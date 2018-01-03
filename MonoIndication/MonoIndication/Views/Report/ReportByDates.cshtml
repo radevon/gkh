@@ -1,0 +1,91 @@
+﻿@model IEnumerable<DBPortable.SvodReportBy2Date>
+
+@{
+    ViewBag.Title = "Отчет по счетчикам";
+    Layout = "~/Views/Shared/MainLayout.cshtml";
+}
+@Html.Partial("topmenu")
+<div class=".container-fluid" style="margin-top: 65px">
+    <h2 style="display:inline">Отчет по счетчикам c @(((DateTime)ViewBag.from).ToString("dd.MM.yy")) по @(((DateTime)ViewBag.to).ToString("dd.MM.yy"))</h2>
+    
+    <table class="table table-condensed table-bordered table-striped" id="exportBtn" style="font-size:12px">
+        <tr>
+            <th title="Ид объекта">IdAdr</th>
+            <th title="Адрес объекта">Adr</th>
+            <th title="№ контура">N_k</th>
+            <th title="Наименование контура">Kontur</th>
+            <th title="Дата снятия показаний">Time</th>
+            <th title="№ sim карты">Sim</th>
+            <th title="Потребление">Q<sub>1</sub></th>
+            <th title="Мгновенная мощность">P</th>
+            <th title="Текущий объемный расход">V<sub>1</sub></th>
+            <th title="Общий объемный расход">V</th>
+            <th title="Температура подачи">T<sub>1</sub></th>
+            <th title="Температура обратки">T<sub>2</sub></th>
+            <th title="Температура холодной воды">T<sub>x</sub></th>
+            <th title="Коррекция потребления теплоэнергии">CorrQ</th>
+            <th title="Текущий массовый расход">V<sub>m1</sub></th>
+            <th title="Общий массовый расход">V<sub>m</sub></th>
+            <th title="Время наработки">Trab</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.IdObject</td>
+                <td>@item.Address</td>
+                <td>@item.n_pp.ToString()</td>
+                <td>@item.K_name</td>
+                <td>
+                    @if (item.recvDate != default(DateTime))
+                    {
+                        @item.recvDate.ToString("dd.MM.yyyy HH:mm:ss")
+                    }
+                    else
+                    {
+                        @:нет данных
+                    }
+                </td>
+                <td>@item.phone</td>
+                <td>@item.heatValue.ToString("#0.00")</td>
+                <td>@item.powerValue.ToString("#0.00")</td>
+                <td>@item.waterLose.ToString("#0.00")</td>
+                <td>@item.waterLoseAll.ToString("#0.00")</td>
+                <td>@item.tempIn.ToString("#0.0")</td>
+                <td>@item.tempOut.ToString("#0.0")</td>
+                <td>@item.tempCold.ToString("#0.0")</td>
+                <td>@item.heatCorect.ToString("#0.00")</td>
+                <td>@item.presure1.ToString("#0.00")</td>
+                <td>@item.presure2.ToString("#0.00")</td>
+                <td>@item.totalWorkHours.ToString("#0.0")</td>
+            </tr>
+        }
+
+    </table>
+
+</div>
+
+@section Scripts{
+<script src='@Url.Content("~/js/xlsx.core.min.js")'></script>
+<script src='@Url.Content("~/js/Blob.min.js")'></script>
+<script src='@Url.Content("~/js/FileSaver.min.js")'></script>
+<script src='@Url.Content("~/js/tableexport.min.js")'></script>
+    <script type="text/javascript">
+    $(function () {
+        $.fn.tableExport.charset = "charset=utf-8";
+        
+        $("#exportBtn").tableExport({
+            headings: true,                    // (Boolean), display table headings (th/td elements) in the <thead>
+            footers: true,                     // (Boolean), display table footers (th/td elements) in the <tfoot>
+            formats: ["xls", "xlsx"],    // (String[]), filetypes for the export
+            fileName: 'Электронка_' + '@(((DateTime)ViewBag.from).ToString("dd.MM.yy",System.Globalization.CultureInfo.CreateSpecificCulture("ru-RU")))' + '-' + '@(((DateTime)ViewBag.to).ToString("dd.MM.yy",System.Globalization.CultureInfo.CreateSpecificCulture("ru-RU")))',                    // (id, String), filename for the downloaded file
+            bootstrap: true,                   // (Boolean), style buttons using bootstrap
+            position: "bottom",                // (top, bottom), position of the caption element relative to table
+            ignoreRows: null,                  // (Number, Number[]), row indices to exclude from the exported file
+            ignoreCols: null,                 // (Number, Number[]), column indices to exclude from the exported file
+            ignoreCSS: ".tableexport-ignore",   // (selector, selector[]), selector(s) to exclude from the exported file
+            trimWhitespace: true
+        });
+    });
+    </script>
+}

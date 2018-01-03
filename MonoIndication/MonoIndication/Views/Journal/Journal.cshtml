@@ -1,0 +1,119 @@
+﻿@using System.Globalization
+@using DBPortable
+@model IEnumerable<DBPortable.HeatFullView>
+
+@{
+    ViewBag.Title = "Журнал последних показаний";
+    Layout = "~/Views/Shared/MainLayout.cshtml";
+}
+
+@Html.Partial("topmenu")
+
+<script type="text/javascript">
+    function getDescriptionError(elementA) {
+        var textError = $(elementA).data("errors");
+        createModal("Информация по ошибкам на счетчике", textError, "");
+    }
+</script>
+
+<div class="container-fluid" style="margin-top: 65px">
+    <div class="row">
+        <div class="col-md-12 col-lg-12">
+            <h2 class="text-primary"><span class="glyphicon glyphicon-time" style="vertical-align: top"></span>&nbsp; Журнал последних показаний</h2>
+            <br/>
+            <div class="text-warning"><i class="text-success">Данные обновлены:</i> @DateTime.Now.ToString("dd MMM в HH:mm:ss",CultureInfo.CreateSpecificCulture("ru-RU"))</div>
+            <table class="table table-hover tableJournal">
+                <thead>
+                    <tr>
+                        <th>Адресс 
+                            @Html.ActionLink(" ","Journal",new{sorted_field="Address", sorted_way="asc"},new {@class="glyphicon glyphicon-chevron-up", title="Нажмите для сортировки по возрастанию"})
+                            @Html.ActionLink(" ","Journal",new{sorted_field="Address", sorted_way="desc"},new {@class="glyphicon glyphicon-chevron-down", title="Нажмите для сортировки по убыванию"})
+                        </th>
+                        <th>Дата получ.
+                            @Html.ActionLink(" ","Journal",new{sorted_field="recvDate", sorted_way="asc"},new {@class="glyphicon glyphicon-chevron-up", title="Нажмите для сортировки по возрастанию"})
+                            @Html.ActionLink(" ","Journal",new{sorted_field="recvDate", sorted_way="desc"},new {@class="glyphicon glyphicon-chevron-down", title="Нажмите для сортировки по убыванию"})
+                        </th>
+                        <th>№ конт</th>
+                        <th>Назв. конт</th>
+                        <th>Q, <span class="dim">[Гкал.]</span></th>
+                        <th>V тек, <span class="dim">[м<sup>3</sup>/ч]</span></th>
+                        <th>Норма V, <span class="dim">[м<sup>3</sup>/ч]</span></th>
+                        <th>V общ, <span class="dim">[м<sup>3</sup>]</span></th>
+                        <th>Мощн, <span class="dim">[кКал/ч]</span></th>
+                        <th>T<sub>1</sub>, <span class="dim">[C&deg;]</span></th>
+                        <th>T<sub>2</sub>, <span class="dim">[C&deg;]</span></th>
+                        <th>T<sub>х</sub>, <span class="dim">[C&deg;]</span></th>
+                        <th>V<sub>m</sub> тек, <span class="dim">[т/ч]</span></th>
+                        <th>V<sub>m</sub> общ, <span class="dim">[т]</span></th>
+                        @*
+                        <th>Проник</th>
+                        <th>Код аварии</th>
+                        *@
+                        <th>t раб, <span class="dim">[ч]</span></th>
+                        <th>Ошибки</th>
+                    </tr>
+                </thead>
+                <tbody>
+                
+                    @if (Model.Count() > 0)
+                    {
+                        foreach (HeatFullView item in Model)
+                        {
+                            <tr>
+                                <td title="@item.phone @item.Description">
+                                    @Html.ActionLink(item.Address, "Index", "Itp", new { id = item.IdObject }, new { })
+                                </td>
+                                <td title="Время получения данных">
+                                    @if (item.recvDate != default(DateTime))
+                                    {
+                                        @item.recvDate.ToString("dd MMM yy г. HH:mm:ss", CultureInfo.CreateSpecificCulture("ru-RU"))
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">нет данных</span>
+                                    }
+                                </td>
+                                <td title="Номер контура">@item.n_pp.ToString()</td>
+                                <td title="Название контура (отоп., гвс)">@item.K_name</td>
+                                <td style="font-weight: bold" title="Показание теплоэнергии">@item.heatValue.ToString("#0.0")</td>
+                                <td title="Текущий объемный расход воды">@item.waterLose.ToString("#0.0")</td>
+                                <td title="Норма объемного расхода воды">@item.vNorma.ToString("#0.0")</td>
+                                <td title="Общий объемный расход воды">@item.waterLoseAll.ToString("#0.0")</td>
+                                <td title="Значение мощности">@item.powerValue.ToString("#0.0")</td>
+                                <td title="Температура подачи">@item.tempIn.ToString("#0.0")</td>
+                                <td title="Температура обратки">@item.tempOut.ToString("#0.0")</td>
+                                <td title="">@item.tempCold.ToString("#0.0")</td>
+                                <td title="Текущий массовый расход воды">@item.presure1.ToString("#0.0")</td>
+                                <td title="Общий массовый расход воды">@item.presure2.ToString("#0.0")</td>
+                                @*
+                                <td style="text-align: center" class='@(item.statusInput > 0 ? "text-danger" : "text-success")'>@item.StatusInputText</td>
+                                <td class='@(item.eventCode > 0 ? "bg-danger" : "")' style="text-align: center">@item.eventCode.ToString()</td>
+                                *@
+                                <td title="Время наработки">@item.totalWorkHours.ToString()</td>
+                                <td>
+                                    @if (item.errorList!=null&&item.errorList.Trim().Length > 0)
+                                    {
+                                        <a class="text-danger" data-errors="@item.errorList" href="javascript:void(0)" onclick="getDescriptionError($(this))">ошибки</a>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                         <tr>
+                            <td colspan="13" style="text-align: center">информация отсутствует</td>
+                         </tr>
+                    }
+                   
+                </tbody>
+
+            </table>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+<script type="text/javascript" src='@Url.Content("~/js/util/ModalHelper.js")'></script>
+}

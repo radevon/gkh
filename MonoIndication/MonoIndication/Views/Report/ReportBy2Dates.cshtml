@@ -1,0 +1,64 @@
+﻿@{
+    ViewBag.Title = "Отчет по 2 датам";
+    Layout = "~/Views/Shared/MainLayout.cshtml";
+}
+
+@Html.Partial("topmenu")
+
+@section Css{
+    <link rel="stylesheet" type="text/css" href='@Url.Content("~/css/bootstrap-datetimepicker.css")'>
+}
+
+<div class="container" style="margin-top: 65px">
+    <div class="row">
+        <div class="col-md-12 col-lg-12 col-sm-12">
+            <h2 class="text-primary">Сводный отчет по объектам на основе показаний за период</h2>
+        </div>
+    </div>
+    @using (Html.BeginForm("GoReport", "Report", FormMethod.Post, new { @class = "form" }))
+    {
+    <div class="row">
+       
+        <div class="col-md-4 col-lg-4 col-sm-6">
+            Начальная дата
+            <input type="text" id="from" name="from" required class="form-control"/>
+        </div>
+        <div class="col-md-4 col-lg-4 col-sm-6">
+            Конечная дата
+            <input type="text" id="to" name="to" required class="form-control" />
+        </div>
+        <div class="col-md-4 col-lg-4 col-sm-6" style="padding:16px 15px">
+            <input type="submit" class="btn btn-primary" value="Получить отчёт" />
+        </div>
+    </div>
+    
+    }
+</div>
+
+@section Scripts {
+<script type="text/javascript" src='@Url.Content("~/js/moment-with-locales.min.js")'></script>
+<script type="text/javascript" src='@Url.Content("~/js/bootstrap-datetimepicker.js")'></script>
+
+<script type="text/javascript">
+    $(function () {
+        $("#from").datetimepicker({
+            inline: false,
+            locale: 'ru',
+            sideBySide: true,
+            defaultDate: moment().subtract(30, 'd'),
+            maxDate: new Date(),
+            format: 'DD.MM.YYYY'
+        });
+
+        $("#to").datetimepicker({
+            inline: false,
+            locale: 'ru',
+            sideBySide: true,
+            defaultDate: new Date(),
+            //minDate: moment(),
+            maxDate: new Date(),
+            format: 'DD.MM.YYYY'
+        });
+    });
+    </script>
+    }

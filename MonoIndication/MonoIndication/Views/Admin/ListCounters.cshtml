@@ -1,0 +1,130 @@
+﻿@model IEnumerable<MonoIndication.KonturModel>
+
+<script type="text/javascript">
+    
+</script>
+
+<table class="table table-condensed">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.N)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.N)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.ActionLink("Редактировать", "Edit", new { /* id=item.PrimaryKey */ }) |
+            <a class="deleteKonturLnk" href="#" data-del-id="@item.N">Удалить</a>
+            
+        </td>
+    </tr>
+}
+
+</table>
+
+<div class="panel panel-default">
+    <div class="panel-heading">Добавление счётчика</div>
+    <div class="panel-body">
+        <form name="addKonturForm" action='@Url.Action("ListCounters","Admin")' method="POST">
+            <table class="table">
+                <tr>
+                    <td>№</td>
+                    <td>Название</td>
+                    <td></td>
+                </tr>
+                <tr>
+
+                    <td>
+                        <input type='text' name="newN" size="4" data-val="true"  data-val-required="Не заполнено поле №"/>
+                        <div data-valmsg-replace="true" data-valmsg-for="newN" />
+                    </td>
+                    <td>
+                        <textarea name="newName" rows="1" cols="30"></textarea>
+                    </td>
+                    <td>
+                        <input type="submit" id="addKonturLink" value="Добавить" class="btn btn-sm btn-default"/>
+                    </td>
+                </tr>
+                
+            </table>
+        </form>
+    </div>
+</div>
+
+<p>
+    <span class="text-danger">
+        
+        @(ViewBag.Message??"")
+    </span>
+</p>
+
+ <script src='@Url.Content("~/js/jqueryval/jquery.validate.min.js")'></script>
+ <script src='@Url.Content("~/js/jqueryval/jquery.validate.unobtrusive.min.js")'></script>
+
+<script type="text/javascript">
+
+    $(function() {
+        $("form[name='addKonturForm']").submit(
+            function (event) {
+
+                var valid = $(this).valid();
+                
+                if(valid){
+                    $.ajax({
+                        url: $(this).attr('action'),
+                        type: $(this).attr('method'),
+                        data: $(this).serialize(),
+                        beforeSend: function () { showLoading(true); },
+                        success: function (response) {
+                            $("#editDbContainer").html(response);
+                        },
+                        complete: function () {
+                            showLoading(false);
+                        },
+                        error: function (xhr, ajaxOptions, thrownError) {
+                            $("#editDbContainer").html("<h4 class='text-danger'>Возникла ошибка! Подробные сведения можно помотреть в консоли браузера</h4>");
+                            console.log(xhr.responseText);
+                        }
+                    });
+                }
+                if (event.preventDefault) event.preventDefault();
+                event.returnValue = false;
+                return false;
+            });
+    });
+
+
+    $("a.deleteKonturLnk").click(function () {
+        if (confirm("Уверены что хотите удалить справочные данные по этой записи?")) {
+            $.ajax({
+                url: '@Url.Action("DeleteKontur")',
+                type: 'POST',
+                data: {'N':$(this).attr('data-del-id')},
+                beforeSend: function () { showLoading(true); },
+                success: function (response) {
+                    $("#editDbContainer").html(response);
+                },
+                complete: function () {
+                    showLoading(false);
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    $("#editDbContainer").html("<h4 class='text-danger'>Возникла ошибка! Подробные сведения можно помотреть в консоли браузера</h4>");
+                    console.log(xhr.responseText);
+                }
+            });
+        }
+    });
+   
+</script>
+

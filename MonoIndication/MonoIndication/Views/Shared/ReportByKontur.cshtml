@@ -1,0 +1,210 @@
+﻿@using System.Globalization
+@using DBPortable
+@model MonoIndication.ReportItpByKontur
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        
+        @if (Model.Parameters.Any())
+        {
+
+            TimeSpan period = @Model.Parameters.Max(x => x.recvDate).Subtract(@Model.Parameters.Min(x => x.recvDate));
+            
+            
+            <table class="reportItptable table table-bordered table-condensed table-hover">
+                <thead>
+                    <tr>
+                        <td colspan="15">
+                            <h3 class="text-muted text-center"><strong>@ViewBag.address</strong></h3>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="15">
+                            <h3 class="text-primary text-center"><strong>ПОДРОБНАЯ ИНФОРМАЦИЯ <span class="text-danger "> ПО КОНТУРУ №@Model.KonturNumber - "@Model.KonturName.ToUpper()"</span></strong></h3>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th title="Время снятия показаний">Дата</th>
+                        <th title="Накопленное показание энергии">Тепл. <span class="dim">(ГКал)</span></th>
+                        <th title="Изменение значения теплоэнергии по отношению к предыдущему снятому показанию">+ <span class="dim">(ГКал)</span></th>
+                        <th title="Текущая мощность (мгновенн.)">Мощн. <span class="dim">(Kкал/ч)</span></th>
+                        <th title="Показание общего объемного расхода воды">V общ. <span class="dim">(м<sup>3</sup>)</span></th>
+                        <th title="Изменение значения расхода воды по отношению к предыдущему снятому показанию">+ v. <span class="dim">(м<sup>3</sup>)</span></th>
+                        <th title="Показание объемного расхода воды (мгновенн.)">V<sub>t</sub> <span class="dim">(м<sup>3</sup>/ч)</span></th>
+                        <th title="Температура теплоносителя подачи">Т<sub>1</sub> <span class="dim">(C&deg;)</span> </th>
+                        <th title="Температура теплоносителя обратки">Т<sub>2</sub> <span class="dim">(C&deg;)</span></th>
+                        <th title="Температура теплоносителя холодного">Т<sub>x</sub> <span class="dim">(C&deg;)</span></th>
+                        <th title="Текущий массовый расход воды">V<sub>m/t</sub> <span class="dim">(т/ч)</span></th>
+                        <th title="Накопленный массовый расход воды">V<sub>m</sub> <span class="dim">(т)</span></th>
+                        @*
+    <th title="Событие проникновения в помещение"><img src='@Url.Content("~/img/entered.jpg")' height="20" /></th>
+    <th title="Сигнал аварии"><img src='@Url.Content("~/img/warning.png")' height="20"/></th>
+                        *@
+                        <th title="Время наработки">t<sub>раб</sub> <span class="dim">(ч)</span></th>
+                        <th title="Ошибки" class="tableexport-ignore"><img src='@Url.Content("~/img/warning.png")' height="20" /></th>
+                        <th class="tableexport-ignore"></th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (HeatInfoView item in Model.Parameters)
+                    { 
+                        <tr>
+                            <td title="Время: @item.recvDate.ToString("HH:mm:ss", CultureInfo.CreateSpecificCulture("ru-RU"))"><pre>@item.recvDate.ToString("dd MMM yy", CultureInfo.CreateSpecificCulture("ru-RU"))</pre></td>
+                            <td>@item.heatValue.ToString("#0.0#")</td>
+                            <td title='Коррекция по замене: @item.heatCorect.ToString()' class='@(item.heatCorect == 0.0 ? "" : "corrected")'>@(Math.Abs(item.heatUsed)+item.heatUsed>0?"+":"")@item.heatUsed.ToString("#0.0#")</td>
+                            <td>@item.powerValue.ToString("#0.0")</td>
+                            <td>@item.waterLoseAll.ToString("#0.0")</td>
+                            <td>@(Math.Abs(item.waterUsed)+item.waterUsed>0?"+":"")@item.waterUsed.ToString("#0.0")</td>
+                            <td>@item.waterLose.ToString("#0.0")</td>
+                            <td>@item.tempIn.ToString("#0")</td>
+                            <td>@item.tempOut.ToString("#0")</td>
+                            <td>@item.tempCold.ToString("#0")</td>
+                            <td>@item.presure1.ToString("#0.0")</td>
+                            <td>@item.presure2.ToString("#0.0")</td>
+                            @*
+    <td class="@(item.statusInput == 0 ? "text-success" : "text-danger")">@(item.statusInput == 0 ? "нет" : "да")</td>
+    <td class="@(item.eventCode == 0 ? "text-success" : "text-danger")">@(item.eventCode == 0 ? "нет" : "да")</td>
+                            *@<td>@item.totalWorkHours.ToString()</td>
+                            <td class="tableexport-ignore">
+                                @if (item.errorList!=null&&item.errorList.Trim().Length > 0)
+{
+    <a class="text-danger" data-errors="@item.errorList" href="javascript:void(0)" onclick="getDescriptionError($(this))">ошибки</a>
+}
+                            </td>
+                            <td title="Коррекция по замене счетчика" class="tableexport-ignore" style="display:none">
+                                <a href="javascript:void(0)" onclick="getReplaceData(@item.Id)">
+                                    <img src='@Url.Content("~/img/mechanica.png")' height="20" style="cursor: pointer" />
+                                </a>
+
+                            </td>
+                        </tr>
+                    }
+                    
+                </tbody>
+                <tfoot>
+                   
+                </tfoot>
+            </table>
+            
+            
+                            
+                            <table class="reportItpsvod table table-bordered table-condensed">
+                                <thead>
+                                    <tr>
+                                        <td colspan="10">
+                                            <h3 class="text-primary text-center"><strong>СВОДНЫЕ ПОКАЗАТЕЛИ <span class="text-danger ">ПО КОНТУРУ №@Model.KonturNumber - "@Model.KonturName.ToUpper()"</span></strong></h3>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="2">
+                                            Период
+                                        </th>
+                                        <th>
+                                            Расход тепл. (ГKал)
+                                        </th>
+                                        <th>
+                                            Расход воды (м<sup>3</sup>)
+                                        </th>
+                                        <th colspan="2">
+                                            Мощность (КBт)
+                                        </th>
+                                        <th colspan="2">
+                                            Темп. вх.(C&deg;)
+                                        </th>
+                                        <th colspan="2">
+                                            Темп. вых.(C&deg;)
+                                        </th>
+                                    </tr>
+                                </thead>
+                        <tbody>
+                            <tr>
+                                <td rowspan="3" colspan="2" style="vertical-align: middle; text-align: center; color:red">
+                                    @period.Days дней @period.Hours ч.
+                                </td>
+                                <td rowspan="3" style="vertical-align: middle; text-align: center; color:red">
+                                    @((Model.Parameters.Sum(x=>x.heatUsed)-Model.Parameters.OrderBy(x=>x.recvDate).First().heatUsed).ToString("#0.0"))
+                                    
+                                </td>
+                        
+                                <td rowspan="3" style="vertical-align: middle; text-align: center; color:red">
+                                    @((Model.Parameters.OrderBy(x=>x.recvDate).Last().waterLoseAll - Model.Parameters.OrderBy(x=>x.recvDate).First().waterLoseAll).ToString("#0.0"))
+                                </td>
+                                
+                                 <td class="bg-danger text-center">
+                                    MAX
+                                </td>
+                                <td class="bg-danger text-right">
+                                    @Model.Parameters.Max(x => x.powerValue).ToString("#0.0")
+                                </td>
+                                <td class="bg-danger text-center">
+                                    MAX
+                                </td>
+                                <td class="bg-danger text-right">
+                                    @Model.Parameters.Max(x => x.tempIn).ToString("#0.0")
+                                </td>
+                                <td class="bg-danger text-center">
+                                    MAX
+                                </td>
+                                <td class="bg-danger text-right">
+                                    @Model.Parameters.Max(x => x.tempOut).ToString("#0.0")
+                                </td>
+                                
+                            </tr>
+                            <tr>
+                                 <td class="bg-warning text-center">
+                                    Ср.
+                                </td>
+                                <td class="bg-warning text-right">
+                                    @Model.Parameters.Average(x => x.powerValue).ToString("#0.0")
+                                </td>
+                                <td class="bg-warning text-center">
+                                    Ср.
+                                </td>
+                                <td class="bg-warning text-right">
+                                    @Model.Parameters.Average(x => x.tempIn).ToString("#0.0")
+                                </td>
+                                <td class="bg-warning text-center">
+                                    Ср.
+                                </td>
+                                <td class="bg-warning text-right">
+                                    @Model.Parameters.Average(x => x.tempOut).ToString("#0.0")
+                                </td>
+                                
+                            </tr>
+                            <tr>
+                              
+                                  <td class="bg-info text-center">
+                                    MIN
+                                </td>
+                                <td class="bg-info text-right">
+                                    @Model.Parameters.Min(x => x.powerValue).ToString("#0.0")
+                                </td>
+                                <td class="bg-info text-center">
+                                    MIN
+                                </td>
+                                <td class="bg-info text-right">
+                                    @Model.Parameters.Min(x => x.tempIn).ToString("#0.0")
+                                </td>
+                                <td class="bg-info text-center">
+                                    MIN
+                                </td>
+                                <td class="bg-info text-right">
+                                    @Model.Parameters.Min(x => x.tempOut).ToString("#0.0")
+                                </td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+           
+                
+                }
+        else
+        {
+            <h3 class="text-muted text-center">Отсутствует информация <span class="text-danger ">по кунтуру №@Model.KonturNumber - "@Model.KonturName.ToUpper()"</span> за указанный период времени!!!</h3>
+           
+        }
+ 
+        
+    </div>
+</div>
+

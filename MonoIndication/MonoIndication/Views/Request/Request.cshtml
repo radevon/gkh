@@ -1,0 +1,180 @@
+﻿@model IEnumerable<DBPortable.RequestStatistic>
+
+@{
+    ViewBag.Title = "Опрос объектов в базе";
+    Layout = "~/Views/Shared/MainLayout.cshtml";
+    string socketAddr = System.Configuration.ConfigurationManager.AppSettings["SocketAddr"] ?? "localhost:50000";
+}
+
+@Html.Partial("topmenu")
+
+
+<div class="container-fluid" style="margin: 65px 0">
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <h2 class="text-muted">Выберите объекты для отправки запроса</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-lg-12 col-sm-12">
+            <table class="table table-condensed table-hover">
+                <tr>
+                    <th>
+                        <input type="checkbox" value="1" name="checkAll"/>
+                    </th>
+                    <th>
+                        Адрес
+                    </th>
+                    <th>
+                        № sim
+                    </th>
+                    <th>
+                        Описание
+                    </th>
+                    <th>
+                        Время отправки запроса
+                    </th>
+                    <th title="Время последних полученых показаний">
+                        Время получ данных
+                    </th>
+                    <th title="Сигнализирует о получении данных по последнему запросу">
+                        Ответ на запрос
+                    </th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <input type="checkbox" value="@item.Phone" @*disabled="@(!item.TryRequest)"*@ name="objectlist"/>
+                        </td>
+                        <td>
+                            @Html.ActionLink(item.Address, "Index", "Itp", new { id = item.MarkerId }, new { })
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Phone)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+                        <td>
+                            @if (item.TimeOfRequest != default(DateTime))
+                            {
+                                @item.TimeOfRequest.ToString("dd.MM.yyyy HH:mm:ss");
+                            }
+                            
+                        </td>
+                        <td>
+                             @if (item.TimeOfData != default(DateTime))
+                             {
+                                 @item.TimeOfData.ToString("dd.MM.yyyy HH:mm:ss");
+                             }
+                        </td>
+                        <td>
+                            @switch (item.RequestStatus)
+                            {
+                                case -1: @Html.Raw("<span class='text-muted'>не опрашивалось</span>"); break;
+                                case 0: @Html.Raw("<span class='text-danger'>ожидание</span>"); break;
+                                case 1: @Html.Raw("<span class='text-success'>получен</span>"); break;
+                                default: @Html.Raw("не известн"); break;
+                            }
+                            
+                        </td>
+
+                    </tr>
+                }
+
+            </table>
+            
+            </div>
+        </div>
+</div>
+
+<div class="footer_fixed">
+    <input id="sendBtn" type="button" class="btn btn-success" value="Отправить запрос" />
+    <span id="message"></span>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+
+        function checkIndicator(value) {
+            if (value) {
+                $('#message').text('Связь с модулем отправки сообщений установлена!');
+                $('#message').addClass('bg-success');
+                $('#sendBtn').prop('disabled', false);
+            } else {
+                $('#message').text('Нет всвязи с модулем отправки сообщений! Проверьте запущен ли модуль и обновите страницу');
+                $('#message').addClass('bg-danger');
+                $('#sendBtn').prop('disabled', true);
+            }
+        }
+
+
+
+        //  сокет для связи
+        var websocket = new WebSocket('ws://@socketAddr');
+        websocket.onopen = function () {
+            checkIndicator(true);
+            if (typeof console !== "undefined" && typeof console.log !== "undefined") {
+                console.log(new Date() + ' Соединение успешно открыто.');
+            }
+        };
+        websocket.onclose = function (event) {
+            checkIndicator(false);
+            if (typeof console !== "undefined" && typeof console.log !== "undefined") {
+                console.log(new Date() + ' Соединение закрыто.');
+            }
+            if (!event.wasClean) {
+                alert('Обрыв соединения с gsm-модулем'); // например, "убит" процесс сервера
+            }
+        };
+        websocket.onmessage = function (event) {
+            if (typeof console !== "undefined" && typeof console.log !== "undefined") {
+                console.log(new Date() + ' Получены ответ от сервера: ' + event.data);
+            }
+        };
+        websocket.onerror = function (error) {
+            checkIndicator(false);
+            if (typeof console !== "undefined" && typeof console.log !== "undefined") {
+                console.log(new Date() + ' Ошибка связи сокета onerror  ' + error);
+            }
+        };
+
+        $(function () {
+            $("input[name='checkAll']").click(function () {
+                var check = $(this).prop("checked");
+                $("input[name='objectlist']").prop("checked", check);
+            });
+
+            
+            $("#sendBtn").click(function () {
+                var objects = $("input[name='objectlist']:checked:not(:disabled)");
+                if (objects.length > 0) {
+                    showLoading(true);
+                    $.each(objects, function (i, e) {
+                        websocket.send($(e).val());
+                        $(e).replaceWith('<span class="bg-success">запрос отправлен</span>');
+                        // запись информации об отправке запроса в базу
+                        sendRequestLog('@Url.Action("SendRequest", "Request")', $(e).val());
+                    });
+                    showLoading(false);
+                    alert('Запросы на получение актуальных показаний отправлены. Подождите некоторое время для получения информации...');
+                } else
+                {
+                    alert('Не выбраны объекты для отправки запросов!');
+                }
+                
+            });
+
+
+        });
+
+
+    </script>
+    }
+
+            
+
+
+           

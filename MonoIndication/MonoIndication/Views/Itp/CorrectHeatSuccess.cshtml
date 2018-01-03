@@ -1,0 +1,80 @@
+﻿@using System.Globalization
+@model MonoIndication.UpdateCounterInfo
+
+<div class="text-center"><span class="text-muted" style="font-style: italic">Дата снятия показания:</span><span class="text-success">@Model.RecvDate.ToString("dd MMM yy HH:mm:ss", CultureInfo.CreateSpecificCulture("ru-RU"))</span></div>
+<table id="tableCorrectInfo" class="table table-condensed">
+   <tr>
+        <td style="width: 60%">Новый счётчик, текущие зн. (ГКал)</td>
+       <td><input type="text" class="form-control digitInfo" value='@Model.NewHeat.ToString("0.00")' disabled="disabled" /></td>
+       <td rowspan="2" style="vertical-align: middle; text-align: center" class="digitInfo">
+           +/-
+           <br/>
+           @Model.NewHeatSubstract.ToString("0.00")
+       </td>
+    </tr>
+    <tr>
+        <td>Новый счётчик, значения на момент установки (ГКал)</td>
+        <td><input type="text" class="form-control digitInfo" value='@Model.NewHeatOnRemove.ToString("0.00")' disabled="disabled" /></td>
+    </tr>
+    <tr>
+        <td>Старый счётчик, посл. полученые показания (ГКал)</td>
+        <td ><input type="text" class="form-control digitInfo" value='@Model.OldHeat.ToString("0.00")' disabled="disabled" /></td>
+        <td rowspan="2" style="vertical-align: middle; text-align: center" class="digitInfo">
+            +/-
+           <br/>
+            @Model.OldHeatSubstract.ToString("0.00")
+        </td>
+    </tr>
+    <tr>
+        <td>Старый счётчик, значения на момент замены (ГКал)</td>
+        <td><input type="text" class="form-control digitInfo" value='@Model.OldHeatOnRemove.ToString("0.00")' disabled="disabled" /></td>
+    </tr>
+    <tr>
+        <td>Общее значение коррекции (ГКал)</td>
+        <td colspan="2" class="digitInfo">@Model.Correction.ToString("0.0##")</td>
+    </tr>
+    <tr>
+        <td>Расход теплоэнергии после коррекции (ГКал)</td>
+        <td colspan="2" class="digitInfo">@Model.FactLoseHeat.ToString("0.00")</td>
+    </tr>
+</table>
+<form name="HeatCorrectForm" id="HeatCorrectForm" method="POST" action='@Url.Action("PostHeatCorrect","Itp")'>
+    <input type="hidden" name="Id" value='@(ViewBag.Id??-1)'/>
+    <input type="hidden" name="heatCorrectValue" value="@Model.Correction"/>
+    <input type="submit" value="Сохранить" class="btn btn-success"/>
+</form>
+
+<script type="text/javascript">
+    $(function () {
+        // POST запррос на сервер с параметрами замены счётчика
+        $("form[name='HeatCorrectForm']").submit(
+            function (event) {
+
+                    $("#modalWindow").modal('hide');
+
+                    $.ajax({
+                        url: $(this).attr('action'),
+                        type: $(this).attr('method'),
+                        data: $(this).serialize(),
+                        beforeSend: function () {
+                            showLoading(true);
+                        },
+                        success: function (response) {
+                            createModal("Результат корректировки показаний", response, "");
+                        },
+                        complete: function () {
+                            showLoading(false);
+                        },
+                        error: function (xhr, ajaxOptions, thrownError) {
+                            alert('Ошибка отправки запроса!');
+                            console.log(xhr.responseText);
+                        }
+                    });
+               
+                if (event.preventDefault) event.preventDefault();
+                event.returnValue = false;
+                return false;
+            });
+    });
+</script>
+

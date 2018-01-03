@@ -1,0 +1,71 @@
+﻿@using System.Globalization
+@using System.Web.UI.WebControls
+@using DBPortable;
+@using MonoIndication
+@model MonoIndication.ReportItp
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <h2 class="text-center text-primary">ИСТОРИЯ ПОКАЗАНИЙ ЗА ПЕРИОД с <span class="text-warning">@Model.startDate.ToString("dd MMM yyyy г.",CultureInfo.CreateSpecificCulture("ru-RU"))</span> по <span class="text-warning">@Model.endDate.ToString("dd MMM yyyy г.",CultureInfo.CreateSpecificCulture("ru-RU"))</span></h2>
+    </div>
+</div>
+<hr/>
+
+<script type="text/javascript">
+    // лтправка запроса по клику на строке значений счётчика - для замены показаний
+    function getReplaceData(id) {
+        showLoading(true);
+        $.get('@Url.Action("ReplaceCounter", "Itp")', { id: id }, function(data) {
+            createModal("Корректировка показаний по причине замены счётчика", data, "");
+        }).error(function (jqXHR, textStatus, errorThrown) {
+            alert('Ошибка отправки запроса!');
+            console.log(jqXHR.responseText);
+        })
+            .complete(function() {
+                showLoading(false);
+            });
+    }
+
+    // клик по ссылке Ошибки в строке данных по счетчику (вывод всплывающего окна с текстом ошибки)
+    function getDescriptionError(elementA) {
+        var textError = $(elementA).data("errors");
+        createModal("Информация по ошибкам на счетчике", textError, "");
+    }
+</script>
+
+@if (Model.ReportKontur.Any())
+{
+    foreach (ReportItpByKontur item in Model.ReportKontur)
+     {
+         @Html.Partial("ReportByKontur",item)
+     }
+     
+     <script type="text/javascript">
+         $(function () {
+             
+             $.fn.tableExport.charset = "charset=utf-8";
+            
+             $(".reportItptable").tableExport({
+                 headings: true,                    // (Boolean), display table headings (th/td elements) in the <thead>
+                 footers: true,                     // (Boolean), display table footers (th/td elements) in the <tfoot>
+                 formats: ["xls","xlsx"],    // (String[]), filetypes for the export
+                 fileName: "itp_" + '@Model.startDate.ToString("dd_MMM_yy",CultureInfo.CreateSpecificCulture("ru-RU"))' + '-' + '@Model.endDate.ToString("dd_MMM_yy",CultureInfo.CreateSpecificCulture("ru-RU"))',                    // (id, String), filename for the downloaded file
+                 bootstrap: true,                   // (Boolean), style buttons using bootstrap
+                 position: "bottom",                // (top, bottom), position of the caption element relative to table
+                 ignoreRows: null,                  // (Number, Number[]), row indices to exclude from the exported file
+                 ignoreCols: null,                 // (Number, Number[]), column indices to exclude from the exported file
+                 ignoreCSS: ".tableexport-ignore"   // (selector, selector[]), selector(s) to exclude from the exported file
+             });
+
+         });
+     </script>
+
+}
+else
+{
+     <div class="text-center">
+                <h2 class="text-danger">Отсутствует информация за указанный период времени!!!</h2>
+     </div>
+}
+
+
+

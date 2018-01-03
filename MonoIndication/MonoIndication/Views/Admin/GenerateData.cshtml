@@ -1,0 +1,46 @@
+﻿@{
+    ViewBag.Title = "GenerateData";
+    Layout = "~/Views/Shared/MainLayout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h2>GenerateData</h2>
+
+<form method="POST" style="display:inline-block" action='@Url.Action("GenerateData")'>
+    <table style="border-spacing: 6px;border-collapse: separate;text-align: right;">
+        <tr>
+            <td>Нач. дата</td>
+            <td><input type="date" name="startdate"/></td>
+        </tr>
+        <tr>
+            <td>Макс кол-во записей</td>
+            <td><input type="text" name="countRec"/></td>
+        </tr>
+        <tr>
+            <td>Теплоэнергия</td>
+            <td><input type="text" name="heat"/></td>
+        </tr>
+        <tr>
+            <td>Вода</td>
+            <td><input type="text" name="water"/></td>
+        </tr>
+        <tr>
+            <td>№ тел</td>
+            <td><input type="text" name="phone"/></td>
+        </tr>
+        <tr>
+            <td>контур</td>
+            <td><input type="text" name="kontur"/></td>
+        </tr>
+        <tr>
+            <td>Период (ч)</td>
+            <td><input type="text" name="period"/></td>
+        </tr>
+    </table>
+    <input type="submit" value="Давай работай"/>
+    </form>
+        </div>
+    </div>
+</div>

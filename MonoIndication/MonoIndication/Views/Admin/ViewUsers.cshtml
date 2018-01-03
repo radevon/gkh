@@ -1,0 +1,69 @@
+﻿@using System.Globalization
+@model IEnumerable<MonoIndication.UserInfoMembership>
+
+<h2 class="text-center text-primary">Список всех пользователей</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            Id
+        </th>
+        <th>
+            Имя (логин)
+        </th>
+        <th>
+            Примечание
+        </th>
+        <th>
+            Дата создания
+        </th>
+        <th>
+            Посл. дата ошибочн. входа
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @(item.CreateDate.HasValue?item.CreateDate.Value.ToString("dd MMM yy HH:mm:ss",CultureInfo.CreateSpecificCulture("ru-Ru")):String.Empty)
+        </td>
+        <td>
+            @(item.LastPasswordFailureDate.HasValue?item.LastPasswordFailureDate.Value.ToString("dd MMM yy HH:mm:ss",CultureInfo.CreateSpecificCulture("ru-Ru")):String.Empty)
+        </td>
+        <td>
+            @if (User.Identity.Name != item.UserName)
+            {
+                <button data-deleteid="@item.UserName" class="deleteAccountBtn btn btn-xs btn-danger">Удалить</button>
+            }
+            
+        </td>
+    </tr>
+}
+
+</table>
+
+
+<script type="text/javascript">
+    $(".deleteAccountBtn").click(function () {
+        $.post('DeleteAccount', { UserName: $(this).attr("data-deleteid") },
+            function(data) {
+                $("#AdminContainer").html(data);
+            }).error(function (jqXHR, textStatus, errorThrown) {
+                $("#AdminContainer").html("<h4 class='text-danger'>Возникла ошибка! Подробные сведения можно помотреть в консоли браузера</h4>");
+                console.log(jqXHR.responseText);
+            });
+    });
+    
+    
+
+</script>

@@ -1,0 +1,17 @@
+﻿@{
+    ViewBag.Title = "Error";
+    Layout = "~/Views/Shared/MainLayout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="text-danger">В программе произошла ошибка. Обратитесь к разработчику для исправления причин появления данного сообщения.</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="text-muted">@(ViewBag.message??"нет сведений об ошибке")</div>
+        </div>
+    </div>
+</div>

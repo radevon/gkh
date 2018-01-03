@@ -1,0 +1,118 @@
+﻿@model IEnumerable<DBPortable.EnergosbitXls>
+@{
+    ViewBag.Title = "Отчет потребления по объектам";
+    Layout = "~/Views/Shared/MainLayout.cshtml";
+}
+
+@section css{
+<style type="text/css">
+    #export {
+        border-collapse: collapse;
+        border-spacing: 0;
+        font-size: 12px;
+        font-family: 'Times New Roman';
+    }
+
+        #export td, #export th {
+            padding: 1px 2px;
+            border: 1px solid #bcbfb1;
+            word-break: normal;
+        }
+
+        #export th {
+            text-align: center;
+            vertical-align: middle;
+        }
+</style>
+}
+<h2 class="text-center">Отчет потребления по объектам</h2>
+<button class="btn btn-success exp" value="1" style="margin:3px;">В excel</button>
+<table style="" id="export">
+    <thead>
+        <tr>
+            <th rowspan="2" style="font-weight:bold;">Зав. № теплосчетчика</th>
+            <th rowspan="2">№ ЖЭУ</th>
+            <th rowspan="2">Адрес</th>
+            <th rowspan="2">Код счетчика в нумерации энергосбыта</th>
+            <th rowspan="2">Тип счетчика</th>
+            <th rowspan="2">Признак учета (1-отопл; 2 - ГВС; 3 - общ)</th>
+            <th rowspan="2">Дата снятия показаний</th>
+            <th rowspan="2">Время снятия показаний</th>
+            <th colspan="4">Подающий трубопровод</th>
+            <th colspan="4">Обратный трубопровод</th>
+            <th rowspan="2">Температура холодной воды</th>
+            <th rowspan="2">Время работы прибора</th>
+            <th rowspan="2">Время работы прибора с ошибкой</th>
+            <th rowspan="2">Код сч. группового учета в кодировке энергосбыта</th>
+        </tr>
+        <tr>
+            <th>Показания прибора учета тепла</th>
+            <th>Расход сетевой воды</th>
+            <th>Мгновенный расход</th>
+            <th>Температура</th>
+            <th>Показания прибора учета тепла</th>
+            <th>Расход сетевой воды</th>
+            <th>Мгновенный расход</th>
+            <th>Температура</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(DBPortable.EnergosbitXls item in Model)
+        { 
+        <tr>
+            <td title="Зав. № теплосчетчика">@item.ZavN</td>
+            <td>@item.Ngao.ToString()</td>
+            <td>@item.Address</td>
+            <td title="Код счетчика в нумерации энергосбыта">@item.KodSchSbut</td>
+            <td title="Тип счетчика">@item.TipSh</td>
+            <td>@item.Uch</td>
+            <td>
+            @if (item.DatePod != default(DateTime))
+            {
+                @item.DatePod.ToString("dd.MM.yyyy");
+            }
+            
+            <td>
+                @if (item.DatePod != default(DateTime))
+                {
+                    @item.DatePod.ToString("HH:mm:ss");
+                }
+            <td title="Показания прибора учета тепла">@item.PodHeat.ToString("f2")</td>
+            <td title="Расход сетевой воды">@item.PodWaterLoseAll.ToString("f0")</td>
+            <td title="Мгновенный расход воды">@item.PodWaterLose.ToString("f4")</td>
+            <td title="Температура подачи">@item.TempIn.ToString("f0")</td>
+            <td title="Показания прибора учета тепла">@item.ObrHeat.ToString("f2")</td>
+            <td title="Расход сетевой воды">@item.ObrWaterLoseAll.ToString("f0")</td>
+            <td title="Мгновенный расход воды">@item.ObrWaterLose.ToString("f4")</td>
+            <td title="Температура обратки">@item.TempOut.ToString("f0")</td>
+            <td title="Температура холодной воды">@item.TempCold.ToString("f0")</td>
+            <td title="Время работы прибора">@item.TotalWorkHours.ToString()</td>
+            <td></td>
+            <td></td>
+        </tr>
+        }
+      
+    </tbody>
+</table>
+
+<button class="btn btn-success exp" value="1" style="margin:3px;">В excel</button>
+
+@section Scripts{
+<script type="text/javascript">
+    var tableToExcel = (function () {
+        var uri = 'data:application/vnd.ms-excel;base64,'
+          , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--><meta http-equiv="content-type" content="text/plain; charset=UTF-8"/></head><body><table>{table}</table></body></html>'
+          , base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))) }
+          , format = function (s, c) { return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; }) }
+        return function (table, name) {
+            if (!table.nodeType) table = document.getElementById(table)
+            var ctx = { worksheet: name || 'Worksheet', table: table.innerHTML }
+            window.location.href = uri + base64(format(template, ctx))
+        }
+    })();
+
+    $(".exp").click(function () {
+        tableToExcel('export','List 1');
+    });
+</script>
+}

@@ -1,0 +1,66 @@
+﻿
+<form method="post" class="form-horizontal" action='@Url.Action("PhoneEdit","Admin")' name="editPhoneForm">
+    <label for="phones">
+        Выберите из списка номер телефона, который хотите изменить:
+    </label>
+    @Html.DropDownList("phones", new SelectList(ViewBag.phones as IEnumerable<string>), new { @class = "form-control" })
+    <span class="text-warning">
+        (если в списке нет нужного номера, возможно данных с него вообще не приходило)
+    </span>
+    <br/>
+        <label for="phones">
+            Введите новый номер телефона.
+        </label>
+    <input type="text" class="form-control" name="newNumber" id="newNumber" data-val="true" data-val-required="Не заполнено поле новый номер телефона" />
+    <div data-valmsg-replace="true" data-valmsg-for="newNumber" />    
+    <span class="text-warning">(данных по новому значению не должно содержаться в базе. иначе изменение не произойдет...)</span>
+    <br/>
+    <label><input type="checkbox" name="includeOtherTables" value="1" /> Изменить также в таблицах контуров и графика опроса</label>
+    <br/>
+    <input type="submit" class="btn btn-danger" value="Применить изменение"/>
+</form>
+
+<span id="mess" class="text-danger" style="font-size:16px">
+    @(TempData["Message"] ?? "")
+</span>
+
+   
+
+    <script type="text/javascript">
+        $.validator.unobtrusive.parse($("form[name='editPhoneForm']"));
+
+        $(function () {
+            $("form[name='editPhoneForm']").submit(
+                function (event) {
+
+                    var valid = $(this).valid();
+
+                    if (valid) {
+                        $.ajax({
+                            url: $(this).attr('action'),
+                            type: $(this).attr('method'),
+                            data: $(this).serialize(),
+                            beforeSend: function () { showLoading(true); },
+                            success: function (response) {
+                                $("#AdminContainer").html(response);
+                            },
+                            complete: function () {
+                                showLoading(false);
+                            },
+                            error: function (xhr, ajaxOptions, thrownError) {
+                                $("#AdminContainer").html("<h4 class='text-danger'>Возникла ошибка! Подробные сведения можно помотреть в консоли браузера</h4>");
+                                console.log(xhr.responseText);
+                            }
+                        });
+                    }
+                    if (event.preventDefault) event.preventDefault();
+                    event.returnValue = false;
+                    return false;
+                });
+        });
+
+        setTimeout(function () {
+            $("#mess").remove();
+        }, 5000);
+
+    </script>

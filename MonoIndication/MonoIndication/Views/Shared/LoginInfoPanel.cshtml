@@ -1,0 +1,17 @@
+﻿<div class="panel panel-default">
+                <div class="panel-heading" style="padding: 5px 10px">
+                    <i class="glyphicon glyphicon-user"></i> ПОЛЬЗОВАТЕЛЬ
+                     @if (Roles.IsUserInRole("administrators"))
+                    {
+                        <span class="pull-right" style="right: 0"> <a href='@Url.Action("Settings","Admin")'>админка</a></span>
+                    }
+                </div>
+
+                <div class="panel-body" style="padding: 10px">
+                    ИМЯ:
+                    <span class="text-muted">@User.Identity.Name</span>
+                   
+                    <a class="btn btn-xs btn-default pull-right" href='@Url.Action("Logout","Account")'>Выход</a>
+                    
+                </div>
+</div>

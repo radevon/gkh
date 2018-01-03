@@ -1,0 +1,46 @@
+﻿@model IEnumerable<DBPortable.Events>
+
+<div class="table-responsive" style="max-height: 400px; overflow-y: auto">
+    <table class="table table-condensed">
+    <tr>
+        <th>
+            № sim
+        </th>
+        <th>
+            Время события
+            <span class="glyphicon glyphicon-chevron-down"></span>
+        </th>
+        <th>
+            Тип события
+        </th>
+        
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Phone)
+        </td>
+        <td>
+            @item.EventTime.ToString("dd MMM yyyy HH:mm:ss")
+        </td>
+        <td style="vertical-align:middle">
+                @switch (item.EventValue)
+                {
+                    case 0:  <img width="20px" src='@Url.Content("~/img/close_.jpg")' title="Состояние закрыто"/> <span>cостояние закрыто</span>
+                    break;
+                    case 1: <img width="20px" src='@Url.Content("~/img/open_.jpg")' title="Состояние открыто"/> <span>cостояние открыто</span>
+                    break;
+                    default: <img width="20px" src='#' title="Состояние неопределено: @item.EventValue.ToString()"/> <span>cостояние неопределено</span>
+                    break;
+                }
+
+              
+            </td>
+        
+    </tr>
+}
+
+</table>
+</div>
+

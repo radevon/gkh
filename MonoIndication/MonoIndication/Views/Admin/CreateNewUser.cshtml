@@ -1,0 +1,37 @@
+﻿@model MonoIndication.NewUser
+
+<h2 class="text-primary">Создание нового пользователя</h2>
+
+
+@using (Ajax.BeginForm("CreateNewUser", "Admin", new AjaxOptions() { HttpMethod = "POST", UpdateTargetId = "AdminContainer" }, new { @class = "form-horizontal createform" }))
+{
+                
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.UserName)
+                        @Html.TextBoxFor(model=>model.UserName,new {@class="form-control"})
+                        @Html.ValidationMessageFor(model => model.UserName)
+                    </div>
+                   
+                 <div class="form-group">
+                     @Html.LabelFor(model => model.Password)
+                     @Html.PasswordFor(model=>model.Password,new {@class="form-control"})
+                     @Html.ValidationMessageFor(model => model.Password)
+                 </div>
+     
+                 <div class="form-group">
+                     @Html.LabelFor(model => model.PasswordRepeat)
+                     @Html.PasswordFor(model=>model.PasswordRepeat,new {@class="form-control"})
+                     @Html.ValidationMessageFor(model => model.PasswordRepeat)
+                 </div>
+     
+                   
+                    <div class="form-group text-center">
+                        <a class="btn btn-default" href='@Url.Action("Settings")'>Отмена</a>
+                        <input type="submit" class="btn btn-default" value="Создать" />
+                    </div>
+                
+                    @Html.ValidationSummary(true)
+
+                }
+
+

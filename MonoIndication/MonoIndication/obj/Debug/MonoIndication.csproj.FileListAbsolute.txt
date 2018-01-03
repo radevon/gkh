@@ -1,0 +1,335 @@
+D:\code\.NET\MonoIndication\MonoIndication\bin\MonoIndication.dll
+D:\code\.NET\MonoIndication\MonoIndication\bin\MonoIndication.pdb
+D:\code\.NET\MonoIndication\MonoIndication\bin\Microsoft.Web.Infrastructure.dll
+D:\code\.NET\MonoIndication\MonoIndication\bin\Microsoft.Web.Mvc.FixedDisplayModes.dll
+D:\code\.NET\MonoIndication\MonoIndication\bin\Newtonsoft.Json.dll
+D:\code\.NET\MonoIndication\MonoIndication\bin\System.Net.Http.Formatting.dll
+D:\code\.NET\MonoIndication\MonoIndication\bin\System.Web.Helpers.dll
+D:\code\.NET\MonoIndication\MonoIndication\bin\System.Web.Http.dll
+D:\code\.NET\MonoIndication\MonoIndication\bin\System.Web.Http.WebHost.dll
+D:\code\.NET\MonoIndication\MonoIndication\bin\System.Web.Mvc.dll
+D:\code\.NET\MonoIndication\MonoIndication\bin\System.Web.Razor.dll
+D:\code\.NET\MonoIndication\MonoIndication\bin\System.Web.WebPages.Deployment.dll
+D:\code\.NET\MonoIndication\MonoIndication\bin\System.Web.WebPages.dll
+D:\code\.NET\MonoIndication\MonoIndication\bin\System.Web.WebPages.Razor.dll
+D:\code\.NET\MonoIndication\MonoIndication\bin\Newtonsoft.Json.xml
+D:\code\.NET\MonoIndication\MonoIndication\bin\System.Net.Http.Formatting.xml
+D:\code\.NET\MonoIndication\MonoIndication\bin\System.Web.Helpers.xml
+D:\code\.NET\MonoIndication\MonoIndication\bin\System.Web.Http.xml
+D:\code\.NET\MonoIndication\MonoIndication\bin\System.Web.Http.WebHost.xml
+D:\code\.NET\MonoIndication\MonoIndication\bin\System.Web.Mvc.xml
+D:\code\.NET\MonoIndication\MonoIndication\bin\System.Web.Razor.xml
+D:\code\.NET\MonoIndication\MonoIndication\bin\System.Web.WebPages.xml
+D:\code\.NET\MonoIndication\MonoIndication\bin\System.Web.WebPages.Deployment.xml
+D:\code\.NET\MonoIndication\MonoIndication\bin\System.Web.WebPages.Razor.xml
+D:\code\.NET\MonoIndication\MonoIndication\bin\ru\System.Net.Http.Formatting.resources.dll
+D:\code\.NET\MonoIndication\MonoIndication\bin\ru\System.Web.Helpers.resources.dll
+D:\code\.NET\MonoIndication\MonoIndication\bin\ru\System.Web.Http.resources.dll
+D:\code\.NET\MonoIndication\MonoIndication\bin\ru\System.Web.Http.WebHost.resources.dll
+D:\code\.NET\MonoIndication\MonoIndication\bin\ru\System.Web.Mvc.resources.dll
+D:\code\.NET\MonoIndication\MonoIndication\bin\ru\System.Web.Razor.resources.dll
+D:\code\.NET\MonoIndication\MonoIndication\bin\ru\System.Web.WebPages.resources.dll
+D:\code\.NET\MonoIndication\MonoIndication\bin\ru\System.Web.WebPages.Deployment.resources.dll
+D:\code\.NET\MonoIndication\MonoIndication\bin\ru\System.Web.WebPages.Razor.resources.dll
+D:\code\.NET\MonoIndication\MonoIndication\obj\Debug\MonoIndication.csprojResolveAssemblyReference.cache
+D:\code\.NET\MonoIndication\MonoIndication\obj\Debug\MonoIndication.dll
+D:\code\.NET\MonoIndication\MonoIndication\obj\Debug\MonoIndication.pdb
+D:\code\.NET\MonoIndication\MonoIndication\bin\MonoIndication.dll.config
+D:\code\.NET\MonoIndication\MonoIndication\bin\AutoMapper.dll
+D:\code\.NET\MonoIndication\MonoIndication\bin\AutoMapper.xml
+D:\dev\vs\HomeWork\MonoIndication\MonoIndication\bin\MonoIndication.dll
+D:\dev\vs\HomeWork\MonoIndication\MonoIndication\bin\MonoIndication.pdb
+D:\dev\vs\HomeWork\MonoIndication\MonoIndication\bin\AutoMapper.dll
+D:\dev\vs\HomeWork\MonoIndication\MonoIndication\bin\Microsoft.Web.Infrastructure.dll
+D:\dev\vs\HomeWork\MonoIndication\MonoIndication\bin\Microsoft.Web.Mvc.FixedDisplayModes.dll
+D:\dev\vs\HomeWork\MonoIndication\MonoIndication\bin\Newtonsoft.Json.dll
+D:\dev\vs\HomeWork\MonoIndication\MonoIndication\bin\System.Net.Http.Formatting.dll
+D:\dev\vs\HomeWork\MonoIndication\MonoIndication\bin\System.Web.Helpers.dll
+D:\dev\vs\HomeWork\MonoIndication\MonoIndication\bin\System.Web.Http.dll
+D:\dev\vs\HomeWork\MonoIndication\MonoIndication\bin\System.Web.Http.WebHost.dll
+D:\dev\vs\HomeWork\MonoIndication\MonoIndication\bin\System.Web.Mvc.dll
+D:\dev\vs\HomeWork\MonoIndication\MonoIndication\bin\System.Web.Razor.dll
+D:\dev\vs\HomeWork\MonoIndication\MonoIndication\bin\System.Web.WebPages.Deployment.dll
+D:\dev\vs\HomeWork\MonoIndication\MonoIndication\bin\System.Web.WebPages.dll
+D:\dev\vs\HomeWork\MonoIndication\MonoIndication\bin\System.Web.WebPages.Razor.dll
+D:\dev\vs\HomeWork\MonoIndication\MonoIndication\bin\AutoMapper.xml
+D:\dev\vs\HomeWork\MonoIndication\MonoIndication\bin\Newtonsoft.Json.xml
+D:\dev\vs\HomeWork\MonoIndication\MonoIndication\bin\System.Net.Http.Formatting.xml
+D:\dev\vs\HomeWork\MonoIndication\MonoIndication\bin\System.Web.Helpers.xml
+D:\dev\vs\HomeWork\MonoIndication\MonoIndication\bin\System.Web.Http.xml
+D:\dev\vs\HomeWork\MonoIndication\MonoIndication\bin\System.Web.Http.WebHost.xml
+D:\dev\vs\HomeWork\MonoIndication\MonoIndication\bin\System.Web.Mvc.xml
+D:\dev\vs\HomeWork\MonoIndication\MonoIndication\bin\System.Web.Razor.xml
+D:\dev\vs\HomeWork\MonoIndication\MonoIndication\bin\System.Web.WebPages.xml
+D:\dev\vs\HomeWork\MonoIndication\MonoIndication\bin\System.Web.WebPages.Deployment.xml
+D:\dev\vs\HomeWork\MonoIndication\MonoIndication\bin\System.Web.WebPages.Razor.xml
+D:\dev\vs\HomeWork\MonoIndication\MonoIndication\bin\ru\System.Net.Http.Formatting.resources.dll
+D:\dev\vs\HomeWork\MonoIndication\MonoIndication\bin\ru\System.Web.Helpers.resources.dll
+D:\dev\vs\HomeWork\MonoIndication\MonoIndication\bin\ru\System.Web.Http.resources.dll
+D:\dev\vs\HomeWork\MonoIndication\MonoIndication\bin\ru\System.Web.Http.WebHost.resources.dll
+D:\dev\vs\HomeWork\MonoIndication\MonoIndication\bin\ru\System.Web.Mvc.resources.dll
+D:\dev\vs\HomeWork\MonoIndication\MonoIndication\bin\ru\System.Web.Razor.resources.dll
+D:\dev\vs\HomeWork\MonoIndication\MonoIndication\bin\ru\System.Web.WebPages.resources.dll
+D:\dev\vs\HomeWork\MonoIndication\MonoIndication\bin\ru\System.Web.WebPages.Deployment.resources.dll
+D:\dev\vs\HomeWork\MonoIndication\MonoIndication\bin\ru\System.Web.WebPages.Razor.resources.dll
+D:\dev\vs\HomeWork\MonoIndication\MonoIndication\obj\Debug\MonoIndication.dll
+D:\dev\vs\HomeWork\MonoIndication\MonoIndication\obj\Debug\MonoIndication.pdb
+E:\MonoIndication\MonoIndication\bin\MonoIndication.dll.config
+E:\MonoIndication\MonoIndication\bin\MonoIndication.dll
+E:\MonoIndication\MonoIndication\bin\MonoIndication.pdb
+E:\MonoIndication\MonoIndication\bin\AutoMapper.dll
+E:\MonoIndication\MonoIndication\bin\Microsoft.Web.Infrastructure.dll
+E:\MonoIndication\MonoIndication\bin\Microsoft.Web.Mvc.FixedDisplayModes.dll
+E:\MonoIndication\MonoIndication\bin\Newtonsoft.Json.dll
+E:\MonoIndication\MonoIndication\bin\System.Net.Http.Formatting.dll
+E:\MonoIndication\MonoIndication\bin\System.Web.Helpers.dll
+E:\MonoIndication\MonoIndication\bin\System.Web.Http.dll
+E:\MonoIndication\MonoIndication\bin\System.Web.Http.WebHost.dll
+E:\MonoIndication\MonoIndication\bin\System.Web.Mvc.dll
+E:\MonoIndication\MonoIndication\bin\System.Web.Razor.dll
+E:\MonoIndication\MonoIndication\bin\System.Web.WebPages.Deployment.dll
+E:\MonoIndication\MonoIndication\bin\System.Web.WebPages.dll
+E:\MonoIndication\MonoIndication\bin\System.Web.WebPages.Razor.dll
+E:\MonoIndication\MonoIndication\bin\System.Data.SQLite.dll
+E:\MonoIndication\MonoIndication\bin\Dapper.dll
+E:\MonoIndication\MonoIndication\bin\AutoMapper.xml
+E:\MonoIndication\MonoIndication\bin\DBPortable.pdb
+E:\MonoIndication\MonoIndication\bin\Newtonsoft.Json.xml
+E:\MonoIndication\MonoIndication\bin\System.Net.Http.Formatting.xml
+E:\MonoIndication\MonoIndication\bin\System.Web.Helpers.xml
+E:\MonoIndication\MonoIndication\bin\System.Web.Http.xml
+E:\MonoIndication\MonoIndication\bin\System.Web.Http.WebHost.xml
+E:\MonoIndication\MonoIndication\bin\System.Web.Mvc.xml
+E:\MonoIndication\MonoIndication\bin\System.Web.Razor.xml
+E:\MonoIndication\MonoIndication\bin\System.Web.WebPages.xml
+E:\MonoIndication\MonoIndication\bin\System.Web.WebPages.Deployment.xml
+E:\MonoIndication\MonoIndication\bin\System.Web.WebPages.Razor.xml
+E:\MonoIndication\MonoIndication\bin\Dapper.xml
+E:\MonoIndication\MonoIndication\bin\ru\System.Net.Http.Formatting.resources.dll
+E:\MonoIndication\MonoIndication\bin\ru\System.Web.Helpers.resources.dll
+E:\MonoIndication\MonoIndication\bin\ru\System.Web.Http.resources.dll
+E:\MonoIndication\MonoIndication\bin\ru\System.Web.Http.WebHost.resources.dll
+E:\MonoIndication\MonoIndication\bin\ru\System.Web.Mvc.resources.dll
+E:\MonoIndication\MonoIndication\bin\ru\System.Web.Razor.resources.dll
+E:\MonoIndication\MonoIndication\bin\ru\System.Web.WebPages.resources.dll
+E:\MonoIndication\MonoIndication\bin\ru\System.Web.WebPages.Deployment.resources.dll
+E:\MonoIndication\MonoIndication\bin\ru\System.Web.WebPages.Razor.resources.dll
+E:\MonoIndication\MonoIndication\obj\Debug\MonoIndication.csprojResolveAssemblyReference.cache
+E:\MonoIndication\MonoIndication\obj\Debug\MonoIndication.dll
+E:\MonoIndication\MonoIndication\obj\Debug\MonoIndication.pdb
+D:\dev\vs\HomeWork\MonoIndication\MonoIndication\bin\WebActivator.dll
+D:\dev\vs\HomeWork\MonoIndication\MonoIndication\bin\WebMatrix.WebData.dll
+D:\dev\vs\HomeWork\MonoIndication\MonoIndication\bin\System.Data.SqlServerCe.dll
+D:\code\.NET\MonoIndication\MonoIndication\bin\System.Data.SqlServerCe.dll
+D:\code\.NET\MonoIndication\MonoIndication\bin\WebActivator.dll
+D:\code\.NET\MonoIndication\MonoIndication\bin\WebMatrix.WebData.dll
+D:\code\.NET\MonoIndication\MonoIndication\bin\System.Data.SQLite.dll
+D:\dev\vs\HomeWork\mono 333\MonoIndication\MonoIndication\bin\MonoIndication.dll
+D:\dev\vs\HomeWork\mono 333\MonoIndication\MonoIndication\bin\MonoIndication.pdb
+D:\dev\vs\HomeWork\mono 333\MonoIndication\MonoIndication\bin\AutoMapper.dll
+D:\dev\vs\HomeWork\mono 333\MonoIndication\MonoIndication\bin\Microsoft.Web.Infrastructure.dll
+D:\dev\vs\HomeWork\mono 333\MonoIndication\MonoIndication\bin\Microsoft.Web.Mvc.FixedDisplayModes.dll
+D:\dev\vs\HomeWork\mono 333\MonoIndication\MonoIndication\bin\Newtonsoft.Json.dll
+D:\dev\vs\HomeWork\mono 333\MonoIndication\MonoIndication\bin\System.Data.SqlServerCe.dll
+D:\dev\vs\HomeWork\mono 333\MonoIndication\MonoIndication\bin\System.Net.Http.Formatting.dll
+D:\dev\vs\HomeWork\mono 333\MonoIndication\MonoIndication\bin\System.Web.Helpers.dll
+D:\dev\vs\HomeWork\mono 333\MonoIndication\MonoIndication\bin\System.Web.Http.dll
+D:\dev\vs\HomeWork\mono 333\MonoIndication\MonoIndication\bin\System.Web.Http.WebHost.dll
+D:\dev\vs\HomeWork\mono 333\MonoIndication\MonoIndication\bin\System.Web.Mvc.dll
+D:\dev\vs\HomeWork\mono 333\MonoIndication\MonoIndication\bin\System.Web.Razor.dll
+D:\dev\vs\HomeWork\mono 333\MonoIndication\MonoIndication\bin\System.Web.WebPages.Deployment.dll
+D:\dev\vs\HomeWork\mono 333\MonoIndication\MonoIndication\bin\System.Web.WebPages.dll
+D:\dev\vs\HomeWork\mono 333\MonoIndication\MonoIndication\bin\System.Web.WebPages.Razor.dll
+D:\dev\vs\HomeWork\mono 333\MonoIndication\MonoIndication\bin\WebActivator.dll
+D:\dev\vs\HomeWork\mono 333\MonoIndication\MonoIndication\bin\WebMatrix.Data.dll
+D:\dev\vs\HomeWork\mono 333\MonoIndication\MonoIndication\bin\WebMatrix.WebData.dll
+D:\dev\vs\HomeWork\mono 333\MonoIndication\MonoIndication\bin\System.Data.SQLite.dll
+D:\dev\vs\HomeWork\mono 333\MonoIndication\MonoIndication\bin\AutoMapper.xml
+D:\dev\vs\HomeWork\mono 333\MonoIndication\MonoIndication\bin\Dapper.xml
+D:\dev\vs\HomeWork\mono 333\MonoIndication\MonoIndication\bin\DBPortable.pdb
+D:\dev\vs\HomeWork\mono 333\MonoIndication\MonoIndication\bin\Newtonsoft.Json.xml
+D:\dev\vs\HomeWork\mono 333\MonoIndication\MonoIndication\bin\System.Net.Http.Formatting.xml
+D:\dev\vs\HomeWork\mono 333\MonoIndication\MonoIndication\bin\System.Web.Helpers.xml
+D:\dev\vs\HomeWork\mono 333\MonoIndication\MonoIndication\bin\System.Web.Http.xml
+D:\dev\vs\HomeWork\mono 333\MonoIndication\MonoIndication\bin\System.Web.Http.WebHost.xml
+D:\dev\vs\HomeWork\mono 333\MonoIndication\MonoIndication\bin\System.Web.Mvc.xml
+D:\dev\vs\HomeWork\mono 333\MonoIndication\MonoIndication\bin\System.Web.Razor.xml
+D:\dev\vs\HomeWork\mono 333\MonoIndication\MonoIndication\bin\System.Web.WebPages.xml
+D:\dev\vs\HomeWork\mono 333\MonoIndication\MonoIndication\bin\System.Web.WebPages.Deployment.xml
+D:\dev\vs\HomeWork\mono 333\MonoIndication\MonoIndication\bin\System.Web.WebPages.Razor.xml
+D:\dev\vs\HomeWork\mono 333\MonoIndication\MonoIndication\bin\WebMatrix.Data.xml
+D:\dev\vs\HomeWork\mono 333\MonoIndication\MonoIndication\bin\WebMatrix.WebData.xml
+D:\dev\vs\HomeWork\mono 333\MonoIndication\MonoIndication\bin\ru\System.Net.Http.Formatting.resources.dll
+D:\dev\vs\HomeWork\mono 333\MonoIndication\MonoIndication\bin\ru\System.Web.Helpers.resources.dll
+D:\dev\vs\HomeWork\mono 333\MonoIndication\MonoIndication\bin\ru\System.Web.Http.resources.dll
+D:\dev\vs\HomeWork\mono 333\MonoIndication\MonoIndication\bin\ru\System.Web.Http.WebHost.resources.dll
+D:\dev\vs\HomeWork\mono 333\MonoIndication\MonoIndication\bin\ru\System.Web.Mvc.resources.dll
+D:\dev\vs\HomeWork\mono 333\MonoIndication\MonoIndication\bin\ru\System.Web.Razor.resources.dll
+D:\dev\vs\HomeWork\mono 333\MonoIndication\MonoIndication\bin\ru\System.Web.WebPages.resources.dll
+D:\dev\vs\HomeWork\mono 333\MonoIndication\MonoIndication\bin\ru\System.Web.WebPages.Deployment.resources.dll
+D:\dev\vs\HomeWork\mono 333\MonoIndication\MonoIndication\bin\ru\System.Web.WebPages.Razor.resources.dll
+D:\dev\vs\HomeWork\mono 333\MonoIndication\MonoIndication\obj\Debug\MonoIndication.csprojResolveAssemblyReference.cache
+D:\dev\vs\HomeWork\mono 333\MonoIndication\MonoIndication\obj\Debug\MonoIndication.dll
+D:\dev\vs\HomeWork\mono 333\MonoIndication\MonoIndication\obj\Debug\MonoIndication.pdb
+D:\code\.NET\MonoLast\MonoIndication\MonoIndication\bin\MonoIndication.dll.config
+D:\code\.NET\MonoLast\MonoIndication\MonoIndication\bin\MonoIndication.dll
+D:\code\.NET\MonoLast\MonoIndication\MonoIndication\bin\MonoIndication.pdb
+D:\code\.NET\MonoLast\MonoIndication\MonoIndication\bin\AutoMapper.dll
+D:\code\.NET\MonoLast\MonoIndication\MonoIndication\bin\Microsoft.Web.Infrastructure.dll
+D:\code\.NET\MonoLast\MonoIndication\MonoIndication\bin\Microsoft.Web.Mvc.FixedDisplayModes.dll
+D:\code\.NET\MonoLast\MonoIndication\MonoIndication\bin\Newtonsoft.Json.dll
+D:\code\.NET\MonoLast\MonoIndication\MonoIndication\bin\System.Data.SqlServerCe.dll
+D:\code\.NET\MonoLast\MonoIndication\MonoIndication\bin\System.Net.Http.Formatting.dll
+D:\code\.NET\MonoLast\MonoIndication\MonoIndication\bin\System.Web.Helpers.dll
+D:\code\.NET\MonoLast\MonoIndication\MonoIndication\bin\System.Web.Http.dll
+D:\code\.NET\MonoLast\MonoIndication\MonoIndication\bin\System.Web.Http.WebHost.dll
+D:\code\.NET\MonoLast\MonoIndication\MonoIndication\bin\System.Web.Mvc.dll
+D:\code\.NET\MonoLast\MonoIndication\MonoIndication\bin\System.Web.Razor.dll
+D:\code\.NET\MonoLast\MonoIndication\MonoIndication\bin\System.Web.WebPages.Deployment.dll
+D:\code\.NET\MonoLast\MonoIndication\MonoIndication\bin\System.Web.WebPages.dll
+D:\code\.NET\MonoLast\MonoIndication\MonoIndication\bin\System.Web.WebPages.Razor.dll
+D:\code\.NET\MonoLast\MonoIndication\MonoIndication\bin\WebActivator.dll
+D:\code\.NET\MonoLast\MonoIndication\MonoIndication\bin\WebMatrix.Data.dll
+D:\code\.NET\MonoLast\MonoIndication\MonoIndication\bin\WebMatrix.WebData.dll
+D:\code\.NET\MonoLast\MonoIndication\MonoIndication\bin\System.Data.SQLite.dll
+D:\code\.NET\MonoLast\MonoIndication\MonoIndication\bin\AutoMapper.xml
+D:\code\.NET\MonoLast\MonoIndication\MonoIndication\bin\Dapper.xml
+D:\code\.NET\MonoLast\MonoIndication\MonoIndication\bin\DBPortable.pdb
+D:\code\.NET\MonoLast\MonoIndication\MonoIndication\bin\Newtonsoft.Json.xml
+D:\code\.NET\MonoLast\MonoIndication\MonoIndication\bin\System.Net.Http.Formatting.xml
+D:\code\.NET\MonoLast\MonoIndication\MonoIndication\bin\System.Web.Helpers.xml
+D:\code\.NET\MonoLast\MonoIndication\MonoIndication\bin\System.Web.Http.xml
+D:\code\.NET\MonoLast\MonoIndication\MonoIndication\bin\System.Web.Http.WebHost.xml
+D:\code\.NET\MonoLast\MonoIndication\MonoIndication\bin\System.Web.Mvc.xml
+D:\code\.NET\MonoLast\MonoIndication\MonoIndication\bin\System.Web.Razor.xml
+D:\code\.NET\MonoLast\MonoIndication\MonoIndication\bin\System.Web.WebPages.xml
+D:\code\.NET\MonoLast\MonoIndication\MonoIndication\bin\System.Web.WebPages.Deployment.xml
+D:\code\.NET\MonoLast\MonoIndication\MonoIndication\bin\System.Web.WebPages.Razor.xml
+D:\code\.NET\MonoLast\MonoIndication\MonoIndication\bin\WebMatrix.Data.xml
+D:\code\.NET\MonoLast\MonoIndication\MonoIndication\bin\WebMatrix.WebData.xml
+D:\code\.NET\MonoLast\MonoIndication\MonoIndication\bin\ru\System.Net.Http.Formatting.resources.dll
+D:\code\.NET\MonoLast\MonoIndication\MonoIndication\bin\ru\System.Web.Helpers.resources.dll
+D:\code\.NET\MonoLast\MonoIndication\MonoIndication\bin\ru\System.Web.Http.resources.dll
+D:\code\.NET\MonoLast\MonoIndication\MonoIndication\bin\ru\System.Web.Http.WebHost.resources.dll
+D:\code\.NET\MonoLast\MonoIndication\MonoIndication\bin\ru\System.Web.Mvc.resources.dll
+D:\code\.NET\MonoLast\MonoIndication\MonoIndication\bin\ru\System.Web.Razor.resources.dll
+D:\code\.NET\MonoLast\MonoIndication\MonoIndication\bin\ru\System.Web.WebPages.resources.dll
+D:\code\.NET\MonoLast\MonoIndication\MonoIndication\bin\ru\System.Web.WebPages.Deployment.resources.dll
+D:\code\.NET\MonoLast\MonoIndication\MonoIndication\bin\ru\System.Web.WebPages.Razor.resources.dll
+D:\code\.NET\MonoLast\MonoIndication\MonoIndication\obj\Debug\MonoIndication.csprojResolveAssemblyReference.cache
+D:\code\.NET\MonoLast\MonoIndication\MonoIndication\obj\Debug\MonoIndication.dll
+D:\code\.NET\MonoLast\MonoIndication\MonoIndication\obj\Debug\MonoIndication.pdb
+D:\dev\vs\HomeWork\MonoIndication\MonoIndication\bin\WebMatrix.Data.dll
+D:\dev\vs\HomeWork\MonoIndication\MonoIndication\bin\WebMatrix.Data.xml
+D:\dev\vs\HomeWork\MonoIndication\MonoIndication\bin\WebMatrix.WebData.xml
+D:\code\.NET\MonoIndication\MonoIndication\bin\WebMatrix.Data.dll
+D:\code\.NET\MonoIndication\MonoIndication\bin\WebMatrix.Data.xml
+D:\code\.NET\MonoIndication\MonoIndication\bin\WebMatrix.WebData.xml
+D:\dev\vs\HomeWork\MonoIndication\MonoIndication\obj\Debug\MonoIndication.csprojResolveAssemblyReference.cache
+D:\dev\vs\HomeWork\MonoIndication\MonoIndication\bin\System.Data.SQLite.dll
+D:\dev\vs\HomeWork\MonoIndication\MonoIndication\bin\DBPortable.pdb
+D:\code\.NET\MonoIndication\MonoIndication\bin\DBPortable.dll
+D:\code\.NET\MonoIndication\MonoIndication\bin\DBPortable.pdb
+D:\dev\vs\HomeWork\MonoIndication\MonoIndication\bin\DBPortable.dll
+E:\dev\vs\Rogachev\MonoIndication\MonoIndication\bin\MonoIndication.dll.config
+E:\dev\vs\Rogachev\MonoIndication\MonoIndication\bin\MonoIndication.dll
+E:\dev\vs\Rogachev\MonoIndication\MonoIndication\bin\MonoIndication.pdb
+E:\dev\vs\Rogachev\MonoIndication\MonoIndication\bin\AutoMapper.dll
+E:\dev\vs\Rogachev\MonoIndication\MonoIndication\bin\DBPortable.dll
+E:\dev\vs\Rogachev\MonoIndication\MonoIndication\bin\Microsoft.Web.Infrastructure.dll
+E:\dev\vs\Rogachev\MonoIndication\MonoIndication\bin\Microsoft.Web.Mvc.FixedDisplayModes.dll
+E:\dev\vs\Rogachev\MonoIndication\MonoIndication\bin\Newtonsoft.Json.dll
+E:\dev\vs\Rogachev\MonoIndication\MonoIndication\bin\System.Data.SqlServerCe.dll
+E:\dev\vs\Rogachev\MonoIndication\MonoIndication\bin\System.Net.Http.Formatting.dll
+E:\dev\vs\Rogachev\MonoIndication\MonoIndication\bin\System.Web.Helpers.dll
+E:\dev\vs\Rogachev\MonoIndication\MonoIndication\bin\System.Web.Http.dll
+E:\dev\vs\Rogachev\MonoIndication\MonoIndication\bin\System.Web.Http.WebHost.dll
+E:\dev\vs\Rogachev\MonoIndication\MonoIndication\bin\System.Web.Mvc.dll
+E:\dev\vs\Rogachev\MonoIndication\MonoIndication\bin\System.Web.Razor.dll
+E:\dev\vs\Rogachev\MonoIndication\MonoIndication\bin\System.Web.WebPages.Deployment.dll
+E:\dev\vs\Rogachev\MonoIndication\MonoIndication\bin\System.Web.WebPages.dll
+E:\dev\vs\Rogachev\MonoIndication\MonoIndication\bin\System.Web.WebPages.Razor.dll
+E:\dev\vs\Rogachev\MonoIndication\MonoIndication\bin\WebActivator.dll
+E:\dev\vs\Rogachev\MonoIndication\MonoIndication\bin\WebMatrix.Data.dll
+E:\dev\vs\Rogachev\MonoIndication\MonoIndication\bin\WebMatrix.WebData.dll
+E:\dev\vs\Rogachev\MonoIndication\MonoIndication\bin\System.Data.SQLite.dll
+E:\dev\vs\Rogachev\MonoIndication\MonoIndication\bin\DBPortable.pdb
+E:\dev\vs\Rogachev\MonoIndication\MonoIndication\bin\AutoMapper.xml
+E:\dev\vs\Rogachev\MonoIndication\MonoIndication\bin\Newtonsoft.Json.xml
+E:\dev\vs\Rogachev\MonoIndication\MonoIndication\bin\System.Net.Http.Formatting.xml
+E:\dev\vs\Rogachev\MonoIndication\MonoIndication\bin\System.Web.Helpers.xml
+E:\dev\vs\Rogachev\MonoIndication\MonoIndication\bin\System.Web.Http.xml
+E:\dev\vs\Rogachev\MonoIndication\MonoIndication\bin\System.Web.Http.WebHost.xml
+E:\dev\vs\Rogachev\MonoIndication\MonoIndication\bin\System.Web.Mvc.xml
+E:\dev\vs\Rogachev\MonoIndication\MonoIndication\bin\System.Web.Razor.xml
+E:\dev\vs\Rogachev\MonoIndication\MonoIndication\bin\System.Web.WebPages.xml
+E:\dev\vs\Rogachev\MonoIndication\MonoIndication\bin\System.Web.WebPages.Deployment.xml
+E:\dev\vs\Rogachev\MonoIndication\MonoIndication\bin\System.Web.WebPages.Razor.xml
+E:\dev\vs\Rogachev\MonoIndication\MonoIndication\bin\WebMatrix.Data.xml
+E:\dev\vs\Rogachev\MonoIndication\MonoIndication\bin\WebMatrix.WebData.xml
+E:\dev\vs\Rogachev\MonoIndication\MonoIndication\bin\ru\System.Net.Http.Formatting.resources.dll
+E:\dev\vs\Rogachev\MonoIndication\MonoIndication\bin\ru\System.Web.Helpers.resources.dll
+E:\dev\vs\Rogachev\MonoIndication\MonoIndication\bin\ru\System.Web.Http.resources.dll
+E:\dev\vs\Rogachev\MonoIndication\MonoIndication\bin\ru\System.Web.Http.WebHost.resources.dll
+E:\dev\vs\Rogachev\MonoIndication\MonoIndication\bin\ru\System.Web.Mvc.resources.dll
+E:\dev\vs\Rogachev\MonoIndication\MonoIndication\bin\ru\System.Web.Razor.resources.dll
+E:\dev\vs\Rogachev\MonoIndication\MonoIndication\bin\ru\System.Web.WebPages.resources.dll
+E:\dev\vs\Rogachev\MonoIndication\MonoIndication\bin\ru\System.Web.WebPages.Deployment.resources.dll
+E:\dev\vs\Rogachev\MonoIndication\MonoIndication\bin\ru\System.Web.WebPages.Razor.resources.dll
+E:\dev\vs\Rogachev\MonoIndication\MonoIndication\obj\Debug\MonoIndication.csprojResolveAssemblyReference.cache
+E:\dev\vs\Rogachev\MonoIndication\MonoIndication\obj\Debug\MonoIndication.dll
+E:\dev\vs\Rogachev\MonoIndication\MonoIndication\obj\Debug\MonoIndication.pdb
+D:\code\.NET\Rogachev\MonoIndication\MonoIndication\bin\MonoIndication.dll.config
+D:\code\.NET\Rogachev\MonoIndication\MonoIndication\bin\MonoIndication.dll
+D:\code\.NET\Rogachev\MonoIndication\MonoIndication\bin\MonoIndication.pdb
+D:\code\.NET\Rogachev\MonoIndication\MonoIndication\bin\AutoMapper.dll
+D:\code\.NET\Rogachev\MonoIndication\MonoIndication\bin\DBPortable.dll
+D:\code\.NET\Rogachev\MonoIndication\MonoIndication\bin\Microsoft.Web.Infrastructure.dll
+D:\code\.NET\Rogachev\MonoIndication\MonoIndication\bin\Microsoft.Web.Mvc.FixedDisplayModes.dll
+D:\code\.NET\Rogachev\MonoIndication\MonoIndication\bin\Newtonsoft.Json.dll
+D:\code\.NET\Rogachev\MonoIndication\MonoIndication\bin\System.Data.SqlServerCe.dll
+D:\code\.NET\Rogachev\MonoIndication\MonoIndication\bin\System.Net.Http.Formatting.dll
+D:\code\.NET\Rogachev\MonoIndication\MonoIndication\bin\System.Web.Helpers.dll
+D:\code\.NET\Rogachev\MonoIndication\MonoIndication\bin\System.Web.Http.dll
+D:\code\.NET\Rogachev\MonoIndication\MonoIndication\bin\System.Web.Http.WebHost.dll
+D:\code\.NET\Rogachev\MonoIndication\MonoIndication\bin\System.Web.Mvc.dll
+D:\code\.NET\Rogachev\MonoIndication\MonoIndication\bin\System.Web.Razor.dll
+D:\code\.NET\Rogachev\MonoIndication\MonoIndication\bin\System.Web.WebPages.Deployment.dll
+D:\code\.NET\Rogachev\MonoIndication\MonoIndication\bin\System.Web.WebPages.dll
+D:\code\.NET\Rogachev\MonoIndication\MonoIndication\bin\System.Web.WebPages.Razor.dll
+D:\code\.NET\Rogachev\MonoIndication\MonoIndication\bin\WebActivator.dll
+D:\code\.NET\Rogachev\MonoIndication\MonoIndication\bin\WebMatrix.Data.dll
+D:\code\.NET\Rogachev\MonoIndication\MonoIndication\bin\WebMatrix.WebData.dll
+D:\code\.NET\Rogachev\MonoIndication\MonoIndication\bin\System.Data.SQLite.dll
+D:\code\.NET\Rogachev\MonoIndication\MonoIndication\bin\DBPortable.pdb
+D:\code\.NET\Rogachev\MonoIndication\MonoIndication\bin\AutoMapper.xml
+D:\code\.NET\Rogachev\MonoIndication\MonoIndication\bin\Newtonsoft.Json.xml
+D:\code\.NET\Rogachev\MonoIndication\MonoIndication\bin\System.Net.Http.Formatting.xml
+D:\code\.NET\Rogachev\MonoIndication\MonoIndication\bin\System.Web.Helpers.xml
+D:\code\.NET\Rogachev\MonoIndication\MonoIndication\bin\System.Web.Http.xml
+D:\code\.NET\Rogachev\MonoIndication\MonoIndication\bin\System.Web.Http.WebHost.xml
+D:\code\.NET\Rogachev\MonoIndication\MonoIndication\bin\System.Web.Mvc.xml
+D:\code\.NET\Rogachev\MonoIndication\MonoIndication\bin\System.Web.Razor.xml
+D:\code\.NET\Rogachev\MonoIndication\MonoIndication\bin\System.Web.WebPages.xml
+D:\code\.NET\Rogachev\MonoIndication\MonoIndication\bin\System.Web.WebPages.Deployment.xml
+D:\code\.NET\Rogachev\MonoIndication\MonoIndication\bin\System.Web.WebPages.Razor.xml
+D:\code\.NET\Rogachev\MonoIndication\MonoIndication\bin\WebMatrix.Data.xml
+D:\code\.NET\Rogachev\MonoIndication\MonoIndication\bin\WebMatrix.WebData.xml
+D:\code\.NET\Rogachev\MonoIndication\MonoIndication\bin\ru\System.Net.Http.Formatting.resources.dll
+D:\code\.NET\Rogachev\MonoIndication\MonoIndication\bin\ru\System.Web.Helpers.resources.dll
+D:\code\.NET\Rogachev\MonoIndication\MonoIndication\bin\ru\System.Web.Http.resources.dll
+D:\code\.NET\Rogachev\MonoIndication\MonoIndication\bin\ru\System.Web.Http.WebHost.resources.dll
+D:\code\.NET\Rogachev\MonoIndication\MonoIndication\bin\ru\System.Web.Mvc.resources.dll
+D:\code\.NET\Rogachev\MonoIndication\MonoIndication\bin\ru\System.Web.Razor.resources.dll
+D:\code\.NET\Rogachev\MonoIndication\MonoIndication\bin\ru\System.Web.WebPages.resources.dll
+D:\code\.NET\Rogachev\MonoIndication\MonoIndication\bin\ru\System.Web.WebPages.Deployment.resources.dll
+D:\code\.NET\Rogachev\MonoIndication\MonoIndication\bin\ru\System.Web.WebPages.Razor.resources.dll
+D:\code\.NET\Rogachev\MonoIndication\MonoIndication\obj\Debug\MonoIndication.csprojResolveAssemblyReference.cache
+D:\code\.NET\Rogachev\MonoIndication\MonoIndication\obj\Debug\MonoIndication.dll
+D:\code\.NET\Rogachev\MonoIndication\MonoIndication\obj\Debug\MonoIndication.pdb
+E:\dev\vs\Rogachev\MonoIndication\MonoIndication\bin\DocumentFormat.OpenXml.dll
+E:\dev\vs\Rogachev\MonoIndication\MonoIndication\bin\TemplateEngine.Docx.dll
+D:\code\.NET\Rogachev\MonoIndication\MonoIndication\bin\DocumentFormat.OpenXml.dll
+D:\code\.NET\Rogachev\MonoIndication\MonoIndication\bin\TemplateEngine.Docx.dll
+D:\code\.NET\Rogachev\MonoIndication\MonoIndication\bin\Static\Acts\monthact.docx
+E:\dev\vs\Rogachev\MonoIndication\MonoIndication\bin\Static\Acts\monthact.docx

@@ -1,0 +1,236 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/MainLayout.cshtml";
+}
+
+@section Css{
+  <link rel="stylesheet" type="text/css" href='@Url.Content("~/js/autocompleate/jquery-ui.min.css")'>
+    <style>
+        html, body {
+            background-color: #F0EDE4;
+        }
+    </style>
+}
+
+<div id="app" data-ng-app="app" data-ng-init="init()" data-ng-controller="MarkerController">
+    <div id="mapcontainer">
+       
+        
+            <table class="table table-hover table-bordered standartFont" style="background-color: #fff">
+                <thead>
+                    <tr>
+                        <th data-ng-click="headerSortClick('MarkerId')" style="cursor:pointer" title="Нажмите для изменения сортировки записей">Id</th>
+                        <th data-ng-click="headerSortClick('Address')" style="cursor:pointer" title="Нажмите для изменения сортировки записей">Адрес</th>
+                        <th data-ng-click="headerSortClick('MarkerType')" style="cursor:pointer" title="Нажмите для изменения сортировки записей">№ ЖЭУ</th>
+                        <th>Описание</th>
+                        <th data-ng-click="headerSortClick('Phone')" style="cursor:pointer" title="Нажмите для изменения сортировки записей">№ тел.</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-ng-repeat="marker in markers | orderBy:['Px',sortField]:reverseSort" data-ng-class="{'rowselected':marker==selectedMarker}" data-ng-click="select(marker,$event)" id="tr{{marker.MarkerId}}">
+                        <td data-ng-bind="marker.MarkerId" style="font-size:12px" class="text-muted"></td>
+                        <td data-ng-bind="marker.Address"></td>
+                        <td data-ng-bind="marker.MarkerType"></td>
+                        <td data-ng-bind="marker.Description" class="text-muted"></td>
+                        <td data-ng-bind="marker.Phone" class="text-success" style="font-family:monospace"></td>
+                    </tr>
+                </tbody>
+                
+            </table>
+        
+    </div>
+
+    <div id="rightpanel">
+        <div class="col-md-12">
+            @Html.Partial("LoginInfoPanel")
+        </div>
+        
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <i class="glyphicon glyphicon-search"></i> ПОИСК ПО АДРЕСУ
+                </div>
+
+                <div class="panel-body">
+                    <input id="searchInput" data-auto-complete="" type="text" data-ng-model="searchCriteria" class="form-control standartFont" placeholder="Адрес" />
+
+                </div>
+            </div>
+       </div>
+
+        <div class="col-md-12">
+           <div class="panel panel-primary">
+               <div class="panel-body">
+                   <table style="border:none; width: 100%">
+                       <tr>
+                          
+                           <td title="Опрос счетчиков посредством GSM">
+                               <a href='@Url.Action("RequestMain", "Request")' target="_self" class="btn btn-sm btn-default">
+                                   <span class="glyphicon glyphicon-bell"></span> Опрос
+                               </a>
+                           </td>
+                           <td></td>
+                           <td style="text-align: right" title="Журнал последних показаний на объектах">
+                               <a href='@Url.Action("Journal","Journal")' target="_self" class="btn btn-sm btn-default">
+                                   <span class="glyphicon glyphicon-list-alt"></span> Журнал
+                               </a>
+                           </td>
+                       </tr>
+                   </table>
+                   
+               </div>
+            </div>
+            
+        </div>
+
+        <div class="col-md-12" data-ng-if="selectedMarker!=null">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <i class="glyphicon glyphicon-list-alt"></i> 
+                    Информация по объекту
+                </div>
+
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-3 col-sm-3 col-xs-3">
+                            № ЖЭУ:
+                        </div>
+                        <div class="col-md-8 col-sm-8 col-xs-8">
+                            <div class="field" data-ng-bind="selectedMarker.MarkerType"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 col-sm-3 col-xs-3">
+                            АДРЕС:
+                        </div>
+                        <div class="col-md-8 col-sm-8 col-xs-8">
+                            <div class="field" data-ng-bind="selectedMarker.Address"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 col-sm-3 col-xs-3">
+                            № SIM:
+                        </div>
+                        <div class="col-md-8 col-sm-8 col-xs-8">
+                            <div class="field" data-ng-bind="selectedMarker.Phone"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 col-sm-3 col-xs-3">
+                            Описание:
+                        </div>
+                        <div class="col-md-8 col-sm-8 col-xs-8">
+                            <div class="field" data-ng-bind="selectedMarker.Description"></div>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-4 col-sm-6 col-xs-6" style="margin-bottom: 5px">
+                            <button type="button" class="btn btn-sm btn-default" data-ng-click="edit()"><span class="glyphicon glyphicon-edit"></span>&nbsp;Редакт</button>
+                        </div>
+                        <div class="col-md-4 col-sm-6 col-xs-6" style="margin-bottom: 5px">
+                            
+                            <button type="button" class="btn btn-sm btn-default" data-ng-click="details()"><span class="glyphicon glyphicon-question-sign"></span>&nbsp;Подробн</button>
+                        </div>
+                        <div class="col-md-4 col-sm-6" style="margin-bottom: 5px">
+                            <button type="button" class="btn btn-sm btn-default" data-ng-click="deleteMark(selectedMarker)"><span class="glyphicon glyphicon-remove"></span>&nbsp;
+                                Удал</button>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12" style="margin-bottom: 10px">
+            <button type="button" class="btn btn-success" data-ng-show="!flagEdit" data-ng-click="add()" style="width:100%">Добавить новый прибор</button>
+        </div>
+
+        <!-- Форма добавления -->
+        <div class="col-md-12" data-ng-show="flagEdit">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <i class="glyphicon glyphicon-pencil"></i> 
+                    Сведения об объекте
+                </div>
+
+                <div class="panel-body">
+                    <form name="editform" data-ng-submit="submitEditForm()" novalidate>
+                        <div class="row">
+                            <div class="col-md-3 col-sm-3 col-xs-3">
+                                № ЖЭУ:
+                            </div>
+                            <div class="col-md-8 col-sm-8 col-xs-8">
+                                <input name="MarkerType" required="required" title="Номер ЖЭУ (цифр)" type="number" data-ng-model="editMarker.MarkerType" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 col-sm-3 col-xs-3">
+                                АДРЕС:
+                            </div>
+                            <div class="col-md-8 col-sm-8 col-xs-8">
+                                <textarea data-ng-model="editMarker.Address" title="Адресс метки - должен быть заполнен (не более 100 символов)" name="address" style="width:100%" required="required" data-ng-maxlength="100"></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 col-sm-3 col-xs-3">
+                                № SIM:
+                            </div>
+                            <div class="col-md-8 col-sm-8 col-xs-8">
+                                <input style="width:100%" required="required" title="Номер телефона - обязательное поле" name="phone" data-ng-model="editMarker.Phone" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 col-sm-3 col-xs-3">
+                                Описание:
+                            </div>
+                            <div class="col-md-8 col-sm-8 col-xs-8">
+                                <input style="width:100%" title="Описание счетчика" name="Description" data-ng-model="editMarker.Description" />
+                            </div>
+                        </div>
+                       
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-6">
+                                <button type="submit" style="margin-bottom: 5px" data-ng-disabled="editform.$invalid" class="btn btn-success">Сохранить</button>
+                            </div>
+                            <div class="col-md-6">
+                                <button type="button" style="margin-bottom: 5px" data-ng-click="cancelAdd()" class="btn btn-danger">Отмена</button>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- конец форма добавления -->
+
+    </div>
+
+      
+
+</div>
+
+
+@section Scripts{
+    <script type="text/javascript" src='@Url.Content("~/js/autocompleate/jquery-ui.min.js")'></script>
+    <script type="text/javascript" src='@Url.Content("~/js/angular/angular.min.js")'></script>
+    <script type="text/javascript" src='@Url.Content("~/js/angular/app.js")'></script>
+    <script type="text/javascript" src='@Url.Content("~/js/angular/service.js")'></script>
+    <script type="text/javascript" src='@Url.Content("~/js/angular/directive.js")'></script>
+    
+<script type="text/javascript">
+        $(function() {
+
+            $(window).resize(function() {
+                $(".ui-autocomplete").css('display', 'none');
+            });
+
+            $("#rightpanel").scroll(function () {
+                $(".ui-autocomplete").css('display', 'none');
+            });
+        });
+    </script>
+
+}

@@ -1,0 +1,120 @@
+﻿@model DBPortable.KonturItem
+
+<form name="EditKontur" id="EditKontur" method="POST" action='@Url.Action("EditKonturs", "Itp")'>
+    <table class="table" style="width: 100%; margin-bottom:5px; font-size:18px">
+        <tr>
+            <td>
+                № sim
+            </td>
+            <td>
+                <input type="text" readonly="readonly" class="form-control text-center" style="font-size:18px" name="phone" id="phone_kontur" value='@Model.phone' data-val="true" data-val-required="Значение не заполнено" />
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+                № контура
+            </td>
+            <td>
+                <input type="text" readonly="readonly" class="form-control text-center" name="N" id="N_kontur" style="font-size:18px" value='@Model.N.ToString()' data-val="true" data-val-number="Значение должно быть целое" data-val-required="Значение не заполнено" />
+                @Html.ValidationMessageFor(x => x.N)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Наименование контура <br />(отоп, гвс, общ)
+            </td>
+            <td>
+                <input type="text" class="form-control text-center" name="Name" id="Name_kontur" style="font-size:18px" value='@Model.Name' data-val="true" data-val-required="Значение не заполнено" />
+                @Html.ValidationMessageFor(x => x.Name)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Тип счетчика
+            </td>
+            <td>
+                <input type="text" class="form-control text-center" name="TipSh" id="TipSh_kontur" style="font-size:18px" value='@Model.TipSh' />
+                @Html.ValidationMessageFor(x => x.TipSh)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Норма расхода воды (м<sup>3</sup> в час)
+            </td>
+            <td>
+                <input type="text" class="form-control text-center" name="vNorma" id="vNorma_kontur" style="font-size:18px" value='@Model.VNorma' />
+                @Html.ValidationMessageFor(x => x.VNorma)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Зав № счетчика
+            </td>
+            <td>
+                <input type="text" class="form-control text-center" name="ZavN" id="ZavN_kontur" style="font-size:18px" value='@Model.ZavN' />
+                @Html.ValidationMessageFor(x => x.ZavN)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                № счетчика <br />в энергосбыте
+            </td>
+            <td>
+                <input type="text" class="form-control text-center" name="KodSchSbut" id="KodSchSbut_kontur" style="font-size:18px" value='@Model.KodSchSbut' />
+                @Html.ValidationMessageFor(x => x.KodSchSbut)
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                @Html.ValidationSummary(true)
+            </td>
+        </tr>
+    </table>
+    <input type="submit" class="btn btn-success pull-right" value="Сохранить изменения" />
+    <div class="text-muted" style="margin-top:5px"><span class="text-danger">Примечание:</span> <strong>"Тип счетч"</strong>, <strong>"№ счетчика в энергосбыте"</strong> и <strong>"Зав №"</strong> для контура обратной магистали (1,3,5 и тд) задавать не обяз. Значение берется из контура подающей магистрали.</div>
+
+</form>
+
+
+
+
+
+
+<script type="text/javascript">
+    $(function () {
+        $.validator.unobtrusive.parse($("#EditKontur"));
+
+        $("form[name='EditKontur']").submit(
+            function (event) {
+
+                var valid = $(this).valid();
+
+                if (valid) {
+                    $("#modalWindow").modal('hide');
+
+                    $.ajax({
+                        url: $(this).attr('action'),
+                        type: $(this).attr('method'),
+                        data: $(this).serialize(),
+                        beforeSend: function () {
+                            showLoading(true);
+                        },
+                        success: function (response) {
+                            createModal("Редактирование контура", response, "");
+                        },
+                        complete: function () {
+                            showLoading(false);
+                        },
+                        error: function (xhr, ajaxOptions, thrownError) {
+                            alert('Ошибка отправки запроса!');
+                            console.log(xhr.responseText);
+                        }
+                    });
+                }
+                if (event.preventDefault) event.preventDefault();
+                event.returnValue = false;
+                return false;
+            });
+    });
+</script>

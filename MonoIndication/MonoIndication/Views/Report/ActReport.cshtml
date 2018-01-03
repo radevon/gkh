@@ -1,0 +1,180 @@
+﻿@model MonoIndication.ActForm
+
+@{
+    ViewBag.Title = "Составление акта по потреблению";
+    Layout = "~/Views/Shared/MainLayout.cshtml";
+}
+
+@section Css{
+    <link rel="stylesheet" type="text/css" href='@Url.Content("~/css/bootstrap-datetimepicker.css")'>
+    <style>
+        body {
+            background-color: #f3f3f3;
+        }
+    </style>
+}
+
+@Html.Partial("topmenu")
+
+@using (Html.BeginForm())
+    {
+    @Html.AntiForgeryToken()
+    
+<div class="container" style="margin-top: 65px">
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <h2 class="text-center">Акт приемки-передачи тепловой энергии</h2>
+        </div>
+
+    </div>
+    <div class="row well well-sm">
+        <div class="col-md-2 col-sm-4 col-xs-5">
+            <span class="LabelDefault">Организация:</span>
+        </div>
+        <div class="col-md-10 col-sm-8 col-xs-7">
+            @Html.TextBoxFor(x => x.NameOrganization, new { @class = "form-control" })
+        </div>
+    </div>
+        <div class="row well well-sm">
+            <div class="col-md-2 col-sm-4 col-xs-5">
+                <span class="LabelDefault">Адрес объекта:</span>
+            </div>
+            <div class="col-md-10 col-sm-8 col-xs-7">
+                <span class="ValueDefault" style="font-size:18px">@Model.Address</span>
+            </div>
+            <input type="hidden" name="Phone" value="@Model.Phone">
+            <input type="hidden" name="Address" value="@Model.Address">
+        </div>
+        <div class="row  well well-sm">
+            <div class="col-md-2 col-sm-3 col-xs-3">
+                <span class="LabelDefault">Отчет. нач. дата:</span>
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-3">
+                @Html.TextBoxFor(x => x.dateFrom, new { @class = "form-control ValueDefault" })
+                @Html.ValidationMessageFor(model => model.dateFrom)
+            </div>
+            <div class="col-md-2 col-sm-3 col-xs-3">
+                <span class="LabelDefault">Отчет. кон. дата:</span>
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-3">
+                @Html.TextBoxFor(x => x.dateTo, new { @class = "form-control ValueDefault" })
+                @Html.ValidationMessageFor(model => model.dateTo)
+            </div>
+        </div>
+        <div class="row  well well-sm">
+            <div class="col-md-2 col-sm-3 col-xs-3">
+                <span class="LabelDefault">№ акта:</span>
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-3">
+                @Html.TextBoxFor(x => x.ActNum, new { @class = "form-control ValueDefault" })
+                @Html.ValidationMessageFor(model => model.ActNum)
+            </div>
+            <div class="col-md-2 col-sm-3 col-xs-3">
+                <span class="LabelDefault">№ договора:</span>
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-3">
+                @Html.TextBoxFor(x => x.DogNum, new { @class = "form-control ValueDefault" })
+                @Html.ValidationMessageFor(model => model.DogNum)
+            </div>
+        </div>
+        <div class="row  well well-sm">
+            <div class="col-md-2 col-sm-3 col-xs-3">
+                <span class="LabelDefault">Должн. поставщика:</span>
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-3">
+                @Html.TextBoxFor(x => x.DolgnPost, new { @class = "form-control ValueDefault" })
+                @Html.ValidationMessageFor(model => model.DolgnPost)
+            </div>
+            <div class="col-md-2 col-sm-3 col-xs-3">
+                <span class="LabelDefault">ФИО поставщика:</span>
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-3">
+                @Html.TextBoxFor(x => x.FioPost, new { @class = "form-control ValueDefault" })
+                @Html.ValidationMessageFor(model => model.FioPost)
+            </div>
+        </div>
+        <div class="row  well well-sm">
+            <div class="col-md-2 col-sm-3 col-xs-3">
+                <span class="LabelDefault">Должн. потребителя:</span>
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-3">
+                @Html.TextBoxFor(x => x.DolgnUser, new { @class = "form-control ValueDefault" })
+                @Html.ValidationMessageFor(model => model.DolgnUser)
+            </div>
+            <div class="col-md-2 col-sm-3 col-xs-3">
+                <span class="LabelDefault">ФИО потребителя:</span>
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-3">
+                @Html.TextBoxFor(x => x.FioUser, new { @class = "form-control ValueDefault" })
+                @Html.ValidationMessageFor(model => model.FioUser)
+            </div>
+        </div>
+        <div class="row  well well-sm">
+            <div class="col-md-2 col-sm-3 col-xs-3">
+                <span class="LabelDefault">тел. для справок:</span>
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-3">
+                @Html.TextBoxFor(x => x.PhoneUser, new { @class = "form-control ValueDefault" })
+                @Html.ValidationMessageFor(model => model.PhoneUser)
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-xs-12 col-sm-12">
+                @Html.ValidationSummary(true)
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 col-xs-12 col-sm-12 text-right">
+                <input type="submit" class="btn btn-lg btn-default" value="Составить отчет" />
+            </div>
+        </div>
+
+
+
+    </div>
+    }
+
+@section Scripts {
+
+    <script src='@Url.Content("~/js/jqueryval/jquery.validate.min.js")'></script>
+    <script src='@Url.Content("~/js/jqueryval/jquery.validate.unobtrusive.min.js")'></script>
+
+    <script type="text/javascript" src='@Url.Content("~/js/moment-with-locales.min.js")'></script>
+    <script type="text/javascript" src='@Url.Content("~/js/bootstrap-datetimepicker.js")'></script>
+
+    <script type="text/javascript">
+        $(function () {
+            $("#dateFrom").datetimepicker({
+                inline: false,
+                locale: 'ru',
+                sideBySide: true,
+                defaultDate: moment().subtract(30, 'd'),
+                maxDate: new Date(),
+                format: 'DD.MM.YYYY'
+            });
+
+            $("#dateTo").datetimepicker({
+                inline: false,
+                locale: 'ru',
+                sideBySide: true,
+                defaultDate: new Date(),
+                //minDate: moment(),
+                maxDate: new Date(),
+                format: 'DD.MM.YYYY'
+            });
+
+            $.validator.addMethod('date',
+            function (value, element) {
+                var isok = true;
+                try {
+                    isok = moment(value, "dd.MM.yyyy").isValid();
+                }
+                catch (err) {
+                    isok = false;
+                }
+                return isok;
+            });
+        });
+    </script>
+}

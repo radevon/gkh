@@ -1,0 +1,97 @@
+﻿<nav class="navbar navbar-default navbar-fixed-top navcustom" role="navigation">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a href='@Url.Action("Index","Initialize")'>
+                        <span class="glyphicon glyphicon-map-marker"></span>
+                        Список объектов
+                    </a>
+                </li>
+                <li><a href='@Url.Action("Journal","Journal")'>
+                        <span class="glyphicon glyphicon-book"></span>
+                        Журнал показаний
+                    </a>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <span class="glyphicon glyphicon-list-alt"></span>&nbsp;Отчёты <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                       <li><a href='@Url.Action("ReportBy2Dates", "Report")'>Отчет по 2 датам</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href='@Url.Action("RequestMain", "Request")'>
+                        <span class="glyphicon glyphicon-bell"></span>
+                        Опрос объектов
+                    </a>
+                </li>
+              
+               
+            </ul>
+            
+            <ul class="nav navbar-nav navbar-right">
+                @if (Roles.IsUserInRole("administrators"))
+                {
+                    <li><a href='@Url.Action("Settings","Admin")'>Админка</a></li>
+                }
+                
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <span class="glyphicon glyphicon-user"></span>&nbsp;Аккаунт <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <div style="padding: 3px 20px">@User.Identity.Name</div>
+                        </li>
+                        <li class="divider"></li>
+                        <li><a href='@Url.Action("Logout","Account")'>Выход</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+</nav>
+
+<script type="text/javascript">
+    $(function () {
+        $(document).mousemove(function (event) {
+            try {
+                var scrolled = $(document).scrollTop();
+                if (scrolled > 40) {
+
+                    if (event.pageY > scrolled + 30) {
+                        $('nav.navbar').css('margin-top', '-50px');
+                    } else {
+                        $('nav.navbar').css('margin-top', '0px');
+                    }
+                } else {
+                    $('nav.navbar').css('margin-top', '0px');
+                }
+            } catch (e) {
+                $('nav.navbar').css('margin-top', '0px');
+            }
+
+        });
+
+        $("nav.navbar").mousemove(function (event) {
+            event.stopPropagation();
+        });
+        
+        
+    });
+</script>

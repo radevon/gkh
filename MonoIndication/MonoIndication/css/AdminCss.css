@@ -1,0 +1,41 @@
+﻿.navbar-fixed-left {
+  width: 210px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  border-radius: 0;
+  height: 100%;
+  z-index: 100;
+}
+
+.navbar-fixed-left .navbar-nav > li {
+  float: none;  /* Cancel default li float: left */
+  width: 210px;
+}
+
+.navbar-fixed-left + .container {
+  padding-left: 230px;
+}
+
+/* On using dropdown menu (To right shift popuped) */
+.navbar-fixed-left .navbar-nav > li > .dropdown-menu {
+  margin-top: -50px;
+  margin-left: 210px;
+}
+
+
+#AdminContainer {
+    position: absolute;
+    left: 210px;
+    top: 0px;
+    height: 100%;
+    padding: 5px 30px;
+    width:60%;
+    min-width:400px;
+}
+
+#editDbContainer{
+    margin:10px;
+    padding:10px;
+    clear:both;
+}

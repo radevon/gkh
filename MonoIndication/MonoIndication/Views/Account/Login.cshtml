@@ -1,0 +1,61 @@
+﻿@model MonoIndication.UserLogin
+
+@{
+    ViewBag.Title = "Авторизация";
+    Layout = "~/Views/Shared/MainLayout.cshtml";
+}
+
+
+
+<div style='height: 100%; background-image: url(@Url.Content("~/img/logo_system.jpg")); background-repeat: no-repeat; background-position: center; background-size: 75%'>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="text-center titleItp">
+                УЧЁТ ПОКАЗАНИЙ ИТП
+            </h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h2 class="text-danger" style="display:inline-block; background-color: rgba(255,255,255,0.95);">Для работы с программой необходима авторизация</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4 col-sm-8 col-sm-offset-2 col-xs-8 col-xs-offset-2" >
+            
+
+                @using (Html.BeginForm("Login","Account",FormMethod.Post,new {@class="form-horizontal loginform"})) {
+                
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.UserName)
+                        @Html.TextBoxFor(model=>model.UserName,new {@class="form-control"})
+                        @Html.ValidationMessageFor(model => model.UserName)
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Password)
+                        @Html.PasswordFor(model=>model.Password,new {@class="form-control"})
+                        @Html.ValidationMessageFor(model => model.Password)
+                    </div>
+                    
+                    <div class="form-group text-center">
+                        <input type="submit" class="btn btn-default btn-lg" value="Вход" />
+                    </div>
+                
+                    @Html.ValidationSummary(true)
+
+                }
+            </div>
+        
+        </div>
+   
+</div>
+    
+    </div>
+
+@section Scripts
+{
+    <script src='@Url.Content("~/js/jqueryval/jquery.validate.min.js")'></script>
+    <script src='@Url.Content("~/js/jqueryval/jquery.validate.unobtrusive.min.js")'></script>
+}

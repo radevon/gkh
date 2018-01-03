@@ -1,0 +1,550 @@
+html, body {
+    margin: 0 0;
+    padding: 0 0;
+    height: 100%;
+    font-family: "Times New Roman";
+}
+
+.titleItp {
+    font-size:36px;
+    color:#6fb6de;
+    text-shadow: 2px 1px 0px #ac6161;
+}
+
+#message{
+    font-size:16px;
+    padding:5px;
+}
+
+/* jquery validate авторизация */
+
+.validation-summary-errors, .field-validation-error  {
+            font-size: 12px;
+            color: #f08080;
+}
+
+.input-validation-error {
+            border: 1px solid #f08080;
+}
+
+.font10 {
+    font-size: 10px;
+}
+
+.loginform {
+        background-color: #ffffff;
+        background-color: rgba(255,255,255,0.95); 
+        border: 1px solid lightgrey; 
+        padding: 5px 25px;
+        -ms-border-radius:10px;
+        border-radius:10px
+}
+
+.createform {
+    background-color: #ffffff;
+    background-color: rgba(255,255,255,.6); 
+    border: 1px solid lightgrey; 
+    padding: 5px 25px;
+    -ms-border-radius:10px;
+    border-radius: 10px;
+    max-width: 400px;
+}
+
+.marker {
+    width: 30px;
+    height: 39px;
+    background-color: transparent;
+    background-image: url(../img/metka.png);
+    background-repeat: no-repeat;
+    background-position: top center;
+    border-radius: 10%;
+    position: absolute;
+    cursor: pointer;
+    background-size: 100%;
+}
+
+.marker.selected {
+        background-image: url(../img/metka_selected.png);
+    }
+
+.rowselected {
+    background-color: #87ceeb !important;
+    color: #ffffff;
+}
+
+.marker.add {
+        background-image: url(../img/metka_edit.png);
+    }
+
+.marker:hover {
+    opacity: 0.6;
+}
+
+.field {
+    color: #F56334;
+    font-weight: bold;
+}
+
+.value {
+    color: #E9788C;
+    font-size: 22px;
+    font-family: monospace;
+    font-weight: bold;
+}
+
+.label_table {
+    font-size: 18px;
+    color: #428BCA;
+}
+
+#mapcontainer table tr td{
+    padding:3px;
+}
+
+#mapcontainer table thead tr{
+    background-color:#f5f5f5;
+}
+
+.standartFont {
+    font-size: 16px;
+}
+
+#backgrounding {
+    top: 0;
+    left: 0;
+    z-index: 134000;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    background-color: #8fbc8f;
+    background-image: url(../img/45.gif);
+    background-position: center center;
+    background-repeat: no-repeat;
+    -ms-opacity: 0.1;
+    opacity: 0.1;
+    filter: alpha(opacity=10);
+    display: none;
+}
+
+#mapcontainer {
+    width: 70%;
+    height: 100%;
+    overflow: auto;
+    position: absolute;
+    left: 0;
+    background-color: #F0EDE4;
+}
+
+#map {
+    position: absolute;
+    border: 1px dashed gray;
+    background-repeat:no-repeat;
+}
+
+.dim{
+    font-size:9px;
+    color:#575757;
+}
+
+.tableKontur tr td{
+    padding:2px !important;
+}
+
+#searchInput {
+    min-height: 2vw;
+}
+
+#rightpanel {
+    width: 30%;
+    position: absolute;
+    right: 0;
+    background-color: #eee;
+    padding: 5px;
+    height: 100%;
+    overflow-y: auto;
+    font-size: 1.3vw;
+}
+
+    #rightpanel .btn {
+        font-size: 1.2vw;
+    }
+
+#rightpanel .panel-body{
+    padding:7px;
+}
+
+
+.navcustom {
+    border-color: #6B9ECA;
+    background-color: #fff;
+    -moz-transition: margin 0.5s ease-in-out 0.1s;
+    -o-transition: margin 0.5s ease-in-out 0.1s;
+    -webkit-transition: margin 0.5s ease-in-out 0.1s;
+    transition: margin 0.5s ease-in-out 0.1s;
+}
+
+#modalContent {
+    min-height: 10vh;
+    max-height: 50vh;
+    overflow: auto;
+}
+
+input.ng-invalid, textarea.ng-invalid {
+    border: 1px solid red;
+}
+
+input.ng-valid textarea.ng-valid {
+    border: 1px solid green;
+}
+
+form[name='editform'] .row {
+    margin-bottom: 5px;
+}
+
+#date0, #date1, #date2, #date3, #date4, #date5, #date6, #date7, #date8, #date9, #date10, #date11 {
+    font-size:13px;
+    border:1px solid lightgray;
+}
+
+.ui-menu .ui-menu-item-wrapper {
+    font-size: 1.1vw;
+}
+
+.ui-autocomplete{
+    max-height:50vh;
+    overflow-y:auto;
+}
+
+/* ИТП страница*/
+
+#waitingDiv {
+    height: 25px;
+    background-image: url(../img/loading.gif);
+    background-repeat: no-repeat;
+    background-position: center top;
+    display: none;
+}
+
+.datepickercustom {
+    border: 1px solid lightblue;
+    background-color: #fcfffe;
+    border-radius: 5px;
+    box-shadow: 1px 2px 3px 0px lightblue;
+    margin: 5px;
+}
+
+.addressInfo{
+    color: #eb6051;
+    font-size:20px;
+}
+
+.well {
+    background-color: #fff;
+    padding:15px;
+}
+
+#headerItp {
+    background-color: #fdfdff;
+    background-image: url(../img/schema_itp_03.png);
+    background-attachment: fixed;
+    background-position: center top;
+    background-repeat: no-repeat;
+    height: 300px;
+}
+
+.buttonLarge {
+    margin: 15px 5px;
+    font-size: 28px;
+    padding: 10px;
+}
+
+.labeldate {
+    font-size: 45px;
+    color: #7D99A4;
+}
+
+#ReportContainer {
+    min-height: 200px;
+}
+
+.reportItptable,  .reportItpsvod {
+    background-color: #fff;
+    color: #575757;
+}
+
+.reportItptable pre {
+    font-size: inherit;
+    margin: 1px;
+    padding: 1px;
+    font-family: inherit;
+    color: #4169a8;
+    background-color: #fefefe;
+}
+
+
+.reportItptable thead, .reportItpsvod thead {
+    color: #717171;
+   
+}
+
+.reportItptable thead tr:nth-of-type(3) {
+     background-color: #98a1aa;
+    color: #ffffff;
+}
+
+.reportItptable thead tr th, .reportItpsvod thead tr th {
+    vertical-align: middle;
+    text-align: center;
+}
+
+.corrected {
+    text-decoration: red underline;
+    
+}
+
+.reportItptable > thead > tr > th, .reportItptable > thead > tr > td, 
+.reportItptable > tbody > tr > th, .reportItptable > tbody > tr > td,
+.reportItptable > tfoot > tr > th, .reportItptable > tfoot > tr > td {
+    padding: 2px;
+}
+
+#tableCorrectInfo > thead > tr > th, #tableCorrectInfo > thead > tr > td, 
+#tableCorrectInfo > tbody > tr > th, #tableCorrectInfo > tbody > tr > td,
+#tableCorrectInfo > tfoot > tr > th, #tableCorrectInfo > tfoot > tr > td {
+    padding: 2px;
+}
+
+.tableJournal {
+    font-size: 12px;
+}
+
+.tableJournal thead {
+    background-color: #71ACDB;
+    color: white;
+}
+
+.tableJournal thead tr th a {
+    color: #ffffff;
+    }
+
+.tableJournal tbody {
+    color: #5E5F5E;
+}
+
+
+.tableJournal> tbody> tr> td:first-child {
+    color: #6A97C8;
+    /*font-size: 11px;*/
+    font-weight: bold;
+}
+
+.tableJournal > thead > tr > th, .tableJournal > thead > tr > td, 
+.tableJournal > tbody > tr > th, .tableJournal > tbody > tr > td,
+.tableJournal > tfoot > tr > th, .tableJournal > tfoot > tr > td {
+    padding: 5px;
+}
+
+.digitInfo {
+    font-size: 22px;
+    color:#fc8d65;
+}
+
+.reportItptable, .reportItpsvod{
+    font-family:monospace;
+}
+
+#tableCorrectInfo {
+    border-collapse: separate;
+    margin-bottom: 5px;
+}
+
+#tableCorrectInfo td:first-child {
+    color: #808080;
+    font-size: 14px;
+}
+
+
+
+.rotate{
+    transform:rotate(45deg);
+}
+
+
+#chartTable table {
+    font-size: 18px;
+    color: #575757;
+}
+
+#modalWindow .modal-body, #modalWindow .modal-header, #modalWindow .modal-footer{
+    padding: 10px 15px;
+}
+
+/* iconic - для svg иконки сигнала подключения*/
+
+.iconic{
+    vertical-align: middle;
+			/*Strong signal*/
+}
+
+.iconic-signal.iconic-signal-strong .iconic-signal-base {
+	fill:#569e26;
+}
+
+.iconic-signal.iconic-signal-strong .iconic-signal-wave * {
+	stroke:#569e26;
+}
+		 
+		/*Medium signal*/
+.iconic-signal.iconic-signal-medium .iconic-signal-base {
+    fill:#efc411;
+}
+
+.iconic-signal.iconic-signal-medium .iconic-signal-wave * {
+    stroke:#efc411;
+}
+.iconic-signal.iconic-signal-medium .iconic-signal-wave-outer {
+    opacity:0.3;
+    stroke-width:1;
+}
+		 
+		/*Weak signal*/
+.iconic-signal.iconic-signal-weak .iconic-signal-base {
+    fill:#b52808;
+}
+.iconic-signal.iconic-signal-weak .iconic-signal-wave * {
+    stroke:#b52808;
+}
+.iconic-signal.iconic-signal-weak .iconic-signal-wave-outer ,
+.iconic-signal.iconic-signal-weak .iconic-signal-wave-middle {
+    opacity:0.3;
+    stroke-width:1;
+}
+		 
+		/*No signal*/
+.iconic-signal.iconic-signal-none .iconic-signal-base {
+    fill:#848484;
+}
+.iconic-signal.iconic-signal-none .iconic-signal-wave * {
+    stroke:#848484;
+    opacity:0.3;
+    stroke-width:1;
+}
+
+#EventInfo {
+    font-size: 12px;
+}
+
+#EventInfo.panel {
+    margin-bottom: 3px;
+}
+
+
+#EventInfo>.panel-heading,#EventInfo>.panel-body {
+    padding: 5px 10px;
+}
+
+.LabelDefault{
+    font-size:16px;
+    color:#575353;
+    text-decoration:underline;
+}
+
+.ValueDefault{
+    font-size:18px;
+    color:#7a7a7a;
+}
+
+.footer_fixed{
+    position:fixed;
+    bottom:0px;
+    width:100%;
+    padding:3px 5px;
+    background-color:#f2f1f1;
+    z-index:100;
+    left:0px;
+}
+
+@media(min-width:1300px) {
+    .reportItptable, .reportItpsvod, .tableJournal {
+        font-size: 16px;
+    }
+}
+     @media(max-width:1000px) {
+        .reportItptable, .reportItpsvod, .tableJournal {
+            font-size: 14px;
+        }
+    }
+
+    @media(max-width:960px) {
+        .reportItptable, .reportItpsvod, .tableJournal {
+            font-size: 12px;
+        }
+       .digitInfo {
+            font-size: 18px;
+        }
+    }
+
+    @media(max-width:880px) {
+        .reportItptable, .reportItpsvod, .tableJournal {
+            font-size: 11px;
+        }
+        #tableCorrectInfo td:first-child {
+            font-size: 10px;
+        }
+
+        .digitInfo {
+            font-size: 16px;
+        }
+
+
+    }
+
+    @media(max-width:820px) {
+        .reportItptable, .reportItpsvod, .tableJournal {
+            font-size: 10px;
+        }
+        .digitInfo {
+            font-size: 15px;
+        }
+    
+    }
+
+    @media(max-width:720px) {
+        .reportItptable, .reportItpsvod, .tableJournal {
+            font-size: 9px;
+        }
+       .digitInfo {
+            font-size: 14px;
+        }
+    }
+
+    @media(max-width:680px) {
+        .reportItptable, .reportItpsvod, .tableJournal {
+            font-size: 8px;
+        }
+
+        .dim{
+            font-size:7px
+        }
+    }
+
+    @media(max-width:640px) {
+        .reportItptable, .reportItpsvod, .tableJournal {
+            font-size: 7px;
+        }
+
+        .dim{
+            font-size:6px
+        }
+    }
+
+   @media(max-width:580px) {
+        .reportItptable, .reportItpsvod, .tableJournal {
+            font-size: 6px;
+        }
+
+        .dim{
+            font-size:6px
+        }
+    }
+

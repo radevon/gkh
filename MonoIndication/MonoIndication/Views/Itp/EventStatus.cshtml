@@ -1,0 +1,34 @@
+﻿@model DBPortable.Events
+
+@if (Model != null)
+{
+    <table style="width: 100%">
+        <tr>
+            <td style="vertical-align:middle">Статус:</td>
+            <td style="text-align: right; vertical-align:middle">
+                @switch (Model.EventValue)
+                {
+                    case 0:  <img width="40" src='@Url.Content("~/img/close_.jpg")' title="Состояние закрыто"/> 
+                    break;
+                    case 1: <img width="40" src='@Url.Content("~/img/open_.jpg")' title="Состояние открыто"/>
+                    break;
+                    default: <img width="40" src='#' title="Состояние неопределено: @Model.EventValue.ToString()"/>
+                    break;
+                }
+
+              
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" class="text-primary">
+                @Model.EventTime.ToString("dd.MM.yyyy HH:mm:ss")
+            </td>
+        </tr>
+</table>
+}
+else
+{
+   @:Информация отсутствует
+}
+
+

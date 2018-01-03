@@ -1,0 +1,357 @@
+﻿@{
+    ViewBag.Title = "Информация по ИТП";
+    Layout = "~/Views/Shared/MainLayout.cshtml";
+
+    string socketAddr = ConfigurationManager.AppSettings["SocketAddr"] ?? "localhost:50000";
+}
+@using System.Configuration
+@using MonoIndication;
+@model MonoIndication.ItpInfo
+
+
+@section Css{
+    <link rel="stylesheet" type="text/css" href='@Url.Content("~/css/bootstrap-datetimepicker.css")'>
+    <link href='@Url.Content("~/css/tableexport.min.css")' rel="stylesheet" />
+    
+    <link href='@Url.Content("~/css/svg.css")' rel="stylesheet" />
+
+    <style type="text/css">
+        .nav.nav-pills > li > a {
+            border: 1px solid gainsboro;
+        }
+    </style>
+}
+
+<script type="text/javascript">
+    function checkIndicator(value) {
+        if (value) {
+            $('svg').attr('class', 'iconic iconic-signal iconic-signal-strong');
+            $('#gsmSend').prop('disabled',false);
+        } else {
+            $('svg').attr('class', 'iconic iconic-signal iconic-signal-weak');
+            $('#gsmSend').prop('disabled',true);
+        }
+    }
+</script>
+
+@Html.Partial("topmenu")
+<div class="container" style="margin-top: 65px">
+    
+
+    <div class="row well">
+        <div class="col-md-12 col-sm-12">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="text-primary text-center">
+                        Подробная информация по ИТП 
+                    </h1>
+                </div>
+            </div>
+            <hr/>
+            <div class="row">
+                <div class="col-md-9">
+                    
+                    <div class="media" title="№ @Model.PhoneNumber">
+
+                        <img class="pull-left media-object" src="~/img/uh-50.jpg" style="height: 90px;" />
+
+                        <div class="media-body">
+                            <h4 class="media-heading addressInfo">@Model.Address</h4>
+                            <div>№ ЖЭУ - @Model.Type.ToString()</div>
+                            <span class="text-muted">@Model.Description</span>
+                        </div>
+                    </div>
+
+                  
+                </div>
+                <div class="col-md-3">
+                    <div class="panel panel-default" id="EventInfo">
+                        <div class="panel-heading">
+                            <span class="glyphicon glyphicon-eye-close"></span>&nbsp;Датчик проникновения
+                            <a id="EventDetailsLink" href="#" style="position: absolute; right:20px">Подробно</a>
+                        </div>
+                        <div class="panel-body" id="EventInfoContent">
+                            @Html.Action("GetEventStatus", "Itp", new { phone=Model.PhoneNumber})
+                        </div>
+            
+                    </div>
+                </div>
+            </div>
+            <hr/>
+            <div class="row">
+                <div class="col-md-12">
+                      
+                    <ul class="nav nav-pills">
+                        <li><a id="KonturEditLink" href="#"><span class="glyphicon glyphicon-record"></span>&nbsp;Контуры</a></li>
+                        <li><a href='@Url.Action("ActReport", "Report", new { phone = Model.PhoneNumber })'><span class="glyphicon glyphicon-text-background"></span>&nbsp;Составить акт</a></li>
+                        <li><a href='@Url.Action("Planing", "PlaningDate", new { phone = Model.PhoneNumber })'><span class="glyphicon glyphicon-dashboard"></span>&nbsp; График опроса</a></li>
+                    </ul>
+            
+                </div>
+            </div>
+            
+            
+         
+            
+          
+            
+        </div>
+       
+        
+    </div>
+    
+    <div class="row">
+        <div class="col-md-12 col-sm-12 text-center">
+            @Html.Signal() <br />
+            <button id="gsmSend" class="btn btn-warning buttonLarge" disabled="disabled" title="Нажмите для отправки sms на счётчик учёта, и получения актуальной информации" ><span class="glyphicon glyphicon glyphicon-phone-alt"></span>&nbsp;ЗАПРОСИТЬ ТЕКУЩИЕ ПОКАЗАНИЯ</button>
+
+        </div>
+    </div>
+        
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <h2 class="text-center text-primary">ПОСЛЕДНИЕ ПОЛУЧЕННЫЕ ДАННЫЕ</h2>
+        </div>
+    </div>
+        
+    <div class="row" style="padding:3px">
+        @Html.Action("LastInformationItp", new { PhoneNumber=Model.PhoneNumber, listKonturs=Model.ListKonturs })
+        
+    </div>
+    
+    <br/>
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <h2 class="text-center text-primary">ПОДРОБНЫЙ ОТЧЁТ ЗА ПЕРИОД</h2>
+        </div>
+    </div>
+
+    <div class="row well">
+
+
+        <div class="col-md-5 text-center">
+            <span class="labeldate">начало периода</span>
+            <div style="overflow:hidden">
+                <div class="form-group">
+                    <div class="datepickercustom" id="datestart"></div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-2 text-center">
+            <span class="labeldate">-</span>
+        </div>
+
+        <div class="col-md-5 text-center">
+            <span class="labeldate">конец периода</span>
+            <div style="overflow:hidden">
+                <div class="form-group">
+                    <div class="datepickercustom" id="dateend"></div>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <button id="ReportButton" class="btn btn-success buttonLarge" title="Нажмите для получения развернутой информации о потреблениии за выбраный период">СФОРМИРОВАТЬ ОТЧЁТ</button>
+            <br/>
+            <div id="waitingDiv"></div>
+        </div>
+
+    </div>
+
+
+    <div id="ReportContainer">
+
+    </div>
+   
+
+</div>
+
+@section Scripts {
+
+
+    <script type="text/javascript" src='@Url.Content("~/js/moment-with-locales.min.js")'></script>
+    <script type="text/javascript" src='@Url.Content("~/js/bootstrap-datetimepicker.js")'></script>
+    
+    <script type="text/javascript" src='@Url.Content("~/js/util/ModalHelper.js")'></script>
+    
+    <script src='@Url.Content("~/js/jqueryval/jquery.validate.min.js")'></script>
+    <script src='@Url.Content("~/js/jqueryval/jquery.validate.unobtrusive.min.js")'></script>
+
+    
+    <!-- https://www.travismclarke.com/tableexport/ -->
+    <script src='@Url.Content("~/js/xlsx.core.min.js")'></script>
+    <script src='@Url.Content("~/js/Blob.min.js")'></script>
+    <script src='@Url.Content("~/js/FileSaver.min.js")'></script>
+    <script src='@Url.Content("~/js/tableexport.min.js")'></script>
+    
+
+   
+
+    <script type="text/javascript">
+
+        $(function () {
+
+            // сокет для связи с модулем передачи
+            $("#gsmSend").click(function () {
+                websocket.send('@Model.PhoneNumber');
+                $(this).replaceWith('<div class="text-muted" style="font-size:20px">Запрос отправлен. Подождите некоторое время и обновите страницу, для получения актуальной информации...</div>');
+                // запись информации об отправке запроса в базу
+                sendRequestLog('@Url.Action("SendRequest", "Request")', '@Model.PhoneNumber');
+            });
+
+
+              $("#ReportButton").click(function () {
+                  var startDate = $('#datestart').data('DateTimePicker').date();
+                  var endDate = $('#dateend').data('DateTimePicker').date();
+                  $.ajax({
+                      url: '@Url.Action("ReportByPeriod", "Itp")',
+                method: 'GET',
+                dataType: 'html',
+                cache: false,
+                data: { 'startDate': moment(startDate).format(), 'endDate': moment(endDate).format(), 'PhoneNumber': '@Model.PhoneNumber', 'address': '@Model.Address' },
+                beforeSend: function () {
+                    $("#ReportContainer").html('');
+                    $("#waitingDiv").show();
+                },
+                success: function (data) { $("#ReportContainer").html(data); },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert("Ошибка при отправке запроса!");
+                },
+                complete: function () {
+                    $("#waitingDiv").hide();
+
+                     }
+                });
+              });
+
+
+            // редактирование контуров
+            $("#KonturEditLink").click(function(e) {
+                
+                $.ajax({
+                    url: '@Url.Action("ListKonturs","Itp")',
+                    method: 'GET',
+                    dataType: 'html',
+                    cache: false,
+                    data: { 'phone': '@Model.PhoneNumber' },
+                    beforeSend: function () {
+                        showLoading(true);
+                    },
+                    success: function(data) {
+                        createModal("Информация по контурам", data, "");
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert("Ошибка при отправке запроса!");
+                        console.log(xhr);
+                    },
+                    complete: function () {
+                        showLoading(false);
+                    }
+                });
+
+                e.preventDefault();
+                e.stopPropagation();
+                return false;
+            });
+
+            // история сработки датчиков проникновения
+            $("#EventDetailsLink").click(function (e) {
+
+                $.ajax({
+                    url: '@Url.Action("GetEventStatusList","Itp")',
+                    method: 'GET',
+                    dataType: 'html',
+                    cache:false,
+                    data: { 'phone': '@Model.PhoneNumber' },
+                    beforeSend: function () {
+                        showLoading(true);
+                    },
+                    success: function (data) {
+                        createModal("Информация о сработках датчика проникновения", data, "");
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert("Ошибка при отправке запроса!");
+                        console.log(xhr);
+                    },
+                    complete: function () {
+                        showLoading(false);
+                    }
+                });
+
+                e.preventDefault();
+                e.stopPropagation();
+                
+                return false;
+            });
+
+              $("#datestart").datetimepicker({
+                  inline: true,
+                  locale: 'ru',
+                  sideBySide: true,
+                  defaultDate: moment().subtract(30, 'd'),
+
+                  maxDate: new Date(),
+                  format: 'DD.MM.YYYY'
+              });
+
+
+              $("#dateend").datetimepicker({
+                  inline: true,
+                  locale: 'ru',
+                  sideBySide: true,
+                  defaultDate: new Date(),
+                  //minDate: moment(),
+                  maxDate: new Date(),
+                  format: 'DD.MM.YYYY'
+              });
+
+
+              setInterval(function () {
+                  $("#EventInfoContent").load('@Url.Action("GetEventStatus","Itp",new {phone=@Model.PhoneNumber})');
+              }, 10000);
+
+        });
+
+
+        //  сокет для связи
+    var websocket = new WebSocket('ws://@socketAddr');
+    websocket.onopen = function () {
+        checkIndicator(true);
+        if (typeof console !== "undefined" && typeof console.log !== "undefined") {
+            console.log(new Date() + ' Соединение успешно открыто.');
+        }
+    };
+    websocket.onclose = function (event) {
+        checkIndicator(false);
+        if (typeof console !== "undefined" && typeof console.log !== "undefined") {
+            console.log(new Date() + ' Соединение закрыто.');
+        }
+        if (!event.wasClean) {
+            alert('Обрыв соединения с gsm-модулем'); // например, "убит" процесс сервера
+        }
+    };
+    websocket.onmessage = function (event) {
+        if (typeof console !== "undefined" && typeof console.log !== "undefined") {
+            console.log(new Date() + ' Получены ответ от сервера: ' + event.data);
+        }
+    };
+    websocket.onerror = function (error) {
+        checkIndicator(false);
+        if (typeof console !== "undefined" && typeof console.log !== "undefined") {
+            console.log(new Date() + ' Ошибка связи ' + error);
+        }
+    };
+           
+
+  
+    </script>
+   
+}

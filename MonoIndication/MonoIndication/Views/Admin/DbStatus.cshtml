@@ -1,0 +1,57 @@
+﻿
+<h2 class="text-primary">Путь к файлу БД и наличие базы данных</h2>
+<table class="table">
+    <tr>
+        <td>Путь определен:</td>
+        <td class='@((bool)ViewBag.hasPath?"bg-success":"bg-danger") text-center'>
+            @((bool)ViewBag.hasPath?"ДА":"НЕТ")
+        </td>
+    </tr>
+    <tr>
+        <td>Значение пути к файлу:</td>
+        <td>
+            <span class="text-muted">@ViewBag.dbpath</span>
+            
+        </td>
+    </tr>
+    <tr>
+        <td>Состояние БАЗЫ:</td>
+        <td class='@((bool)ViewBag.dbStatus?"bg-success":"bg-danger") text-center'>
+            @((bool)ViewBag.dbStatus?"Создана":"Не создана")
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <button id="createDb" class='btn btn-default @((bool)ViewBag.hasPath?"show":"hidden")'>Пересоздать базу и объекты</button>
+        </td>
+        <td>
+            
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2" class="small text-danger text-center">
+            <span id="mess">
+                @(TempData["message"]??"")
+            </span>
+            
+        </td>
+    </tr>
+</table>
+
+<script type="text/javascript">
+    $("#createDb").click(function () {
+        $.post('RecreateDb', {},
+            function(data) {
+                $("#AdminContainer").html(data);
+            }).error(function (jqXHR, textStatus, errorThrown) {
+                $("#AdminContainer").html("<h4 class='text-danger'>Возникла ошибка! Подробные сведения можно помотреть в консоли браузера</h4>");
+                console.log(jqXHR.responseText);
+            });
+    });
+    
+    
+
+    setTimeout(function () {
+        $("#mess").remove();
+    }, 5000);
+</script>

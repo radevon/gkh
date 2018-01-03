@@ -1,0 +1,67 @@
+﻿@using MonoIndication
+@model MonoIndication.LogInfoVM
+
+<h2 class="text-primary">Информация об истории действий пользователей и ошибках</h2>
+
+<table class="table">
+    <tr style="background-color: #fefefe">
+        <td style="width:160px">Путь к файлу логов:</td>
+        <td class="text-muted">@Model.LogFilePath</td>
+    </tr>
+</table>
+
+<h3>Таблица логов</h3>
+<div style="max-height: 500px; overflow-y: auto">
+    <table class="table table-condensed">
+        <thead>
+            <tr style="background-color: #eeeeee">
+                <th>id</th>
+                <th>время</th>
+                <th>user</th>
+                <th>тип</th>
+                <th>текст</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (LogMessage item in Model.AllDbLogs)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.MessageDate.ToString("dd.MM.yy HH:mm:ss")</td>
+                    <td>@item.UserName</td>
+                    <td class='@(item.MessageType=="error"?"text-danger":"")'>@item.MessageType</td>
+                    <td class="font10">@item.MessageText</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+    <ul id="log_page" class="pagination">
+        @for (int i = 0; i < Model.PageCount; i++)
+{
+    <li class='@(Model.CurrentPage==i?"active":"")'><a href='@Url.Action("ViewLog", new { CurrentPage=i})'>@((i + 1).ToString())</a></li>
+}
+
+
+
+    </ul>
+
+
+<script type="text/javascript">
+    $("#log_page a").click(
+        function (event) {
+            $.get($(this).attr('href'), {},
+                function (data) {
+                    $("#AdminContainer").html(data);
+                })
+            .error(function (jqXHR, textStatus, errorThrown) {
+                $("#AdminContainer").html("<h4 class='text-danger'>Возникла ошибка! Подробные сведения можно помотреть в консоли браузера</h4>");
+                console.log(jqXHR.responseText);
+            });
+            if (event.preventDefault) event.preventDefault();
+            event.returnValue = false;
+        }
+    );
+</script>

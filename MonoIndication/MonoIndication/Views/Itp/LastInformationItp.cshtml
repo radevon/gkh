@@ -1,0 +1,100 @@
+﻿@using System.Globalization
+@using MonoIndication
+@model List<MonoIndication.ItpRow>
+
+@if (Model.Any())
+{  
+    
+        foreach (ItpRow item in Model)
+        {
+            if(item.KonturNumber%2==0)
+            {
+                <div class="clearfix"></div>
+            }
+        <div class="col-md-6 col-sm-6">
+            <table class="table table-condensed tableKontur"  style='border: 1px solid lightgray; background-color: @(item.KonturNumber % 2 == 0 ? "#fff3f2" : "#f1f7ff")'>
+                <thead style="border: 1px solid lightgray">
+                    <tr>
+                        <th colspan="2" class="text-center" style="color: #de5a53; font-size:20px">
+                            КОНТУР №@item.KonturNumber "@item.KonturName.ToUpper()"
+                        </th>
+                    </tr>
+                    <tr style="background-color: #BDE3F4">
+                        <th style="width:60%">НАЗВАНИЕ ПАРАМЕТРА</th>
+                        <th class="text-right">ЗНАЧЕНИЕ ПАРАМЕТРА</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="label_table">Время получения данных</td>
+                        <td class="value text-right">@item.HeatLastInfo.recvDate.ToString("dd MMM yy г. HH:mm:ss", CultureInfo.CreateSpecificCulture("ru-RU"))</td>
+                    </tr>
+                    <tr>
+                        <td class="label_table">Показания теплоэнергии <small>[Гкал.]</small></td>
+                        <td class="value text-right">@item.HeatLastInfo.heatValue.ToString("#0.0#")</td>
+                    </tr>
+                    <tr>
+                        <td class="label_table">Мощность [Ккал/ч]</td>
+                        <td class="value text-right">@item.HeatLastInfo.powerValue.ToString("#0.0#")</td>
+                    </tr>
+                    <tr>
+                        <td class="label_table">Объёмный расход воды (текущий) <small>[м<sup>3</sup>/ч]</small></td>
+                        <td class="value text-right">@item.HeatLastInfo.waterLose.ToString("#0.0#")</td>
+                    </tr>
+                    <tr>
+                        <td class="label_table">Объёмный расход воды (общий) <small>[м<sup>3</sup>]</small></td>
+                        <td class="value text-right">@item.HeatLastInfo.waterLoseAll.ToString("#0.0#")</td>
+                    </tr>
+                    <tr>
+                        <td class="label_table">Температура подачи <small>[C&deg;]</small></td>
+                        <td class="value text-right">@item.HeatLastInfo.tempIn.ToString("#0.0")</td>
+                    </tr>
+                    <tr>
+                        <td class="label_table">Температура обратки <small>[C&deg;]</small></td>
+                        <td class="value text-right">@item.HeatLastInfo.tempOut.ToString("#0.0")</td>
+                    </tr>
+
+                    <tr>
+                        <td class="label_table">Температура хол носителя [C&deg;]</td>
+                        <td class="value text-right">@item.HeatLastInfo.tempCold.ToString("#0.0")</td>
+                    </tr>
+
+                    <tr>
+                        <td class="label_table">Текущий массовый расход воды <small>[т/ч]</small></td>
+                        <td class="value text-right">@item.HeatLastInfo.presure1.ToString("#0.0#")</td>
+                    </tr>
+                    <tr>
+                        <td class="label_table">Накопленный массовый расход воды <small>[т]</small></td>
+                        <td class="value text-right">@item.HeatLastInfo.presure2.ToString("#0.0#")</td>
+                    </tr>
+
+                    <tr>
+                        <td class="label_table">Время наработки <small>[ч]</small></td>
+                        <td class="value text-right">
+                            @item.HeatLastInfo.totalWorkHours.ToString()
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label_table">Ошибки</td>
+                        <td class="value text-right">
+                            <span style="font-size:13px" class='@(item.HeatLastInfo.errorList.Trim().Length>0?"text-danger":"text-success")'>@item.HeatLastInfo.errorList</span>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    
+          
+        }
+
+
+}
+else
+{
+    <div class="col-md-12 col-sm-12 text-center">
+        <h3 class="text-danger">Отсутствует информация по прибору</h3>
+    </div>
+}
+
+

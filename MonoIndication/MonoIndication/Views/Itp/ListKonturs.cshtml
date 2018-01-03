@@ -1,0 +1,202 @@
+﻿@model MonoIndication.KonturKorrectVM
+
+<script type="text/javascript">
+    function remove(phone, number) {
+        if (!confirm("Контур будет удален! Подтверждаете удаление?"))
+            return false;
+        $("#modalWindow").modal('hide');
+        $.ajax({
+            url: '@Url.Action("RemoveKontur", "Itp")',
+            method: 'POST',
+            dataType: 'html',
+
+            data: { 'phone': phone, 'number': number },
+            beforeSend: function () {
+                showLoading(true);
+            },
+            success: function (data) {
+                createModal("Удаление контура", data, "");
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert("Ошибка при отправке запроса!");
+                console.log(xhr);
+            },
+            complete: function () {
+                showLoading(false);
+            }
+        });
+    }
+</script>
+
+<table class="table table-condensed table-bordered" style="font-size:12px">
+    <tr>
+        <th>
+            № сим
+        </th>
+        <th>
+            № конт
+        </th>
+        <th>
+            Наимен
+        </th>
+        <th>
+            Тип счетч
+        </th>
+        <th>
+            Норма расх. воды, м<sup>3</sup>/ч
+        </th>
+        <th>
+            № счет в энергсб
+        </th>
+        <th>
+            Зав № счетч
+        </th>
+        <th></th>
+        <th></th>
+    </tr>
+    @if (Model.KontursInfo.Count > 0)
+    {
+        foreach (var item in Model.KontursInfo)
+        {
+            <tr>
+                <td class="text-muted">
+                    @Html.DisplayFor(modelItem => item.phone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.N)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TipSh)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VNorma)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.KodSchSbut)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ZavN)
+                </td>
+                <td>
+
+                    <a name="EditLink" href='@Url.Action("EditKonturs", "Itp", new { phone=item.phone, N=item.N})' class="text-warning">Изм.</a>
+                </td>
+                <td>
+
+                    <a href="#" class="text-danger" onclick="remove('@item.phone',@item.N)">Удалить</a>
+                </td>
+            </tr>
+        }
+    }
+    else
+    {
+        <tr>
+            <td colspan="9" style="text-align: center" class="text-muted">
+                Нет данных по контурам объекта
+            </td>
+        </tr>
+    }
+
+
+</table>
+
+<p>
+    <a id="AddNewKonturBtn" href="#" class="btn btn-success">Добавить новый</a>
+    
+</p>
+
+
+<script type="text/javascript">
+
+    $("#AddNewKonturBtn").click(function (e) {
+        $("#modalWindow").modal('hide');
+        $.ajax({
+            url: '@Url.Action("AddKonturs", "Itp")',
+            method: 'GET',
+            dataType: 'html',
+
+            data: { 'phone': '@Model.Phone' },
+                    beforeSend: function () {
+                        showLoading(true);
+                    },
+                    success: function (data) {
+                        createModal("Добавление нового контура", data,"");
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert("Ошибка при отправке запроса!");
+                        console.log(xhr);
+                    },
+                    complete: function () {
+                        showLoading(false);
+                    }
+        });
+
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+    });
+    
+
+    $("a[name='EditLink']").click(function (e) {
+        $("#modalWindow").modal('hide');
+        var targ=e.target|| e.srcElement;
+       
+        $.ajax({
+            url: targ.href,
+            method: 'GET',
+            dataType: 'html',
+            beforeSend: function () {
+                showLoading(true);
+            },
+            success: function (data) {
+                createModal("Редактирование контура", data, "");
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert("Ошибка при отправке запроса!");
+                console.log(xhr);
+            },
+            complete: function () {
+                showLoading(false);
+            }
+        });
+
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+    });
+
+
+    $(".RemoveKonturLink").click(function (e) {
+        if (!confirm("Контур будет удален! Подтверждаете удаление?"))
+            return false;
+        $("#modalWindow").modal('hide');
+        $.ajax({
+            url: '@Url.Action("RemoveKontur", "Itp")',
+            method: 'POST',
+            dataType: 'html',
+
+            data: { 'phone': '@Model.Phone', 'number':6 },
+            beforeSend: function () {
+                showLoading(true);
+            },
+            success: function (data) {
+                createModal("Удаление контура", data, "");
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert("Ошибка при отправке запроса!");
+                console.log(xhr);
+            },
+            complete: function () {
+                showLoading(false);
+            }
+        });
+
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+    });
+    
+</script>
