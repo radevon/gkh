@@ -37,6 +37,7 @@ namespace MonoIndication
 
                     tableContent.AddRow(
                         new FieldContent("Np", (i + 1).ToString()),
+                        new FieldContent("Addres", obj.Address),
                         new FieldContent("KonturName",obj.Konturs[i].KonturName),
                         new FieldContent("HeatLast", obj.Konturs[i].Podacha.EndValues.HeatValue.ToString("0.0")),
                         new FieldContent("HeatFirst", obj.Konturs[i].Podacha.StartValues.HeatValue.ToString("0.0")),
@@ -55,10 +56,7 @@ namespace MonoIndication
                         new FieldContent("VolumeLastObr", obj.Konturs[i].Obratka.EndValues.WaterValue.ToString("0.0")),
                         new FieldContent("VolumeFirstObr", obj.Konturs[i].Obratka.StartValues.WaterValue.ToString("0.0")),
                         new FieldContent("VolumeDiffsObr", obj.Konturs[i].Obratka.DiffsWater.ToString("0.0")),
-                        new FieldContent("ByTimerLastObr", obj.Konturs[i].Obratka.EndValues.TotalHours.ToString()),
-                        new FieldContent("ByTimerFirstObr", obj.Konturs[i].Obratka.StartValues.TotalHours.ToString()),
-                        new FieldContent("ByTimerDiffsObr", obj.Konturs[i].Obratka.DiffsTimer.ToString()),
-
+                        
                         new FieldContent("VolumeDiffAll", obj.Konturs[i].WaterDiff.ToString("0.0")),
                         new FieldContent("HeatDiffAll", obj.Konturs[i].HeatDiff.ToString("0.0"))
                         );
@@ -72,7 +70,6 @@ namespace MonoIndication
                     new FieldContent("AktNumber",obj.AktNumber),
                     new FieldContent("DocNumber",obj.DocNumber),
                     new FieldContent("NamePredpriatie",obj.NamePredpriatie),
-                    new FieldContent("Addres",obj.Address),
                     new FieldContent("PeriodReport", obj.PeriodReport),
                     new FieldContent("PostDolgn", obj.PostDolgn),
                     new FieldContent("UserDolgn", obj.UserDolgn),
@@ -90,7 +87,6 @@ namespace MonoIndication
                     new FieldContent("AktNumber",obj.AktNumber),
                     new FieldContent("DocNumber",obj.DocNumber),
                     new FieldContent("NamePredpriatie",obj.NamePredpriatie),
-                    new FieldContent("Addres",obj.Address),
                     new FieldContent("PeriodReport", obj.PeriodReport),
                     new FieldContent("PostDolgn", obj.PostDolgn),
                     new FieldContent("UserDolgn", obj.UserDolgn),

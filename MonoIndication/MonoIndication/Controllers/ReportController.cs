@@ -52,7 +52,7 @@ namespace MonoIndication.Controllers
                 form.Phone = phone;
                 form.Address = "Неизвестный адрес";
             }
-            form.NameOrganization = "";
+            
             DateTime now=DateTime.Now.AddMonths(-1);
             form.dateFrom = new DateTime(now.Year, now.Month, 1);
             form.dateTo = form.dateFrom.AddMonths(1).AddDays(-1);

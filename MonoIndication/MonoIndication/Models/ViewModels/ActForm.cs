@@ -10,7 +10,7 @@ namespace MonoIndication
     {
         public ActForm()
         {
-            
+            NameOrganization = "КЖЭУП \"Рогачев\"";
         }
         public string NameOrganization { get; set; }
         public string Phone { get; set; } // идентификатор объекта № sim
