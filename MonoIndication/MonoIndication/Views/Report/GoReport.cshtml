@@ -23,11 +23,36 @@
             text-align: center;
             vertical-align: middle;
         }
+
+    .podacha {
+        background-color: #fff4f4;
+    }
+    .obratka {
+        background-color: #eff8ff;
+    }
+
+    .fix {
+        height: 45px;
+        width: 100%;
+        position: fixed;
+        top: 0px;
+        background-color: #fefefe;
+        border-bottom: 1px solid gray;
+        background:rgba(250,246,231,0.8);
+    }
+
+    .fix h2{
+        margin-top:0px;
+    }
 </style>
 }
-<h2 class="text-center">Отчет потребления по объектам</h2>
-<button class="btn btn-success exp" value="1" style="margin:3px;">В excel</button>
-<table style="" id="export">
+<div class="fix">
+    <button class="btn btn-success exp" value="1" style="margin:3px; float:left">В excel</button>
+    <h2 class="text-center">Отчет потребления по объектам для Энергосбыта</h2>
+    
+</div>
+
+<table style="margin-top:46px" id="export">
     <thead>
         <tr>
             <th rowspan="2" style="font-weight:bold;">Зав. № теплосчетчика</th>
@@ -38,22 +63,22 @@
             <th rowspan="2">Признак учета (1-отопл; 2 - ГВС; 3 - общ)</th>
             <th rowspan="2">Дата снятия показаний</th>
             <th rowspan="2">Время снятия показаний</th>
-            <th colspan="4">Подающий трубопровод</th>
-            <th colspan="4">Обратный трубопровод</th>
+            <th colspan="4" class="podacha">Подающий трубопровод</th>
+            <th colspan="4" class="obratka">Обратный трубопровод</th>
             <th rowspan="2">Температура холодной воды</th>
             <th rowspan="2">Время работы прибора</th>
             <th rowspan="2">Время работы прибора с ошибкой</th>
             <th rowspan="2">Код сч. группового учета в кодировке энергосбыта</th>
         </tr>
         <tr>
-            <th>Показания прибора учета тепла</th>
-            <th>Расход сетевой воды</th>
-            <th>Мгновенный расход</th>
-            <th>Температура</th>
-            <th>Показания прибора учета тепла</th>
-            <th>Расход сетевой воды</th>
-            <th>Мгновенный расход</th>
-            <th>Температура</th>
+            <th class="podacha">Показания прибора учета тепла</th>
+            <th class="podacha">Расход сетевой воды</th>
+            <th class="podacha">Мгновенный расход</th>
+            <th class="podacha">Температура</th>
+            <th class="obratka">Показания прибора учета тепла</th>
+            <th class="obratka">Расход сетевой воды</th>
+            <th class="obratka">Мгновенный расход</th>
+            <th class="obratka">Температура</th>
         </tr>
     </thead>
     <tbody>
@@ -77,14 +102,14 @@
                 {
                     @item.DatePod.ToString("HH:mm:ss");
                 }
-            <td title="Показания прибора учета тепла">@item.PodHeat.ToString("f2")</td>
-            <td title="Расход сетевой воды">@item.PodWaterLoseAll.ToString("f0")</td>
-            <td title="Мгновенный расход воды">@item.PodWaterLose.ToString("f4")</td>
-            <td title="Температура подачи">@item.TempIn.ToString("f0")</td>
-            <td title="Показания прибора учета тепла">@item.ObrHeat.ToString("f2")</td>
-            <td title="Расход сетевой воды">@item.ObrWaterLoseAll.ToString("f0")</td>
-            <td title="Мгновенный расход воды">@item.ObrWaterLose.ToString("f4")</td>
-            <td title="Температура обратки">@item.TempOut.ToString("f0")</td>
+            <td title="Показания прибора учета тепла" class="podacha">@item.PodHeat.ToString("f2")</td>
+            <td title="Расход сетевой воды" class="podacha">@item.PodWaterLoseAll.ToString("f0")</td>
+            <td title="Мгновенный расход воды" class="podacha">@item.PodWaterLose.ToString("f4")</td>
+            <td title="Температура подачи" class="podacha">@item.TempIn.ToString("f0")</td>
+            <td title="Показания прибора учета тепла" class="obratka">@item.ObrHeat.ToString("f2")</td>
+            <td title="Расход сетевой воды" class="obratka">@item.ObrWaterLoseAll.ToString("f0")</td>
+            <td title="Мгновенный расход воды" class="obratka">@item.ObrWaterLose.ToString("f4")</td>
+            <td title="Температура обратки" class="obratka">@item.TempOut.ToString("f0")</td>
             <td title="Температура холодной воды">@item.TempCold.ToString("f0")</td>
             <td title="Время работы прибора">@item.TotalWorkHours.ToString()</td>
             <td></td>
@@ -95,7 +120,6 @@
     </tbody>
 </table>
 
-<button class="btn btn-success exp" value="1" style="margin:3px;">В excel</button>
 
 @section Scripts{
 <script type="text/javascript">

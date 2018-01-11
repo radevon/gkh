@@ -91,59 +91,63 @@ namespace MonoIndication.Controllers
             // 1) беру список контуров
             Dictionary<int, string> konturs = repo.GetKontursBeforeDates(form.Phone, findKonturFrom, findKonturTo);
 
-            int max_kontur = konturs.Keys.Max(x => x);
-            int max_count = (int)Math.Floor(max_kontur / 2.0)+1;
-
-            for (int i = 1; i <= max_count; i++)
+            if (konturs.Count > 0) // если есть контуры
             {
-                int low = 2 * (i - 1); // индекс для подачи (четное)
-                int high = low + 1;    // индекс для обратки (неч)
+                int max_kontur = konturs.Keys.Max(x => x);
+                int max_count = (int)Math.Floor(max_kontur / 2.0) + 1;
 
-                SubKontur podacha = new SubKontur();
-                SubKontur obratka=new SubKontur();
-                // если есть контур подачи
-                if (konturs.Keys.Contains(low))
+                for (int i = 1; i <= max_count; i++)
                 {
-                    podacha = GetKonturInfo(form.dateFrom, form.dateTo, form.Phone, low);
-                    // если есть обратка
-                    if (konturs.Keys.Contains(high))
+                    int low = 2 * (i - 1); // индекс для подачи (четное)
+                    int high = low + 1;    // индекс для обратки (неч)
+
+                    SubKontur podacha = new SubKontur();
+                    SubKontur obratka = new SubKontur();
+                    // если есть контур подачи
+                    if (konturs.Keys.Contains(low))
+                    {
+                        podacha = GetKonturInfo(form.dateFrom, form.dateTo, form.Phone, low);
+                        // если есть обратка
+                        if (konturs.Keys.Contains(high))
+                        {
+                            obratka = GetKonturInfo(form.dateFrom, form.dateTo, form.Phone, high);
+                        }
+                    }
+                    // если есть обратка без подачи (такого не должно быть но все же)
+                    else if (konturs.Keys.Contains(high))
                     {
                         obratka = GetKonturInfo(form.dateFrom, form.dateTo, form.Phone, high);
                     }
-                }
-                // если есть обратка без подачи (такого не должно быть но все же)
-                else if (konturs.Keys.Contains(high))
+                    else
                     {
-                        obratka = GetKonturInfo(form.dateFrom, form.dateTo, form.Phone, high);
+                        continue;
                     }
-                else
-                {
-                    continue;
+
+
+                    KonturObject objAdd = new KonturObject()
+                    {
+                        KonturNum = i,
+                        // инициализация не полн
+                        Podacha = podacha,
+                        Obratka = obratka
+                    };
+
+                    KonturItem podInfo = repo.GetKonturByNumber(form.Phone, low);
+                    if (podInfo != null)
+                    {
+                        objAdd.KonturName = podInfo.Name.Split(' ')[0];
+                        objAdd.SchType = podInfo.TipSh;
+                    }
+                    else
+                    {
+                        objAdd.KonturName = i.ToString();
+                        objAdd.SchType = "";
+                    }
+
+                    resAct.Konturs.Add(objAdd);
+
                 }
-
-                
-                KonturObject objAdd = new KonturObject()
-                {
-                    KonturNum = i,
-                    // инициализация не полн
-                    Podacha = podacha,
-                    Obratka = obratka
-                };
-
-                KonturItem podInfo = repo.GetKonturByNumber(form.Phone, low);
-                if (podInfo != null)
-                {
-                    objAdd.KonturName = podInfo.Name.Split(' ')[0];
-                    objAdd.SchType = podInfo.TipSh;
-                }else
-                {
-                    objAdd.KonturName = i.ToString();
-                    objAdd.SchType = "";
-                }
-
-                resAct.Konturs.Add(objAdd);
-
-            }
+            }        
 
               
 

@@ -49,13 +49,13 @@ namespace MonoIndication
                         new FieldContent("ByTimerFirst", obj.Konturs[i].Podacha.StartValues.TotalHours.ToString()),
                         new FieldContent("ByTimerDiffs", obj.Konturs[i].Podacha.DiffsTimer.ToString()),
                         new FieldContent("DaysWork", obj.Konturs[i].Podacha.DiffsDate.Days.ToString()),
-                        
-                        new FieldContent("HeatLastObr", obj.Konturs[i].Obratka.EndValues.HeatValue.ToString("0.0")),
-                        new FieldContent("HeatFirstObr", obj.Konturs[i].Obratka.StartValues.HeatValue.ToString("0.0")),
-                        new FieldContent("HeatDiffObr", obj.Konturs[i].Obratka.DiffsHeat.ToString("0.0")),
-                        new FieldContent("VolumeLastObr", obj.Konturs[i].Obratka.EndValues.WaterValue.ToString("0.0")),
-                        new FieldContent("VolumeFirstObr", obj.Konturs[i].Obratka.StartValues.WaterValue.ToString("0.0")),
-                        new FieldContent("VolumeDiffsObr", obj.Konturs[i].Obratka.DiffsWater.ToString("0.0")),
+
+                        new FieldContent("HeatLastObr", obj.Konturs[i].Obratka.EndValues.HeatValue==0?"":obj.Konturs[i].Obratka.EndValues.HeatValue.ToString("0.0")),
+                        new FieldContent("HeatFirstObr", obj.Konturs[i].Obratka.StartValues.HeatValue==0?"":obj.Konturs[i].Obratka.StartValues.HeatValue.ToString("0.0")),
+                        new FieldContent("HeatDiffObr", obj.Konturs[i].Obratka.DiffsHeat==0?"":obj.Konturs[i].Obratka.DiffsHeat.ToString("0.0")),
+                        new FieldContent("VolumeLastObr", obj.Konturs[i].Obratka.EndValues.WaterValue==0?"":obj.Konturs[i].Obratka.EndValues.WaterValue.ToString("0.0")),
+                        new FieldContent("VolumeFirstObr", obj.Konturs[i].Obratka.StartValues.WaterValue==0?"":obj.Konturs[i].Obratka.StartValues.WaterValue.ToString("0.0")),
+                        new FieldContent("VolumeDiffsObr", obj.Konturs[i].Obratka.DiffsWater==0?"":obj.Konturs[i].Obratka.DiffsWater.ToString("0.0")),
                         
                         new FieldContent("VolumeDiffAll", obj.Konturs[i].WaterDiff.ToString("0.0")),
                         new FieldContent("HeatDiffAll", obj.Konturs[i].HeatDiff.ToString("0.0"))
