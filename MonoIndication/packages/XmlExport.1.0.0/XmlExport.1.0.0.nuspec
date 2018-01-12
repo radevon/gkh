@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>XmlExport</id>
+    <version>1.0.0</version>
+    <title>Xml Export</title>
+    <authors>Calabonga</authors>
+    <owners>Calabonga</owners>
+    <projectUrl>http://www.calabonga.net/blog/post/asp-net-mvc-3-eksport-v-excel-ili-chto-takoe-xmlexport</projectUrl>
+    <iconUrl>http://www.calabonga.net/images/logo.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Generator for exporting data to Office (Excel and Word)</description>
+    <summary>Xml export helpr for WorkBook with Worksheets generations. https://msdn.microsoft.com/en-us/library/aa140066(v=office.10).aspx</summary>
+    <releaseNotes>Cell constructor refactored</releaseNotes>
+    <copyright>Calabonga.NET</copyright>
+    <language>en-US</language>
+    <tags>xml xmlexport data generator exporting export office ms excel calabonga word</tags>
+  </metadata>
+</package>

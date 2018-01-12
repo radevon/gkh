@@ -8,6 +8,11 @@ using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 
+using Excel=Microsoft.Office.Interop.Excel; 
+using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Diagnostics;
+
 namespace MonoIndication.Controllers
 {
     [Authorize]
@@ -202,6 +207,129 @@ namespace MonoIndication.Controllers
             IEnumerable<EnergosbitXls> list = repo.GetEnSbReport(from, to);
             return View(list);
         }
+
+
+        [DllImport("user32.dll")]
+        static extern int GetWindowThreadProcessId(int hWnd, out int lpdwProcessId);
+
+        public ActionResult ToExcel()
+        {
+            //IEnumerable<EnergosbitXls> list = repo.GetEnSbReport(from, to);
+            Excel.Application appExl=null;
+            Excel.Workbooks wBooks = null;
+            Excel.Workbook wBook = null;
+            Excel.Sheets wSheets = null;
+            Excel.Worksheet wSheet = null;
+            Excel.Range ranges=null;
+            
+            try
+            {
+
+                List<EnergosbitXls> list = repo.GetEnSbReport(DateTime.Now.AddMonths(-1), new DateTime(2017,12,15)).ToList();
+
+                appExl = new Excel.Application();
+                //appExl.Visible = true;
+                wBooks=appExl.Workbooks;
+                wBook = wBooks.Open(Server.MapPath("~/Static/Energosbit.xls"));
+                wSheets = wBook.Worksheets;
+                wSheet = wSheets.get_Item(1);
+                ranges = wSheet.UsedRange;
+                
+
+                for(int i=0;i<list.Count();i++)
+                {
+                    ranges.Cells[i + 5, 1].Value2 = list[i].ZavN;
+                    ranges.Cells[i + 5, 2].Value2 = list[i].Ngao.ToString();
+                    ranges.Cells[i + 5, 3].Value2 = list[i].Address;
+                    ranges.Cells[i + 5, 4].Value2 = list[i].KodSchSbut;
+                    ranges.Cells[i + 5, 5].Value2 = list[i].TipSh;
+                    ranges.Cells[i + 5, 6].Value2 = list[i].Uch;
+                    ranges.Cells[i + 5, 7].Value2 = list[i].DatePod == default(DateTime) ? "" : list[i].DatePod.ToString("dd.MM.yy");
+                    ranges.Cells[i + 5, 8].Value2 = list[i].DatePod == default(DateTime) ? "" : list[i].DatePod.ToString("HH:mm:ss");
+                    ranges.Cells[i + 5, 9].Value2 = Math.Round(list[i].PodHeat,2);
+                    ranges.Cells[i + 5, 10].Value2 = Math.Round(list[i].PodWaterLoseAll,0);
+                    ranges.Cells[i + 5, 11].Value2 = Math.Round(list[i].PodWaterLose,4);
+                    ranges.Cells[i + 5, 12].Value2 = Math.Round(list[i].TempIn,0);
+                    ranges.Cells[i + 5, 13].Value2 = Math.Round(list[i].ObrHeat,2);
+                    ranges.Cells[i + 5, 14].Value2 = Math.Round(list[i].ObrWaterLoseAll,0);
+                    ranges.Cells[i + 5, 15].Value2 = Math.Round(list[i].ObrWaterLose,4);
+                    ranges.Cells[i + 5, 16].Value2 = Math.Round(list[i].TempOut,0);
+                    ranges.Cells[i + 5, 17].Value2 = Math.Round(list[i].TempCold,0);
+                    ranges.Cells[i + 5, 18].Value2 = list[i].TotalWorkHours.ToString();
+                    ranges.Cells[i + 5, 21].Value2 = true;
+                    ranges.Cells[i + 5, 22].Value2 = false;
+                }
+
+                wBook.SaveCopyAs(Server.MapPath("~/Static/Energosbit_new.xls"));
+
+                
+                          
+
+
+                
+
+                wBook.Close(false, Missing.Value, Missing.Value);
+                wBooks.Close();
+
+                //wBooks.Close();
+                
+
+                //appExl.Application.Quit();
+
+                int id;
+                // Find the Excel Process Id (ath the end, you kill him
+                GetWindowThreadProcessId(appExl.Hwnd, out id);
+                Process excelProcess = Process.GetProcessById(id);
+                
+                
+                appExl.Quit();
+                
+
+               
+                
+                Marshal.FinalReleaseComObject(ranges);
+                Marshal.FinalReleaseComObject(wSheet);
+                Marshal.FinalReleaseComObject(wSheets);
+                Marshal.FinalReleaseComObject(wBook);
+                Marshal.FinalReleaseComObject(wBooks);
+                Marshal.FinalReleaseComObject(appExl);
+
+                ranges = null;
+                wSheet = null;
+                wSheets = null;
+                wBook = null;
+                wBooks = null;
+                appExl = null;
+
+
+                
+                System.GC.Collect();
+                System.GC.WaitForPendingFinalizers();
+
+                excelProcess.Kill();
+                
+                return Content("true");
+            }
+            catch(Exception ex){
+                
+                Marshal.ReleaseComObject(ranges);
+                Marshal.ReleaseComObject(wSheet);
+                Marshal.ReleaseComObject(wSheets);
+                Marshal.ReleaseComObject(wBook);
+                Marshal.ReleaseComObject(wBooks);
+                Marshal.ReleaseComObject(appExl);
+
+                System.GC.Collect();
+                System.GC.WaitForPendingFinalizers();
+
+                return Content(ex.Message);
+
+            }
+            
+           
+            
+        }
+
 
         public ActionResult GenRepTest()
         {

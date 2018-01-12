@@ -250,3 +250,4 @@ E:\dev\vs\gkh\MonoIndication\MonoIndication\bin\ru\System.Web.WebPages.Razor.res
 E:\dev\vs\gkh\MonoIndication\MonoIndication\obj\Release\MonoIndication.csprojResolveAssemblyReference.cache
 E:\dev\vs\gkh\MonoIndication\MonoIndication\obj\Release\MonoIndication.dll
 E:\dev\vs\gkh\MonoIndication\MonoIndication\obj\Release\MonoIndication.pdb
+E:\dev\vs\gkh\MonoIndication\MonoIndication\bin\Calabonga.Xml.Exports.dll
