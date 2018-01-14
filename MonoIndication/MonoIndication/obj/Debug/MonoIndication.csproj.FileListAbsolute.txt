@@ -333,3 +333,4 @@ D:\code\.NET\Rogachev\MonoIndication\MonoIndication\bin\DocumentFormat.OpenXml.d
 D:\code\.NET\Rogachev\MonoIndication\MonoIndication\bin\TemplateEngine.Docx.dll
 D:\code\.NET\Rogachev\MonoIndication\MonoIndication\bin\Static\Acts\monthact.docx
 E:\dev\vs\Rogachev\MonoIndication\MonoIndication\bin\Static\Acts\monthact.docx
+D:\code\.NET\Rogachev\MonoIndication\MonoIndication\bin\Calabonga.Xml.Exports.dll

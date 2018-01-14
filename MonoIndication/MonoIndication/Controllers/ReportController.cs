@@ -12,6 +12,7 @@ using Excel=Microsoft.Office.Interop.Excel;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
+using System.IO;
 
 namespace MonoIndication.Controllers
 {
@@ -192,14 +193,6 @@ namespace MonoIndication.Controllers
             return kontur;
         }
 
-        [HttpPost]
-        public ActionResult ReportBy2Dates(DateTime from, DateTime to)
-        {
-            IEnumerable<SvodReportBy2Date> report = repo.GetReportBy2Date(from, to);
-            ViewBag.from = from;
-            ViewBag.to = to;
-            return View("ReportByDates",report);
-        }
 
         [HttpPost]
         public ActionResult GoReport(DateTime from, DateTime to)
@@ -219,31 +212,36 @@ namespace MonoIndication.Controllers
             Excel.Workbooks wBooks = null;
             Excel.Workbook wBook = null;
             Excel.Sheets wSheets = null;
-            Excel.Worksheet wSheet = null;
-            Excel.Range ranges=null;
-            
+            Excel.Worksheet ranges = null;
+
+            string file_path_new=Server.MapPath("~/Static/Energosbit_new.xls");
             try
             {
-
+                
                 List<EnergosbitXls> list = repo.GetEnSbReport(DateTime.Now.AddMonths(-1), new DateTime(2017,12,15)).ToList();
 
+               
+                
                 appExl = new Excel.Application();
+                appExl.ScreenUpdating = false;
+                
                 //appExl.Visible = true;
                 wBooks=appExl.Workbooks;
                 wBook = wBooks.Open(Server.MapPath("~/Static/Energosbit.xls"));
                 wSheets = wBook.Worksheets;
-                wSheet = wSheets.get_Item(1);
-                ranges = wSheet.UsedRange;
+                ranges = wSheets.get_Item(1);
+
+                int count = list.Count;
                 
 
-                for(int i=0;i<list.Count();i++)
+                for(int i=0;i<count;i++)
                 {
                     ranges.Cells[i + 5, 1].Value2 = list[i].ZavN;
                     ranges.Cells[i + 5, 2].Value2 = list[i].Ngao.ToString();
                     ranges.Cells[i + 5, 3].Value2 = list[i].Address;
                     ranges.Cells[i + 5, 4].Value2 = list[i].KodSchSbut;
                     ranges.Cells[i + 5, 5].Value2 = list[i].TipSh;
-                    ranges.Cells[i + 5, 6].Value2 = list[i].Uch;
+                    ranges.Cells[i + 5, 6].Value2 = list[i].UchCode;
                     ranges.Cells[i + 5, 7].Value2 = list[i].DatePod == default(DateTime) ? "" : list[i].DatePod.ToString("dd.MM.yy");
                     ranges.Cells[i + 5, 8].Value2 = list[i].DatePod == default(DateTime) ? "" : list[i].DatePod.ToString("HH:mm:ss");
                     ranges.Cells[i + 5, 9].Value2 = Math.Round(list[i].PodHeat,2);
@@ -256,69 +254,90 @@ namespace MonoIndication.Controllers
                     ranges.Cells[i + 5, 16].Value2 = Math.Round(list[i].TempOut,0);
                     ranges.Cells[i + 5, 17].Value2 = Math.Round(list[i].TempCold,0);
                     ranges.Cells[i + 5, 18].Value2 = list[i].TotalWorkHours.ToString();
-                    ranges.Cells[i + 5, 21].Value2 = true;
-                    ranges.Cells[i + 5, 22].Value2 = false;
+                    ranges.Cells[i + 5, 21].Value2 = list[i].isOtop;
+                    ranges.Cells[i + 5, 22].Value2 = list[i].isGvs;
+                    ranges.Cells[i + 5, 23].Value2 = list[i].period.Month;
+                    ranges.Cells[i + 5, 24].Value2 = list[i].period.Year;
+                   
                 }
-
-                wBook.SaveCopyAs(Server.MapPath("~/Static/Energosbit_new.xls"));
-
+                appExl.ScreenUpdating = true;
                 
-                          
-
-
-                
+                wBook.SaveCopyAs(file_path_new);
 
                 wBook.Close(false, Missing.Value, Missing.Value);
                 wBooks.Close();
-
-                //wBooks.Close();
                 
-
-                //appExl.Application.Quit();
+                appExl.Application.Quit();
 
                 int id;
-                // Find the Excel Process Id (ath the end, you kill him
+                //Find the Excel Process Id (ath the end, you kill him
                 GetWindowThreadProcessId(appExl.Hwnd, out id);
                 Process excelProcess = Process.GetProcessById(id);
                 
                 
                 appExl.Quit();
-                
 
-               
-                
                 Marshal.FinalReleaseComObject(ranges);
-                Marshal.FinalReleaseComObject(wSheet);
+                
                 Marshal.FinalReleaseComObject(wSheets);
                 Marshal.FinalReleaseComObject(wBook);
                 Marshal.FinalReleaseComObject(wBooks);
                 Marshal.FinalReleaseComObject(appExl);
 
                 ranges = null;
-                wSheet = null;
+                
                 wSheets = null;
                 wBook = null;
                 wBooks = null;
                 appExl = null;
 
-
+                
                 
                 System.GC.Collect();
                 System.GC.WaitForPendingFinalizers();
 
                 excelProcess.Kill();
+
+
+                //copy to MemoryStream
+                MemoryStream ms = new MemoryStream();
+                using (FileStream fs = System.IO.File.OpenRead(file_path_new)) 
+                { 
+                    fs.CopyTo(ms); 
+                }
+
+                //Delete file
+                //if (File.Exists(file_path_new))
+                  //  File.Delete(file_path_new);
+
+                //Download file
                 
-                return Content("true");
+                return File(ms.ToArray(), "application/vnd.ms-excel", DateTime.Now.Date.ToString() + ".xls");
             }
             catch(Exception ex){
-                
-                Marshal.ReleaseComObject(ranges);
-                Marshal.ReleaseComObject(wSheet);
-                Marshal.ReleaseComObject(wSheets);
-                Marshal.ReleaseComObject(wBook);
-                Marshal.ReleaseComObject(wBooks);
-                Marshal.ReleaseComObject(appExl);
 
+                if (ranges != null)
+                {
+                    Marshal.ReleaseComObject(ranges);
+                }
+                if (wSheets != null)
+                {
+                    Marshal.ReleaseComObject(wSheets);
+                }
+                if (wBook != null)
+                {
+                    Marshal.ReleaseComObject(wBook);
+                }
+                if (wBooks != null)
+                {
+                    Marshal.ReleaseComObject(wBooks);
+                }
+                if (appExl != null)
+                {
+                    appExl.Quit();
+                    Marshal.ReleaseComObject(appExl);
+                }
+                
                 System.GC.Collect();
                 System.GC.WaitForPendingFinalizers();
 

@@ -13,6 +13,10 @@
         font-family: 'Times New Roman';
     }
 
+        #export thead {
+            box-shadow:2px 0px 2px 1px gray;
+        }
+
         #export td, #export th {
             padding: 1px 2px;
             border: 1px solid #bcbfb1;
@@ -36,9 +40,9 @@
         width: 100%;
         position: fixed;
         top: 0px;
-        background-color: #fefefe;
+        background-color: #bad5e9;
         border-bottom: 1px solid gray;
-        background:rgba(250,246,231,0.8);
+        background: rgba(169, 203, 227, 0.8);
     }
 
     .fix h2{
@@ -69,6 +73,10 @@
             <th rowspan="2">Время работы прибора</th>
             <th rowspan="2">Время работы прибора с ошибкой</th>
             <th rowspan="2">Код сч. группового учета в кодировке энергосбыта</th>
+            <th rowspan="2">Qотоп</th>
+            <th rowspan="2">Qгвс</th>
+            <th rowspan="2">МесР</th>
+            <th rowspan="2">ГодР</th>
         </tr>
         <tr>
             <th class="podacha">Показания прибора учета тепла</th>
@@ -90,7 +98,7 @@
             <td>@item.Address</td>
             <td title="Код счетчика в нумерации энергосбыта">@item.KodSchSbut</td>
             <td title="Тип счетчика">@item.TipSh</td>
-            <td>@item.Uch</td>
+            <td class="text-center">@item.UchCode</td>
             <td>
             @if (item.DatePod != default(DateTime))
             {
@@ -104,16 +112,20 @@
                 }
             <td title="Показания прибора учета тепла" class="podacha">@item.PodHeat.ToString("f2")</td>
             <td title="Расход сетевой воды" class="podacha">@item.PodWaterLoseAll.ToString("f0")</td>
-            <td title="Мгновенный расход воды" class="podacha">@item.PodWaterLose.ToString("f4")</td>
+            <td title="Мгновенный расход воды" class="podacha">@item.PodWaterLose.ToString("0.0##")</td>
             <td title="Температура подачи" class="podacha">@item.TempIn.ToString("f0")</td>
             <td title="Показания прибора учета тепла" class="obratka">@item.ObrHeat.ToString("f2")</td>
             <td title="Расход сетевой воды" class="obratka">@item.ObrWaterLoseAll.ToString("f0")</td>
-            <td title="Мгновенный расход воды" class="obratka">@item.ObrWaterLose.ToString("f4")</td>
+            <td title="Мгновенный расход воды" class="obratka">@item.ObrWaterLose.ToString("0.0##")</td>
             <td title="Температура обратки" class="obratka">@item.TempOut.ToString("f0")</td>
             <td title="Температура холодной воды">@item.TempCold.ToString("f0")</td>
             <td title="Время работы прибора">@item.TotalWorkHours.ToString()</td>
             <td></td>
             <td></td>
+            <td>@(item.isOtop?"ИСТИНА":"ЛОЖЬ")</td>
+            <td>@(item.isGvs?"ИСТИНА":"ЛОЖЬ")</td>
+            <td>@item.period.Month.ToString()</td>
+            <td>@item.period.Year.ToString()</td>
         </tr>
         }
       

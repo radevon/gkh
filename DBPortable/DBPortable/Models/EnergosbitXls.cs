@@ -49,5 +49,55 @@ namespace DBPortable
 
         public double ObrWaterLoseAll { get; set; }
 
+        public bool isOtop
+        {
+            get
+            {
+                if (String.IsNullOrWhiteSpace(Uch))
+                    return false;
+
+                if (Uch.ToLower().Contains("ото") || Uch.ToLower().Contains("общ"))
+                {
+                    return true;
+                }
+                else
+                    return false;
+            }
+        }
+
+        public bool isGvs
+        {
+            get
+            {
+                if (String.IsNullOrWhiteSpace(Uch))
+                    return false;
+
+                if (Uch.ToLower().Contains("гвс") || Uch.ToLower().Contains("общ"))
+                {
+                    return true;
+                }
+                else
+                    return false;
+            }
+        }
+
+        public DateTime period { get; set; }
+
+
+        public string UchCode
+        {
+            get
+            {
+                if (isOtop && isGvs)
+                    return "3";
+                else if (isOtop)
+                    return "1";
+                else if (isGvs)
+                    return "2";
+                else
+                    return "";
+            }
+        }
+        
     }
 }

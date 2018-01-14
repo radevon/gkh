@@ -303,7 +303,6 @@
     <None Include="Properties\PublishProfiles\test.pubxml" />
     <Content Include="Views\Admin\ChangeAdminPassword.cshtml" />
     <Content Include="Views\Report\ReportBy2Dates.cshtml" />
-    <Content Include="Views\Report\ReportByDates.cshtml" />
     <Content Include="Views\Request\Request.cshtml" />
     <Content Include="Views\Itp\ListKonturs.cshtml" />
     <Content Include="Views\Itp\AddKonturs.cshtml" />
