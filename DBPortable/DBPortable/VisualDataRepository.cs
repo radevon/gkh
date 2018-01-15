@@ -517,9 +517,10 @@ where o.recvDate=(select max(recvDate) from  db_heat_parameter where phone=o.pho
 
             using (IDbConnection conn = new SQLiteConnection(this.db_.GetDefaultConnectionString()))
             {
+                DateTime per = to.Day > 5 ? to : (new DateTime(to.Year, to.Month, 1)).AddDays(-1);
                 parameters = conn.Query<EnergosbitXls>(@"select m.address, m.px, m.MarkerType as Ngao, date(@period_) as period, pod.recvDate as DatePod, pod.phone, substr(k.Name,1,3) as uch, k.ZavN, k.KodSchSbut, k.TipSh, pod.heatValue as PodHeat, pod.tempIn, pod.tempOut, pod.waterLose as PodWaterLose, pod.waterLoseAll as podWaterLoseAll, pod.totalWorkHours, pod.tempCold, pod.n_pp, pod.g_npp,
 	    obr.heatValue as ObrHeat, obr.waterLose as ObrWaterLose, obr.waterLoseAll as ObrWaterLoseAll
- from db_object_marker m left join groupingDayView pod on m.phone=pod.phone and pod.n_pp % 2 = 0 and (date(pod.recvDate)=date(@from_) or date(pod.recvDate)=date(@to_)) left join  db_konturs k on k.phone=pod.phone and k.N=pod.n_pp left join groupingDayView obr on pod.phone=obr.phone and pod.g_npp=obr.g_npp and date(pod.recvDate)=date(obr.recvDate) and pod.n_pp=obr.n_pp-1  order by m.px, m.address, pod.phone, pod.g_npp, pod.recvDate", new { from_ = from.ToString("yyyy-MM-dd"), to_ = to.ToString("yyyy-MM-dd"), period_ = to.ToString("yyyy-MM-dd") });
+ from db_object_marker m left join groupingDayView pod on m.phone=pod.phone and pod.n_pp % 2 = 0 and (date(pod.recvDate)=date(@from_) or date(pod.recvDate)=date(@to_)) left join  db_konturs k on k.phone=pod.phone and k.N=pod.n_pp left join groupingDayView obr on pod.phone=obr.phone and pod.g_npp=obr.g_npp and date(pod.recvDate)=date(obr.recvDate) and pod.n_pp=obr.n_pp-1  order by m.px, m.address, pod.phone, pod.g_npp, pod.recvDate", new { from_ = from.ToString("yyyy-MM-dd"), to_ = to.ToString("yyyy-MM-dd"), period_ = per.ToString("yyyy-MM-dd") });
             }
 
             return parameters;

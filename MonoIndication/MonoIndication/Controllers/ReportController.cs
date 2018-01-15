@@ -194,7 +194,7 @@ namespace MonoIndication.Controllers
         }
 
 
-        [HttpPost]
+       
         public ActionResult GoReport(DateTime from, DateTime to)
         {
             IEnumerable<EnergosbitXls> list = repo.GetEnSbReport(from, to);
@@ -205,7 +205,8 @@ namespace MonoIndication.Controllers
         [DllImport("user32.dll")]
         static extern int GetWindowThreadProcessId(int hWnd, out int lpdwProcessId);
 
-        public ActionResult ToExcel()
+        [HttpPost]
+        public ActionResult ToExcel(DateTime from, DateTime to)
         {
             //IEnumerable<EnergosbitXls> list = repo.GetEnSbReport(from, to);
             Excel.Application appExl=null;
@@ -218,7 +219,7 @@ namespace MonoIndication.Controllers
             try
             {
                 
-                List<EnergosbitXls> list = repo.GetEnSbReport(DateTime.Now.AddMonths(-1), new DateTime(2017,12,15)).ToList();
+                List<EnergosbitXls> list = repo.GetEnSbReport(from,to).ToList();
 
                
                 
@@ -306,12 +307,7 @@ namespace MonoIndication.Controllers
                     fs.CopyTo(ms); 
                 }
 
-                //Delete file
-                //if (File.Exists(file_path_new))
-                  //  File.Delete(file_path_new);
-
-                //Download file
-                
+                                
                 return File(ms.ToArray(), "application/vnd.ms-excel", DateTime.Now.Date.ToString() + ".xls");
             }
             catch(Exception ex){

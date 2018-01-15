@@ -15,7 +15,7 @@
             <h2 class="text-primary">Сводный отчет по объектам на основе показаний за период</h2>
         </div>
     </div>
-    @using (Html.BeginForm("GoReport", "Report", FormMethod.Post, new { @class = "form" }))
+    @using (Html.BeginForm("ToExcel", "Report", FormMethod.Post, new { @class = "form" }))
     {
     <div class="row">
        
@@ -28,11 +28,16 @@
             <input type="text" id="to" name="to" required class="form-control" />
         </div>
         <div class="col-md-4 col-lg-4 col-sm-6" style="padding:16px 15px">
-            <input type="submit" class="btn btn-primary" value="Получить отчёт" />
+            <input type="submit" class="btn btn-primary" value="Получить отчёт в Excel" title="На компьютере обязательно должен быть установлен Microsoft Office Excel"/>
         </div>
     </div>
     
     }
+    <div class="row">
+        <div class="col-md-4 col-xs-4 col-sm-4 col-xs-offset-8 col-sm-offset-8 col-md-offset-8">
+            <a id="ReportToScreen" href="#" title="Вывести таблицу отчета на экран (не требуется установка excel)">Отчет на экран</a>
+        </div>
+    </div>
 </div>
 
 @section Scripts {
@@ -58,6 +63,13 @@
             //minDate: moment(),
             maxDate: new Date(),
             format: 'DD.MM.YYYY'
+        });
+
+
+        $("#ReportToScreen").click(function (e) {
+            window.location.href = '@Url.Action("GoReport","Report")' + '?from=' + moment($("#from").val(), 'DD.MM.YYYY').toISOString() + '&to=' + moment($("#to").val(), 'DD.MM.YYYY').toISOString();
+            e.preventDefault();
+            return false;
         });
     });
     </script>
