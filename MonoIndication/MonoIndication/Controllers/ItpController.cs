@@ -53,9 +53,7 @@ namespace MonoIndication.Controllers
                 Marker m = repo.GetMarkerById(id.Value);
                 if (m == null)
                     return HttpNotFound();
-                if (m.MarkerType != 0) // если часом не по адресу пришли - редирект к ЦТП
-                    return HttpNotFound();
-
+                
                 ItpInfo itp = Mapper.Map<Marker, ItpInfo>(m);
                 itp.ListKonturs = repo.GetNumberKonturs(m.Phone);
 
