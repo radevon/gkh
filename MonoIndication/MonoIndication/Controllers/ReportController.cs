@@ -265,18 +265,20 @@ namespace MonoIndication.Controllers
                 
                 wBook.SaveCopyAs(file_path_new);
 
-                wBook.Close(false, Missing.Value, Missing.Value);
+                wBook.Close(0);
                 wBooks.Close();
                 
-                appExl.Application.Quit();
+                //appExl.Application.Quit();
 
+                /*
                 int id;
-                //Find the Excel Process Id (ath the end, you kill him
                 GetWindowThreadProcessId(appExl.Hwnd, out id);
                 Process excelProcess = Process.GetProcessById(id);
-                
+                */
                 
                 appExl.Quit();
+
+                
 
                 Marshal.FinalReleaseComObject(ranges);
                 
@@ -294,10 +296,10 @@ namespace MonoIndication.Controllers
 
                 
                 
-                System.GC.Collect();
-                System.GC.WaitForPendingFinalizers();
-
-                excelProcess.Kill();
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+                
+                // excelProcess.Kill();
 
 
                 //copy to MemoryStream
@@ -334,10 +336,10 @@ namespace MonoIndication.Controllers
                     Marshal.ReleaseComObject(appExl);
                 }
                 
-                System.GC.Collect();
-                System.GC.WaitForPendingFinalizers();
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
 
-                return Content(ex.Message);
+                return Content(ex.Message +"<br/>"+ex.StackTrace);
 
             }
             

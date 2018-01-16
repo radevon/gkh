@@ -61,6 +61,6 @@ E:\dev\vs\gkh\DBPortable\DBPortable\bin\Release\System.Data.SQLite.dll
 E:\dev\vs\gkh\DBPortable\DBPortable\bin\Release\System.Data.SQLite.EF6.dll
 E:\dev\vs\gkh\DBPortable\DBPortable\bin\Release\System.Data.SQLite.Linq.dll
 E:\dev\vs\gkh\DBPortable\DBPortable\bin\Release\Dapper.xml
-E:\dev\vs\gkh\DBPortable\DBPortable\obj\Release\DBPortable.csprojResolveAssemblyReference.cache
 E:\dev\vs\gkh\DBPortable\DBPortable\obj\Release\DBPortable.dll
 E:\dev\vs\gkh\DBPortable\DBPortable\obj\Release\DBPortable.pdb
+E:\dev\vs\gkh\DBPortable\DBPortable\obj\Release\DBPortable.csproj.ResolveComReference.cache

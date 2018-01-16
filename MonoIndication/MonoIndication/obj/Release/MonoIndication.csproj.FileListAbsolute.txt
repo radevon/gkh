@@ -252,3 +252,4 @@ E:\dev\vs\gkh\MonoIndication\MonoIndication\obj\Release\MonoIndication.dll
 E:\dev\vs\gkh\MonoIndication\MonoIndication\obj\Release\MonoIndication.pdb
 E:\dev\vs\gkh\MonoIndication\MonoIndication\bin\Calabonga.Xml.Exports.dll
 D:\code\.NET\Rogachev\MonoIndication\MonoIndication\bin\Calabonga.Xml.Exports.dll
+E:\dev\vs\gkh\MonoIndication\MonoIndication\obj\Release\MonoIndication.csproj.ResolveComReference.cache
