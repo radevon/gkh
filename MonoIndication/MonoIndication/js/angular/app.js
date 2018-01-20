@@ -199,7 +199,15 @@ app.controller('MarkerController',function MarkerController($scope,$http,dataSer
             if (pattern.test(value.Address))
                 this.push(value);
         }, array);
-        return array;
+        return array.sort(function (a, b) {
+            if (a.Address > b.Address) {
+                return 1;
+            } else if (a.Address < b.Address) {
+                return -1
+            } else {
+                return 0;
+            }
+        });
     };
 
 });
