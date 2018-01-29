@@ -11,6 +11,7 @@ using System.Configuration;
 namespace MonoIndication.Controllers
 {
     [Authorize]
+    [OutputCache(Duration = 0, NoStore = true)]
     public class DeviceController : Controller
     {
         
@@ -19,6 +20,7 @@ namespace MonoIndication.Controllers
         private VisualDataRepository repo = new VisualDataRepository(ConfigurationManager.AppSettings["dbPath"]);
         private Logger loger = new Logger();
 
+        
         public JsonResult AllMarkers()
         {
             List<Marker> devices=new List<Marker>();

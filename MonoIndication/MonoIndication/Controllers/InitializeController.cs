@@ -12,6 +12,7 @@ namespace MonoIndication.Controllers
         //
         // GET: /Initialize/
 
+        
         public ActionResult Index()
         {
             return View();
