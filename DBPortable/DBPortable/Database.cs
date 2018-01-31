@@ -102,6 +102,11 @@ from db_heat_parameter main;";
      unique(phone,WhenSms,SmsMode)
 )";
 
+        private string RegionInfo = @"create table if not exists 'regions' (
+    'Id'	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+	'regionName'	TEXT NOT NULL
+)";
+
         private string LogTable = @"CREATE TABLE if not exists 'loging' (
 	'Id'	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
 	'MessageDate'	TEXT NOT NULL,
@@ -161,7 +166,8 @@ from db_heat_parameter main;";
                               && this.ExecuteSqlCreateTable(this.EventTable).isSuccess
                               && this.ExecuteSqlCreateTable(this.DebrifTable).isSuccess
                               && this.ExecuteSqlCreateTable(this.LogTable).isSuccess
-                              && this.ExecuteSqlCreateTable(this.groupingDayView).isSuccess;
+                              && this.ExecuteSqlCreateTable(this.groupingDayView).isSuccess
+                              && this.ExecuteSqlCreateTable(this.RegionInfo).isSuccess;
             return allSuccess;
         }
 

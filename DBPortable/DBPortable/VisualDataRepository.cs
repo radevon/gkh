@@ -475,7 +475,47 @@ on   start_select.n_month = second_select.n_month + 1;";
 
         #endregion
 
+        // работа с объектами справочника групп регионов
+        #region Regions
 
+        public List<Regions> GetAllRegions()
+        {
+            List<Regions> all = new List<Regions>();
+            using (IDbConnection conn = new SQLiteConnection(this.db_.GetDefaultConnectionString()))
+            {
+                all = conn.Query<Regions>(@"select Id, regionName from regions").ToList();
+            }
+
+            return all;
+        }
+
+        public int AddRegion(Regions item)
+        {
+            if(item==null||String.IsNullOrWhiteSpace(item.RegionName))
+                return -1;
+            try
+            {
+                using (IDbConnection conn = new SQLiteConnection(this.db_.GetDefaultConnectionString()))
+                {
+                    return conn.ExecuteScalar<int>("insert into regions (regionName) values(@name);", new { name = item.RegionName });
+                }
+            }
+            catch (Exception ex)
+            {
+                return -1;
+            }
+            
+        }
+
+        public int DeleteRegion(int id)
+        {
+            using (IDbConnection conn = new SQLiteConnection(this.db_.GetDefaultConnectionString()))
+            {
+                return conn.ExecuteScalar<int>("delete from regions where id=@id_;", new { id_=id });
+            }
+        }
+
+        #endregion
         public IEnumerable<HeatFullView> GetJournal()
         {
             IEnumerable<HeatFullView> parameters = Enumerable.Empty<HeatFullView>();

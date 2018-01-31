@@ -78,6 +78,7 @@
     <Compile Include="Models\KonturItem.cs" />
     <Compile Include="Models\LogRecord.cs" />
     <Compile Include="Models\Marker.cs" />
+    <Compile Include="Models\Regions.cs" />
     <Compile Include="Models\RequestStatistic.cs" />
     <Compile Include="Models\SvodReportBy2Date.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

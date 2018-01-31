@@ -9,6 +9,15 @@ app.service("dataService",function dataService($http) {
         });
     };
 
+    this.getgroups = function () {
+        return $http({
+            url: '././device/allgroups',
+            method: 'GET',
+            dataType: 'json',
+            cache: false
+        });
+    }
+
     this.insertmarker = function(marker) {
         return $http({
             url: '././device/InsertNewMarker',

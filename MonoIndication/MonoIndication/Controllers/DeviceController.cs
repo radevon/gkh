@@ -48,6 +48,32 @@ namespace MonoIndication.Controllers
             return Json(devices, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult AllGroups()
+        {
+            List<Regions> groups = new List<Regions>();
+            try
+            {
+                groups = repo.GetAllRegions();
+
+            }
+            catch (Exception ex)
+            {
+                LogMessage message = new LogMessage()
+                {
+                    Id = -1,
+                    MessageDate = DateTime.Now,
+                    UserName = User.Identity.Name,
+                    MessageType = "error",
+                    MessageText = ex.Message + ex.StackTrace
+                };
+
+                loger.LogToFile(message);
+                loger.LogToDatabase(message);
+            }
+
+            return Json(groups, JsonRequestBehavior.AllowGet);
+        }
+
         [HttpPost]
         public JsonResult InsertNewMarker(Marker marker)
         {

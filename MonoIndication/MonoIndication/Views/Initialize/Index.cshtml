@@ -21,6 +21,7 @@
                     <tr>
                         <th data-ng-click="headerSortClick('MarkerId')" style="cursor:pointer" title="Нажмите для изменения сортировки записей">Id</th>
                         <th data-ng-click="headerSortClick('Address')" style="cursor:pointer" title="Нажмите для изменения сортировки записей">Адрес</th>
+                        <th>Код гр. объектов</th>
                         <th data-ng-click="headerSortClick('MarkerType')" style="cursor:pointer" title="Нажмите для изменения сортировки записей">№ ЖЭУ</th>
                         <th data-ng-click="headerSortClick('Description')" style="cursor:pointer" title="Нажмите для изменения сортировки записей">Описание</th>
                         <th data-ng-click="headerSortClick('Phone')" style="cursor:pointer" title="Нажмите для изменения сортировки записей">№ тел.</th>
@@ -30,6 +31,7 @@
                     <tr data-ng-repeat="marker in markers | orderBy:['Px',sortField]:reverseSort" data-ng-class="{'rowselected':marker==selectedMarker}" data-ng-click="select(marker,$event)" id="tr{{marker.MarkerId}}">
                         <td data-ng-bind="marker.MarkerId" style="font-size:12px" class="text-muted"></td>
                         <td data-ng-bind="marker.Address"></td>
+                        <td data-ng-bind="marker.Px"></td>
                         <td data-ng-bind="marker.MarkerType"></td>
                         <td data-ng-bind="marker.Description" class="text-muted"></td>
                         <td data-ng-bind="marker.Phone" class="text-success" style="font-family:monospace"></td>
@@ -97,6 +99,7 @@
                         </div>
                         <div class="col-md-8 col-sm-8 col-xs-8">
                             <div class="field" data-ng-bind="selectedMarker.MarkerType"></div>
+                            <div>{{getTitleForGroup(selectedMarker.Px)}}</div>
                         </div>
                     </div>
                     <div class="row">

@@ -7,11 +7,15 @@ app.controller('MarkerController',function MarkerController($scope,$http,dataSer
     
     $scope.init = function () {
         $scope.loadMarkers();
+        $scope.loadGroups();
     };
 
     $scope.markers = [];
     $scope.flagEdit = false;
     $scope.selectedMarker = null;
+
+    $scope.groups = [];
+    
 
     $scope.loadMarkers = function () {
         dataService.getmarkers()
@@ -21,6 +25,13 @@ app.controller('MarkerController',function MarkerController($scope,$http,dataSer
             .error(function (error) { console.log(error); alert('При загрузке списка объектов возникла ошибка!'); }); 
     };
  
+    $scope.loadGroups=function(){
+        dataService.getgroups()
+            .success(function (data) {
+                $scope.groups = data;
+            })
+            .error(function (error) { console.log(error); $scope.groups = []; });
+    }
 
     // метод вставки записи метки в базу 
     $scope.insertMarker = function (marker) {
@@ -159,13 +170,23 @@ app.controller('MarkerController',function MarkerController($scope,$http,dataSer
 		};
 
 
+	$scope.getTitleForGroup = function (id) {
+	    var title = "-";
+	    if ($scope.groups != undefined && $scope.groups.length > 0) {
+	        angular.forEach($scope.groups, function (value, key) {
+	            if (value.Id === id) {
+	                title = value.RegionName;	               
+	            }
+	        });
+	    }
+	    return title;
+	}
 
     $scope.deleteMark = function(marker) {
         if (confirm('Вы подтверждаете удаление информации?')) {
             $scope.deleteMarker(marker.MarkerId);
             $scope.selectedMarker = null;
-        }
-        ;
+        };
     };
 
 		// логика добавления - редактирования
