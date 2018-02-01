@@ -171,7 +171,7 @@ app.controller('MarkerController',function MarkerController($scope,$http,dataSer
 
 
 	$scope.getTitleForGroup = function (id) {
-	    var title = "-";
+	    var title = "нет";
 	    if ($scope.groups != undefined && $scope.groups.length > 0) {
 	        angular.forEach($scope.groups, function (value, key) {
 	            if (value.Id === id) {

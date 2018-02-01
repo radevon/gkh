@@ -3,7 +3,7 @@ $(function() {
 
     // состояние базы
     $("#DbSettingLink").click(
-        function () {
+        function (e) {
             showLoading(true);
             $.get('././DbStatus', {},
                 function(data) {
@@ -16,12 +16,14 @@ $(function() {
                 showLoading(false);
             });
 
+            e.preventDefault();
+
         }
     );
     
     // добавление пользователя
     $("#UserCreateLink").click(
-        function () {
+        function (e) {
             showLoading(true);
             $.get('././CreateNewUser', {},
                 function (data) {
@@ -33,13 +35,13 @@ $(function() {
             }).complete(function () {
                 showLoading(false);
             });
-
+            e.preventDefault();
         }
     );
     
     // просмотр пользователей
     $("#UserEditLink").click(
-        function () {
+        function (e) {
             showLoading(true);
             $.get('././ViewUsers', {},
                 function (data) {
@@ -51,12 +53,12 @@ $(function() {
             }).complete(function () {
                 showLoading(false);
             });
-
+            e.preventDefault();
         }
     );
     
     $("#LogViewLink").click(
-        function () {
+        function (e) {
             showLoading(true);
             $.get('././ViewLog', {},
                 function (data) {
@@ -68,11 +70,12 @@ $(function() {
             }).complete(function () {
                 showLoading(false);
             });
+            e.preventDefault();
         }
     );
 
     $("#DbEditLink").click(
-        function () {
+        function (e) {
             showLoading(true);
             $.get('././DbEditor', {},
                 function (data) {
@@ -84,11 +87,14 @@ $(function() {
             }).complete(function () {
                 showLoading(false);
             });
+
+            e.preventDefault();
+            //return false;
         }
     );
 
 
-    $("#PhoneEditLink").click(function () {
+    $("#PhoneEditLink").click(function (e) {
         showLoading(true);
         $.get('././PhoneEdit', {},
             function (data) {
@@ -100,11 +106,12 @@ $(function() {
         }).complete(function () {
             showLoading(false);
         });
+        e.preventDefault();
     });
     
 
     $("#AdminPasswordChange").click(
-    function () {
+    function (e) {
         showLoading(true);
         $.get('././ChangeAdminPassword', {},
             function (data) {
@@ -116,6 +123,7 @@ $(function() {
         }).complete(function () {
             showLoading(false);
         });
+        e.preventDefault();
     }
 );
     

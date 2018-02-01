@@ -196,14 +196,13 @@ namespace MonoIndication.Controllers
             return PartialView();
         }
 
-        public ActionResult ListCounters()
+        public ActionResult ListRegions()
         {
-            List<KonturModel> list = new List<KonturModel>();
+            List<Regions> list = new List<Regions>();
 
             try
             {
-                Mapper.Initialize(cfg=>cfg.CreateMap<KonturItem,KonturModel>());
-                list = Mapper.Map<List<KonturModel>>(repo_data.GetAllKonturs());
+                list = repo_data.GetAllRegions().OrderBy(x=>x.Id).ToList();
                 return PartialView(list);
             }
             catch (Exception ex)
@@ -223,22 +222,26 @@ namespace MonoIndication.Controllers
             
         }
 
+        
         [HttpPost]
-        public ActionResult ListCounters(int newN, string newName)
+        public ActionResult ListRegions(string newName)
         {
-            List<KonturModel> list = new List<KonturModel>();
-
+            List<Regions> list = new List<Regions>();
+            if (String.IsNullOrWhiteSpace(newName))
+            {
+                Content(String.Format("<h4 class='text-danger'>Не возможно добавить пустое значение! Заполните текстовое поле</h4>"));
+            }
             try
             {
-                Mapper.Initialize(cfg => cfg.CreateMap<KonturItem, KonturModel>());
+               
                 try
                 {
-                    repo_data.InsertKontur(new KonturItem() {N = newN, Name = newName});
+                    repo_data.AddRegion(new Regions { Id = 0, RegionName = newName });
                     LogMessage message = new LogMessage()
                     {
                         MessageDate = DateTime.Now,
                         MessageType = "insert",
-                        MessageText = String.Format("Попытка записи нового значения в таблицу 'db_konturs' - справочник контуров. N={0} Name={1}", newN, newName)
+                        MessageText = String.Format("Попытка записи нового значения в таблицу 'regions' - справочник групп объектов. значение={0}", newName)
                     };
 
                     loger.LogToFile(message);
@@ -257,9 +260,9 @@ namespace MonoIndication.Controllers
                     loger.LogToDatabase(message);
                     ViewBag.Message = "Ошибка при добавлении нового значения в справочник.";
                 }
-                
 
-                list = Mapper.Map<List<KonturModel>>(repo_data.GetAllKonturs());
+
+                list = repo_data.GetAllRegions().OrderBy(x => x.Id).ToList();
             }
             catch (Exception ex)
             {
@@ -276,19 +279,17 @@ namespace MonoIndication.Controllers
                 return Content(String.Format("<h4 class='text-danger'>Возникли ошибки. Данные записаны в лог</h4>"));
             }
 
-            
-            
-            //Thread.Sleep(2000);
             return PartialView(list);
         }
+        
 
         [HttpPost]
-        public ActionResult DeleteKontur(string phone)
+        public ActionResult DeleteRegion(int id)
         {
             try
             {
-                repo_data.DeleteKonturByNumber(phone);
-                return RedirectToAction("ListCounters");
+                repo_data.DeleteRegion(id);
+                return RedirectToAction("ListRegions");
             }
             catch (Exception ex)
             {
@@ -306,6 +307,7 @@ namespace MonoIndication.Controllers
             }
             
         }
+         
 
         // get запрос на список телефонов перед изменением
         public ActionResult PhoneEdit()

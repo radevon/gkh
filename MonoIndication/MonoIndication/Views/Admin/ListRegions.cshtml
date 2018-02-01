@@ -1,16 +1,13 @@
-﻿@model IEnumerable<MonoIndication.KonturModel>
+﻿@model List<DBPortable.Regions>
 
-<script type="text/javascript">
-    
-</script>
 
 <table class="table table-condensed">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.N)
+            Id
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+            Название группы
         </th>
         <th></th>
     </tr>
@@ -18,14 +15,14 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.N)
+            @Html.DisplayFor(modelItem => item.Id)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Name)
+            @Html.DisplayFor(modelItem => item.RegionName)
         </td>
         <td>
             @Html.ActionLink("Редактировать", "Edit", new { /* id=item.PrimaryKey */ }) |
-            <a class="deleteKonturLnk" href="#" data-del-id="@item.N">Удалить</a>
+            <a class="deleteGroupLink" href="#" data-del-id="@item.Id">Удалить</a>
             
         </td>
     </tr>
@@ -34,30 +31,13 @@
 </table>
 
 <div class="panel panel-default">
-    <div class="panel-heading">Добавление счётчика</div>
+    <div class="panel-heading">Добавление записи</div>
     <div class="panel-body">
-        <form name="addKonturForm" action='@Url.Action("ListCounters","Admin")' method="POST">
-            <table class="table">
-                <tr>
-                    <td>№</td>
-                    <td>Название</td>
-                    <td></td>
-                </tr>
-                <tr>
+        <form name="addRegionForm" action='@Url.Action("ListRegions","Admin")' method="POST">
+            <label for="newName">Название подгруппы объектов</label>
+            <textarea name="newName" required="required" rows="1" cols="30"></textarea>
+            <input type="submit" id="addGroupLink" value="Добавить" class="btn btn-sm btn-default" />
 
-                    <td>
-                        <input type='text' name="newN" size="4" data-val="true"  data-val-required="Не заполнено поле №"/>
-                        <div data-valmsg-replace="true" data-valmsg-for="newN" />
-                    </td>
-                    <td>
-                        <textarea name="newName" rows="1" cols="30"></textarea>
-                    </td>
-                    <td>
-                        <input type="submit" id="addKonturLink" value="Добавить" class="btn btn-sm btn-default"/>
-                    </td>
-                </tr>
-                
-            </table>
         </form>
     </div>
 </div>
@@ -75,7 +55,7 @@
 <script type="text/javascript">
 
     $(function() {
-        $("form[name='addKonturForm']").submit(
+        $("form[name='addRegionForm']").submit(
             function (event) {
 
                 var valid = $(this).valid();
@@ -105,12 +85,12 @@
     });
 
 
-    $("a.deleteKonturLnk").click(function () {
+    $("a.deleteGroupLink").click(function () {
         if (confirm("Уверены что хотите удалить справочные данные по этой записи?")) {
             $.ajax({
-                url: '@Url.Action("DeleteKontur")',
+                url: '@Url.Action("DeleteRegion")',
                 type: 'POST',
-                data: {'N':$(this).attr('data-del-id')},
+                data: {'id':$(this).attr('data-del-id')},
                 beforeSend: function () { showLoading(true); },
                 success: function (response) {
                     $("#editDbContainer").html(response);
@@ -123,6 +103,7 @@
                     console.log(xhr.responseText);
                 }
             });
+            return false;
         }
     });
    

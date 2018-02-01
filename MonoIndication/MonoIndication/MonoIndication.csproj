@@ -170,7 +170,6 @@
     <Compile Include="Models\Log\Loging.cs" />
     <Compile Include="Models\Log\LogMessage.cs" />
     <Compile Include="Models\ViewModels\ActForm.cs" />
-    <Compile Include="Models\ViewModels\Admin\KonturModel.cs" />
     <Compile Include="Models\ViewModels\Admin\LogInfoVM.cs" />
     <Compile Include="Models\ViewModels\Itp\ItpInfo.cs" />
     <Compile Include="Models\ViewModels\Itp\ItpRow.cs" />
@@ -286,7 +285,7 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Admin\ViewLog.cshtml" />
     <Content Include="Views\Admin\DbEditor.cshtml" />
-    <Content Include="Views\Admin\ListCounters.cshtml" />
+    <Content Include="Views\Admin\ListRegions.cshtml" />
     <Content Include="Views\Shared\LoginInfoPanel.cshtml" />
     <Content Include="Views\Admin\GenerateData.cshtml" />
     <Content Include="Views\Itp\ReplaceCounter.cshtml" />
