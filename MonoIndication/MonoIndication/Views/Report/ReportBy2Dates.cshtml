@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IEnumerable<SelectListItem>
+@{ 
     ViewBag.Title = "Отчет по 2 датам";
     Layout = "~/Views/Shared/MainLayout.cshtml";
 }
@@ -27,15 +28,25 @@
             Конечная дата
             <input type="text" id="to" name="to" required class="form-control" />
         </div>
-        <div class="col-md-4 col-lg-4 col-sm-6" style="padding:16px 15px">
-            <input type="submit" class="btn btn-primary" value="Получить отчёт в Excel" title="На компьютере обязательно должен быть установлен Microsoft Office Excel"/>
+        <div class="col-md-4 col-lg-4 col-sm-6">
+            Группа объектов
+            @Html.DropDownList("GroupId", Model, new { @class = "form-control" })
+           
         </div>
     </div>
+        <div class="row" style="padding:5px 0">
+            <div class="col-md-6 col-sm-6 col-xs-6">
+                <input type="submit" class="btn btn-primary" value="Получить отчёт в Excel" title="На компьютере обязательно должен быть установлен Microsoft Office Excel" />
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-6">
+                <a id="ReportToScreen" href="#" class="btn btn-default pull-right" title="Вывести таблицу отчета на экран (не требуется установка excel)">Отчет на экран</a>
+            </div>
+        </div>
     
     }
     <div class="row">
         <div class="col-md-4 col-xs-4 col-sm-4 col-xs-offset-8 col-sm-offset-8 col-md-offset-8">
-            <a id="ReportToScreen" href="#" title="Вывести таблицу отчета на экран (не требуется установка excel)">Отчет на экран</a>
+            
         </div>
     </div>
 </div>
@@ -67,7 +78,7 @@
 
 
         $("#ReportToScreen").click(function (e) {
-            window.location.href = '@Url.Action("GoReport","Report")' + '?from=' + moment($("#from").val(), 'DD.MM.YYYY').toISOString() + '&to=' + moment($("#to").val(), 'DD.MM.YYYY').toISOString();
+            window.location.href = '@Url.Action("GoReport","Report")' + '?from=' + moment($("#from").val(), 'DD.MM.YYYY').toISOString() + '&to=' + moment($("#to").val(), 'DD.MM.YYYY').toISOString() + '&GroupId=' + $("#GroupId").val();
             e.preventDefault();
             return false;
         });

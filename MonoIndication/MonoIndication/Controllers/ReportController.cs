@@ -37,7 +37,23 @@ namespace MonoIndication.Controllers
 
         public ActionResult ReportBy2Dates()
         {
-            return View();
+            List<Regions> allRegion = new List<Regions>();
+            try
+            {
+                allRegion = repo.GetAllRegions();
+            }
+            catch (Exception ex)
+            {
+                ViewBag.message = ex.Message;
+            }
+            SelectListItem def=new SelectListItem(){Text="Все",Value="0"};
+            IEnumerable<SelectListItem> defaults=Utilite.SingleItemAsEnumerable<SelectListItem>(def);
+            IEnumerable<SelectListItem> dbase=allRegion.Select(x=>new SelectListItem(){ Text=x.RegionName, Value=x.Id.ToString()});
+            IEnumerable<SelectListItem> groups=Enumerable.Union(defaults,dbase);
+            
+            
+            
+            return View(groups);
         }
 
 
@@ -195,9 +211,9 @@ namespace MonoIndication.Controllers
 
 
        
-        public ActionResult GoReport(DateTime from, DateTime to)
+        public ActionResult GoReport(DateTime from, DateTime to, int GroupId)
         {
-            IEnumerable<EnergosbitXls> list = repo.GetEnSbReport(from, to);
+            IEnumerable<EnergosbitXls> list = repo.GetEnSbReport(from, to,GroupId);
             return View(list);
         }
 
@@ -206,9 +222,9 @@ namespace MonoIndication.Controllers
         static extern int GetWindowThreadProcessId(int hWnd, out int lpdwProcessId);
 
         [HttpPost]
-        public ActionResult ToExcel(DateTime from, DateTime to)
+        public ActionResult ToExcel(DateTime from, DateTime to, int GroupId)
         {
-            //IEnumerable<EnergosbitXls> list = repo.GetEnSbReport(from, to);
+            
             Excel.Application appExl=null;
             Excel.Workbooks wBooks = null;
             Excel.Workbook wBook = null;
@@ -219,7 +235,7 @@ namespace MonoIndication.Controllers
             try
             {
                 
-                List<EnergosbitXls> list = repo.GetEnSbReport(from,to).ToList();
+                List<EnergosbitXls> list = repo.GetEnSbReport(from,to,GroupId).ToList();
 
                
                 

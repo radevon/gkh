@@ -310,6 +310,7 @@
     <Content Include="Views\Report\GoReport.cshtml" />
     <Content Include="Views\PlaningDate\Planing.cshtml" />
     <Content Include="Views\Itp\EditKonturs.cshtml" />
+    <Content Include="Views\Admin\EditRegion.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Account\Login.cshtml" />

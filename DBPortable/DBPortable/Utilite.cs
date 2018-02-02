@@ -59,6 +59,12 @@ namespace DBPortable
             return DA;
         }
 
+        // usage: someObject.SingleItemAsEnumerable();
+        public static IEnumerable<T> SingleItemAsEnumerable<T>(T item)
+        {
+            yield return item;
+        }
+
     }
 
     public struct MethodResult

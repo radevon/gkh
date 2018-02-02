@@ -222,6 +222,36 @@ namespace MonoIndication.Controllers
             
         }
 
+        public ActionResult EditRegion(int id)
+        {
+            
+            try
+            {
+                Regions region = repo_data.GetRegionById(id);
+                if (region != null)
+                {
+                    return PartialView(region);
+                }
+                else
+                    return Content("<h4 class='text-warning'>Объект не найден в базе данны. Обновите страницу!</h4>");
+                
+            }
+            catch (Exception ex)
+            {
+                LogMessage message = new LogMessage()
+                {
+                    MessageDate = DateTime.Now,
+                    MessageType = "error",
+                    MessageText = ex.Message + ex.StackTrace
+                };
+
+                loger.LogToFile(message);
+                loger.LogToDatabase(message);
+
+                return Content(String.Format("<h4 class='text-danger'>Возникли ошибки. Данные записаны в лог</h4>"));
+            }
+
+        }
         
         [HttpPost]
         public ActionResult ListRegions(string newName)

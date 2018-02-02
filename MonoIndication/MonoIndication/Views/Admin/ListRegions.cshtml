@@ -21,9 +21,8 @@
             @Html.DisplayFor(modelItem => item.RegionName)
         </td>
         <td>
-            @Html.ActionLink("Редактировать", "Edit", new { /* id=item.PrimaryKey */ }) |
-            <a class="deleteGroupLink" href="#" data-del-id="@item.Id">Удалить</a>
-            
+            <a class="editGroupLink" href="#" data-edit-id="@item.Id">Изменить</a>|           
+            <a class="deleteGroupLink" href="#" data-del-id="@item.Id">Удалить</a>            
         </td>
     </tr>
 }
@@ -35,6 +34,7 @@
     <div class="panel-body">
         <form name="addRegionForm" action='@Url.Action("ListRegions","Admin")' method="POST">
             <label for="newName">Название подгруппы объектов</label>
+            <br/>
             <textarea name="newName" required="required" rows="1" cols="30"></textarea>
             <input type="submit" id="addGroupLink" value="Добавить" class="btn btn-sm btn-default" />
 
@@ -107,5 +107,25 @@
         }
     });
    
+    $("a.editGroupLink").click(function () {
+            $.ajax({
+                url: '@Url.Action("EditRegion")',
+                type: 'GET',
+                data: { 'id': $(this).attr('data-edit-id') },
+                beforeSend: function () { showLoading(true); },
+                success: function (response) {
+                    $("#editDbContainer").html(response);
+                },
+                complete: function () {
+                    showLoading(false);
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    $("#editDbContainer").html("<h4 class='text-danger'>Возникла ошибка! Подробные сведения можно помотреть в консоли браузера</h4>");
+                    console.log(xhr.responseText);
+                }
+            });
+            return false;
+    });
+
 </script>
 

@@ -1,0 +1,46 @@
+﻿@model DBPortable.Regions
+
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Редактирование группы</legend>
+
+        @Html.HiddenFor(model => model.Id)
+
+        
+            <label for="RegionName">Наименование группы объектов</label>
+        <br/>
+            <textarea name="RegionName" id="RegionName">@(Model.RegionName??"")</textarea>
+            @Html.ValidationMessageFor(model => model.RegionName)
+        <hr/>
+
+        <p>
+            <input type="submit" class="btn btn-default" value="Сохранить" />
+            <a id="returnToList" href="#" class="btn btn-default">Отмена</a>
+        </p>
+    </fieldset>
+    
+}
+
+<script type="text/javascript">
+
+   
+
+    $("#returnToList").click(function (e) {
+            showLoading(true);
+            $.get('@Url.Action("ListRegions", "Admin")', {},
+                function (data) {
+                    $("#editDbContainer").html(data);
+                })
+                .error(function (jqXHR, textStatus, errorThrown) {
+                    $("#editDbContainer").html("<h4 class='text-danger'>Возникла ошибка! Подробные сведения можно помотреть в консоли браузера</h4>");
+                    console.log(jqXHR.responseText);
+                }).complete(function () { showLoading(false); });
+            e.preventDefault();
+        });
+
+</script>
+
