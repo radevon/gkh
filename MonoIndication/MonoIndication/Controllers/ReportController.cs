@@ -58,22 +58,14 @@ namespace MonoIndication.Controllers
 
 
         // get запрос на получение формы заполнения акта
-        public ActionResult ActReport(string phone)
+        public ActionResult ActReport()
         {
-            Marker obj = repo.GetMarkerByPhone(phone);
+            List<Marker> all = repo.GetAllMarkers().OrderBy(x=>x.Px).ThenBy(x=>x.Address).ToList();
            
 
             ActForm form = new ActForm();
 
-            if (obj != null)
-            {
-                form.Address = obj.Address;
-                form.Phone = obj.Phone;
-            }else
-            {
-                form.Phone = phone;
-                form.Address = "Неизвестный адрес";
-            }
+          
             
             DateTime now=DateTime.Now.AddMonths(-1);
             form.dateFrom = new DateTime(now.Year, now.Month, 1);
@@ -91,20 +83,30 @@ namespace MonoIndication.Controllers
                 return View(form);
             }
 
-            //form.dateFrom
+            List<ActModel> objects = new List<ActModel>();
 
+            ActModel current = BindActModel(form);
+            objects.Add(current);
+
+            byte[] content = ReportGen.GetActReport(objects, Server.MapPath(ConfigurationManager.AppSettings["ActPath"].ToString()));
+            return File(content, "application/octet-stream", "act_"+DateTime.Now + ".docx");
+        }
+
+        [NonAction]
+        private ActModel BindActModel(ActForm form)
+        {
             ActModel resAct = new ActModel();
-            resAct.Address = form.Address??String.Empty;
+            resAct.Address = form.Address ?? String.Empty;
             resAct.AktNumber = form.ActNum ?? String.Empty;
-            resAct.DocNumber = form.DogNum??String.Empty;
-            resAct.NamePredpriatie = form.NameOrganization??String.Empty;
-            resAct.PostDolgn = form.DolgnPost??String.Empty;
-            resAct.PostFio = form.FioPost??String.Empty;
-            resAct.UserDolgn = form.DolgnUser??String.Empty;
-            resAct.UserFio = form.FioUser??String.Empty;
-            resAct.UserPhone = form.PhoneUser??String.Empty;
+            resAct.DocNumber = form.DogNum ?? String.Empty;
+            resAct.NamePredpriatie = form.NameOrganization ?? String.Empty;
+            resAct.PostDolgn = form.DolgnPost ?? String.Empty;
+            resAct.PostFio = form.FioPost ?? String.Empty;
+            resAct.UserDolgn = form.DolgnUser ?? String.Empty;
+            resAct.UserFio = form.FioUser ?? String.Empty;
+            resAct.UserPhone = form.PhoneUser ?? String.Empty;
             resAct.ReportDate = DateTime.Now;
-            resAct.PeriodReport = String.Format("c {0} по {1}",form.dateFrom.ToString("dd MMM"),form.dateTo.ToString("dd MMM"));
+            resAct.PeriodReport = String.Format("c {0} по {1}", form.dateFrom.ToString("dd MMM"), form.dateTo.ToString("dd MMM"));
 
             // диаппазон выбора контуров
             DateTime findKonturFrom = new DateTime(form.dateFrom.Year, form.dateFrom.Month, form.dateFrom.Day, 0, 0, 0);
@@ -175,11 +177,7 @@ namespace MonoIndication.Controllers
                 resAct.Konturs.Add(new KonturObject());
             }
 
-            List<ActModel> objects=new List<ActModel>();
-            objects.Add(resAct);
-
-            byte[] content = ReportGen.GetActReport(objects, Server.MapPath(ConfigurationManager.AppSettings["ActPath"].ToString()));
-            return File(content, "application/octet-stream", resAct.Address + ".docx");
+            return resAct;
         }
 
         [NonAction]
