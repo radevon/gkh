@@ -15,7 +15,7 @@ namespace MonoIndication
         private static string tempPath = Path.GetTempPath();
 
         // метод позволяющий генерировать отчет по шаблону
-        public static byte[] GetActReport(ActModel obj,string sourceFilePath)
+        public static byte[] GetActReport(List<ActModel> obj,string sourceFilePath)
         {
             byte[] res=new byte[]{};
             
@@ -32,76 +32,82 @@ namespace MonoIndication
                 if (obj == null)
                     return res;
 
-                TableContent tableContent=new TableContent("TableRep");
-                for(int i=0;i<obj.KonturCount;i++){
+                RepeatContent repeated = new RepeatContent("ItemArray");
 
-                    tableContent.AddRow(
-                        new FieldContent("Np", (i + 1).ToString()),
-                        new FieldContent("Addres", obj.Address),
-                        new FieldContent("KonturName",obj.Konturs[i].KonturName),
-                        new FieldContent("HeatLast", obj.Konturs[i].Podacha.EndValues.HeatValue.ToString("0.0")),
-                        new FieldContent("HeatFirst", obj.Konturs[i].Podacha.StartValues.HeatValue.ToString("0.0")),
-                        new FieldContent("HeatDiff", obj.Konturs[i].Podacha.DiffsHeat.ToString("0.0")),
-                        new FieldContent("VolumeLast", obj.Konturs[i].Podacha.EndValues.WaterValue.ToString("0.0")),
-                        new FieldContent("VolumeFirst", obj.Konturs[i].Podacha.StartValues.WaterValue.ToString("0.0")),
-                        new FieldContent("VolumeDiffs", obj.Konturs[i].Podacha.DiffsWater.ToString("0.0")),
-                        new FieldContent("ByTimerLast", obj.Konturs[i].Podacha.EndValues.TotalHours.ToString()),
-                        new FieldContent("ByTimerFirst", obj.Konturs[i].Podacha.StartValues.TotalHours.ToString()),
-                        new FieldContent("ByTimerDiffs", obj.Konturs[i].Podacha.DiffsTimer.ToString()),
-                        new FieldContent("DaysWork", obj.Konturs[i].Podacha.DiffsDate.Days.ToString()),
-
-                        new FieldContent("HeatLastObr", obj.Konturs[i].Obratka.EndValues.HeatValue==0?"":obj.Konturs[i].Obratka.EndValues.HeatValue.ToString("0.0")),
-                        new FieldContent("HeatFirstObr", obj.Konturs[i].Obratka.StartValues.HeatValue==0?"":obj.Konturs[i].Obratka.StartValues.HeatValue.ToString("0.0")),
-                        new FieldContent("HeatDiffObr", obj.Konturs[i].Obratka.DiffsHeat==0?"":obj.Konturs[i].Obratka.DiffsHeat.ToString("0.0")),
-                        new FieldContent("VolumeLastObr", obj.Konturs[i].Obratka.EndValues.WaterValue==0?"":obj.Konturs[i].Obratka.EndValues.WaterValue.ToString("0.0")),
-                        new FieldContent("VolumeFirstObr", obj.Konturs[i].Obratka.StartValues.WaterValue==0?"":obj.Konturs[i].Obratka.StartValues.WaterValue.ToString("0.0")),
-                        new FieldContent("VolumeDiffsObr", obj.Konturs[i].Obratka.DiffsWater==0?"":obj.Konturs[i].Obratka.DiffsWater.ToString("0.0")),
-                        
-                        new FieldContent("VolumeDiffAll", obj.Konturs[i].WaterDiff.ToString("0.0")),
-                        new FieldContent("HeatDiffAll", obj.Konturs[i].HeatDiff.ToString("0.0"))
-                        );
-                  
-                }
-                IContentItem[] commonFields;
-
-                if (tableContent.Rows!=null&&tableContent.Rows.Count > 0)
+                // цикл по всем объектам
+                foreach (ActModel m in obj)
                 {
-                    commonFields = new IContentItem[]{
-                    new FieldContent("AktNumber",obj.AktNumber),
-                    new FieldContent("DocNumber",obj.DocNumber),
-                    new FieldContent("NamePredpriatie",obj.NamePredpriatie),
-                    new FieldContent("PeriodReport", obj.PeriodReport),
-                    new FieldContent("PostDolgn", obj.PostDolgn),
-                    new FieldContent("UserDolgn", obj.UserDolgn),
-                    new FieldContent("PostFio", obj.PostFio),
-                    new FieldContent("UserFio", obj.UserFio),
-                    new FieldContent("UserPhone", obj.UserPhone),
-                    new FieldContent("ReportDate", obj.ReportDate.ToString("dd MMM yyyy")),
-                    tableContent
+                    TableContent tableContent = new TableContent("TableRep");
+                    for (int i = 0; i < m.KonturCount; i++)
+                    {
 
-                    
-                };
-                }else
+                        tableContent.AddRow(
+                            new FieldContent("Np", (i + 1).ToString()),
+                            new FieldContent("Addres", m.Address),
+                            new FieldContent("KonturName", m.Konturs[i].KonturName),
+                            new FieldContent("HeatLast", m.Konturs[i].Podacha.EndValues.HeatValue.ToString("0.0")),
+                            new FieldContent("HeatFirst", m.Konturs[i].Podacha.StartValues.HeatValue.ToString("0.0")),
+                            new FieldContent("HeatDiff", m.Konturs[i].Podacha.DiffsHeat.ToString("0.0")),
+                            new FieldContent("VolumeLast", m.Konturs[i].Podacha.EndValues.WaterValue.ToString("0.0")),
+                            new FieldContent("VolumeFirst", m.Konturs[i].Podacha.StartValues.WaterValue.ToString("0.0")),
+                            new FieldContent("VolumeDiffs", m.Konturs[i].Podacha.DiffsWater.ToString("0.0")),
+                            new FieldContent("ByTimerLast", m.Konturs[i].Podacha.EndValues.TotalHours.ToString()),
+                            new FieldContent("ByTimerFirst", m.Konturs[i].Podacha.StartValues.TotalHours.ToString()),
+                            new FieldContent("ByTimerDiffs", m.Konturs[i].Podacha.DiffsTimer.ToString()),
+                            new FieldContent("DaysWork", m.Konturs[i].Podacha.DiffsDate.Days.ToString()),
+
+                            new FieldContent("HeatLastObr", m.Konturs[i].Obratka.EndValues.HeatValue == 0 ? "" : m.Konturs[i].Obratka.EndValues.HeatValue.ToString("0.0")),
+                            new FieldContent("HeatFirstObr", m.Konturs[i].Obratka.StartValues.HeatValue == 0 ? "" : m.Konturs[i].Obratka.StartValues.HeatValue.ToString("0.0")),
+                            new FieldContent("HeatDiffObr", m.Konturs[i].Obratka.DiffsHeat == 0 ? "" : m.Konturs[i].Obratka.DiffsHeat.ToString("0.0")),
+                            new FieldContent("VolumeLastObr", m.Konturs[i].Obratka.EndValues.WaterValue == 0 ? "" : m.Konturs[i].Obratka.EndValues.WaterValue.ToString("0.0")),
+                            new FieldContent("VolumeFirstObr", m.Konturs[i].Obratka.StartValues.WaterValue == 0 ? "" : m.Konturs[i].Obratka.StartValues.WaterValue.ToString("0.0")),
+                            new FieldContent("VolumeDiffsObr", m.Konturs[i].Obratka.DiffsWater == 0 ? "" : m.Konturs[i].Obratka.DiffsWater.ToString("0.0")),
+
+                            new FieldContent("VolumeDiffAll", m.Konturs[i].WaterDiff.ToString("0.0")),
+                            new FieldContent("HeatDiffAll", m.Konturs[i].HeatDiff.ToString("0.0"))
+                            );
+
+                    }
+                    IContentItem[] commonFields;
+
+                    if (tableContent.Rows != null && tableContent.Rows.Count > 0)
                     {
                         commonFields = new IContentItem[]{
-                    new FieldContent("AktNumber",obj.AktNumber),
-                    new FieldContent("DocNumber",obj.DocNumber),
-                    new FieldContent("NamePredpriatie",obj.NamePredpriatie),
-                    new FieldContent("PeriodReport", obj.PeriodReport),
-                    new FieldContent("PostDolgn", obj.PostDolgn),
-                    new FieldContent("UserDolgn", obj.UserDolgn),
-                    new FieldContent("PostFio", obj.PostFio),
-                    new FieldContent("UserFio", obj.UserFio),
-                    new FieldContent("UserPhone", obj.UserPhone),
-                    new FieldContent("ReportDate", obj.ReportDate.ToString("dd MMM yyyy"))
+                    new FieldContent("AktNumber",m.AktNumber),
+                    new FieldContent("DocNumber",m.DocNumber),
+                    new FieldContent("NamePredpriatie",m.NamePredpriatie),
+                    new FieldContent("PeriodReport", m.PeriodReport),
+                    new FieldContent("PostDolgn", m.PostDolgn),
+                    new FieldContent("UserDolgn", m.UserDolgn),
+                    new FieldContent("PostFio", m.PostFio),
+                    new FieldContent("UserFio", m.UserFio),
+                    new FieldContent("UserPhone", m.UserPhone),
+                    new FieldContent("ReportDate", m.ReportDate.ToString("dd MMM yyyy")),
+                    tableContent                    
                 };
-                    
                     }
-                   
-               
+                    else
+                    {
+                        commonFields = new IContentItem[]{
+                    new FieldContent("AktNumber",m.AktNumber),
+                    new FieldContent("DocNumber",m.DocNumber),
+                    new FieldContent("NamePredpriatie",m.NamePredpriatie),
+                    new FieldContent("PeriodReport", m.PeriodReport),
+                    new FieldContent("PostDolgn", m.PostDolgn),
+                    new FieldContent("UserDolgn", m.UserDolgn),
+                    new FieldContent("PostFio", m.PostFio),
+                    new FieldContent("UserFio", m.UserFio),
+                    new FieldContent("UserPhone", m.UserPhone),
+                    new FieldContent("ReportDate", m.ReportDate.ToString("dd MMM yyyy"))
+                };
+
+                    }
+                    repeated.AddItem(commonFields);
+                }                              
+                              
                     using (var outputDocument = new TemplateProcessor(copyTempFile).SetRemoveContentControls(true))
                     {
-                        outputDocument.FillContent(new Content(commonFields));
+                        outputDocument.FillContent(new Content(repeated));
                         outputDocument.SaveChanges();
                         
                     }

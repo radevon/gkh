@@ -12,6 +12,8 @@ namespace MonoIndication
         {
             Podacha=new SubKontur();
             Obratka=new SubKontur();
+            KonturName = "";
+            SchType = "";
         }
 
         public int KonturNum { get; set; }

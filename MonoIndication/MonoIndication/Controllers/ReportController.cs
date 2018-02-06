@@ -169,11 +169,16 @@ namespace MonoIndication.Controllers
                     resAct.Konturs.Add(objAdd);
 
                 }
-            }        
+            }
+            else // если нет ни одного контура то создаю 1 новый пустой для корректного заполнения таблицы в отчете
+            {
+                resAct.Konturs.Add(new KonturObject());
+            }
 
-              
+            List<ActModel> objects=new List<ActModel>();
+            objects.Add(resAct);
 
-            byte[] content = ReportGen.GetActReport(resAct, Server.MapPath(ConfigurationManager.AppSettings["ActPath"].ToString()));
+            byte[] content = ReportGen.GetActReport(objects, Server.MapPath(ConfigurationManager.AppSettings["ActPath"].ToString()));
             return File(content, "application/octet-stream", resAct.Address + ".docx");
         }
 
@@ -364,90 +369,5 @@ namespace MonoIndication.Controllers
         }
 
 
-        public ActionResult GenRepTest()
-        {
-            List<KonturObject> konturs = new List<KonturObject>();
-            konturs.Add(new KonturObject()
-            {
-                KonturName="гвс",
-                KonturNum=1,
-                SchType="ТЭМ105-М",
-                Podacha = new SubKontur()
-                {
-                    StartValues = new KonturValues()
-                    {
-                        HeatValue=2234.7,
-                        RecvDate=DateTime.Now.AddDays(-15),
-                        WaterValue=234.1,
-                        TotalHours=244
-                    },
-                    EndValues = new KonturValues()
-                    {
-                        HeatValue = 2574.234,
-                        RecvDate = DateTime.Now,
-                        WaterValue = 250.5,
-                        TotalHours = 321
-                    }
-                },
-                Obratka = new SubKontur()
-                {
-                    StartValues = new KonturValues()
-                    {
-                        HeatValue = 234.7,
-                        RecvDate = DateTime.Now.AddDays(-15),
-                        WaterValue = 556.1,
-                        TotalHours = 244
-                    },
-                    EndValues = new KonturValues()
-                    {
-                        HeatValue =267,
-                        RecvDate = DateTime.Now,
-                        WaterValue = 560.5,
-                        TotalHours = 321
-                    }
-                }
-            });
-            konturs.Add(new KonturObject()
-            {
-                KonturName = "отоп",
-                KonturNum = 2,
-                SchType = "ТЭМ104",
-                Podacha = new SubKontur()
-                {
-                    StartValues = new KonturValues()
-                    {
-                        HeatValue = 34.7,
-                        RecvDate = DateTime.Now.AddDays(-15),
-                        WaterValue = 2434.1,
-                        TotalHours = 2344
-                    },
-                    EndValues = new KonturValues()
-                    {
-                        HeatValue = 574.234,
-                        RecvDate = DateTime.Now,
-                        WaterValue = 5450.5,
-                        TotalHours = 3321
-                    }
-                }
-            });
-
-            ActModel model = new ActModel()
-            {
-                NamePredpriatie="КУП \"Жилкомсервис Два\"",
-                AktNumber="1233",
-                DocNumber="12-12",
-                Address="ул Жарковского 12 б",
-                PostFio="Новенький И. Г.",
-                PostDolgn="гл. инженер",
-                UserFio="Пердыш Н. К.",
-                PeriodReport="июбрь 2017",
-                UserDolgn="бухгалтер",
-                UserPhone="2-33-45",
-                Konturs = konturs
-                
-            };
-            byte[] content=ReportGen.GetActReport(model,Server.MapPath(ConfigurationManager.AppSettings["ActPath"].ToString()));
-            return File(content, "application/octet-stream", model.Address + ".docx");
-        }
     }
 }
