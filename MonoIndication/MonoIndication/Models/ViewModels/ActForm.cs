@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
+using System.Configuration;
 
 namespace MonoIndication
 {
@@ -10,7 +11,8 @@ namespace MonoIndication
     {
         public ActForm()
         {
-            NameOrganization = "КЖЭУП \"Рогачев\"";
+            string organization = ConfigurationManager.AppSettings["Organization"] ?? String.Empty;
+            NameOrganization = organization;
         }
         public string NameOrganization { get; set; }
         

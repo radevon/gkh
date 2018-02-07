@@ -312,6 +312,9 @@
     <Content Include="Views\PlaningDate\Planing.cshtml" />
     <Content Include="Views\Itp\EditKonturs.cshtml" />
     <Content Include="Views\Admin\EditRegion.cshtml" />
+    <Content Include="Static\Acts\monthactNew.docx" />
+    <Content Include="Static\Energosbit.xls" />
+    <Content Include="Static\Energosbit_new.xls" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Account\Login.cshtml" />
