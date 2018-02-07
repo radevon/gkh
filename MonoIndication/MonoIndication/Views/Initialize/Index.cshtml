@@ -72,7 +72,16 @@
                                    <span class="glyphicon glyphicon-bell"></span> Опрос
                                </a>
                            </td>
-                           <td></td>
+                           <td><div class="dropdown">
+                                   <a href="#" class="dropdown-toggle btn btn-sm btn-default" data-toggle="dropdown">
+                                       <span class="glyphicon glyphicon-list-alt"></span>&nbsp;Отчёты <b class="caret"></b>
+                                   </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href='@Url.Action("ReportBy2Dates", "Report")'><span class="glyphicon glyphicon-list-alt"></span>&nbsp;Отчет excel</a></li>
+                                    <li><a href='@Url.Action("ActReport", "Report")'><span class="glyphicon glyphicon-text-background"></span>&nbsp;Акты</a></li>
+                                </ul>
+                            </div>
+                           </td>
                            <td style="text-align: right" title="Журнал последних показаний на объектах">
                                <a href='@Url.Action("Journal","Journal")' target="_self" class="btn btn-sm btn-default">
                                    <span class="glyphicon glyphicon-list-alt"></span> Журнал

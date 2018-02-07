@@ -64,39 +64,47 @@ namespace MonoIndication.Controllers
            
 
             ActForm form = new ActForm();
-
-          
-            
+                        
             DateTime now=DateTime.Now.AddMonths(-1);
             form.dateFrom = new DateTime(now.Year, now.Month, 1);
             form.dateTo = form.dateFrom.AddMonths(1).AddDays(-1);
+            ViewBag.addreses = all;
             return View(form);
         }
 
 
         // получаю информацию введенную и из базы значения, заполняю объект и генерирую word отчет
         [HttpPost]
-        public ActionResult ActReport(ActForm form)
+        public ActionResult ActReport(ActForm form, string[] phones)
         {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid || phones == null || phones.Length == 0)
             {
+                if (phones == null || phones.Length == 0)
+                {
+                    ViewBag.Message = "Не выбран ни один объект для получения отчета!";
+                }
+                List<Marker> all = repo.GetAllMarkers().OrderBy(x => x.Px).ThenBy(x => x.Address).ToList();
+                ViewBag.addreses = all;
+
                 return View(form);
             }
 
             List<ActModel> objects = new List<ActModel>();
-
-            ActModel current = BindActModel(form);
-            objects.Add(current);
+            for (int i = 0; i < phones.Length; i++)
+            {
+                ActModel current = BindActModel(form, phones[i]);
+                objects.Add(current);
+            }
+            
 
             byte[] content = ReportGen.GetActReport(objects, Server.MapPath(ConfigurationManager.AppSettings["ActPath"].ToString()));
             return File(content, "application/octet-stream", "act_"+DateTime.Now + ".docx");
         }
 
         [NonAction]
-        private ActModel BindActModel(ActForm form)
+        private ActModel BindActModel(ActForm form, string phone)
         {
             ActModel resAct = new ActModel();
-            resAct.Address = form.Address ?? String.Empty;
             resAct.AktNumber = form.ActNum ?? String.Empty;
             resAct.DocNumber = form.DogNum ?? String.Empty;
             resAct.NamePredpriatie = form.NameOrganization ?? String.Empty;
@@ -111,9 +119,16 @@ namespace MonoIndication.Controllers
             // диаппазон выбора контуров
             DateTime findKonturFrom = new DateTime(form.dateFrom.Year, form.dateFrom.Month, form.dateFrom.Day, 0, 0, 0);
             DateTime findKonturTo = new DateTime(form.dateTo.Year, form.dateTo.Month, form.dateTo.Day, 23, 59, 59);
+
+            Marker addr = repo.GetMarkerByPhone(phone);
+            resAct.Address = String.Empty;
+            if (addr != null)
+            {
+                resAct.Address = addr.Address ?? String.Empty;
+            }
             // получить инфу из базы по показаниям
             // 1) беру список контуров
-            Dictionary<int, string> konturs = repo.GetKontursBeforeDates(form.Phone, findKonturFrom, findKonturTo);
+            Dictionary<int, string> konturs = repo.GetKontursBeforeDates(phone, findKonturFrom, findKonturTo);
 
             if (konturs.Count > 0) // если есть контуры
             {
@@ -130,17 +145,17 @@ namespace MonoIndication.Controllers
                     // если есть контур подачи
                     if (konturs.Keys.Contains(low))
                     {
-                        podacha = GetKonturInfo(form.dateFrom, form.dateTo, form.Phone, low);
+                        podacha = GetKonturInfo(form.dateFrom, form.dateTo, phone, low);
                         // если есть обратка
                         if (konturs.Keys.Contains(high))
                         {
-                            obratka = GetKonturInfo(form.dateFrom, form.dateTo, form.Phone, high);
+                            obratka = GetKonturInfo(form.dateFrom, form.dateTo, phone, high);
                         }
                     }
                     // если есть обратка без подачи (такого не должно быть но все же)
                     else if (konturs.Keys.Contains(high))
                     {
-                        obratka = GetKonturInfo(form.dateFrom, form.dateTo, form.Phone, high);
+                        obratka = GetKonturInfo(form.dateFrom, form.dateTo, phone, high);
                     }
                     else
                     {
@@ -156,7 +171,7 @@ namespace MonoIndication.Controllers
                         Obratka = obratka
                     };
 
-                    KonturItem podInfo = repo.GetKonturByNumber(form.Phone, low);
+                    KonturItem podInfo = repo.GetKonturByNumber(phone, low);
                     if (podInfo != null)
                     {
                         objAdd.KonturName = podInfo.Name.Split(' ')[0];
@@ -164,7 +179,7 @@ namespace MonoIndication.Controllers
                     }
                     else
                     {
-                        objAdd.KonturName = i.ToString();
+                        objAdd.KonturName = "";
                         objAdd.SchType = "";
                     }
 

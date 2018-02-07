@@ -13,9 +13,7 @@ namespace MonoIndication
             NameOrganization = "КЖЭУП \"Рогачев\"";
         }
         public string NameOrganization { get; set; }
-        public string Phone { get; set; } // идентификатор объекта № sim
-        public string Address { get; set; }
-
+        
         //[DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
         [Required(ErrorMessage="Поле должно быть заполнено")]
         public DateTime dateFrom { get; set; }

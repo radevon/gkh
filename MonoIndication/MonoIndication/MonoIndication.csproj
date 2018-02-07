@@ -169,6 +169,7 @@
     <Compile Include="Models\Log\Logger.cs" />
     <Compile Include="Models\Log\Loging.cs" />
     <Compile Include="Models\Log\LogMessage.cs" />
+    <Compile Include="Models\NameValue.cs" />
     <Compile Include="Models\ViewModels\ActForm.cs" />
     <Compile Include="Models\ViewModels\Admin\LogInfoVM.cs" />
     <Compile Include="Models\ViewModels\Itp\ItpInfo.cs" />
