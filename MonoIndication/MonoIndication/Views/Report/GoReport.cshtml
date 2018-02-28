@@ -138,13 +138,13 @@
                 {
                     @item.DatePod.ToString("HH:mm:ss");
                 }
-            <td title="Показания прибора учета тепла" class="podacha">@item.PodHeat.ToString("f2")</td>
-            <td title="Расход сетевой воды" class="podacha">@item.PodWaterLoseAll.ToString("f0")</td>
-            <td title="Мгновенный расход воды" class="podacha">@item.PodWaterLose.ToString("0.0##")</td>
+            <td title="Показания прибора учета тепла" class="podacha">@item.PodHeat.ToString("f1")</td>
+            <td title="Расход сетевой воды" class="podacha">@item.PodWaterLoseAll.ToString("f1")</td>
+            <td title="Мгновенный расход воды" class="podacha">@item.PodWaterLose.ToString("0.0")</td>
             <td title="Температура подачи" class="podacha">@item.TempIn.ToString("f0")</td>
-            <td title="Показания прибора учета тепла" class="obratka">@item.ObrHeat.ToString("f2")</td>
-            <td title="Расход сетевой воды" class="obratka">@item.ObrWaterLoseAll.ToString("f0")</td>
-            <td title="Мгновенный расход воды" class="obratka">@item.ObrWaterLose.ToString("0.0##")</td>
+            <td title="Показания прибора учета тепла" class="obratka">@item.ObrHeat.ToString("f1")</td>
+            <td title="Расход сетевой воды" class="obratka">@item.ObrWaterLoseAll.ToString("f1")</td>
+            <td title="Мгновенный расход воды" class="obratka">@item.ObrWaterLose.ToString("0.0")</td>
             <td title="Температура обратки" class="obratka">@item.TempOut.ToString("f0")</td>
             <td title="Температура холодной воды">@item.TempCold.ToString("f0")</td>
             <td title="Время работы прибора">@item.TotalWorkHours.ToString()</td>

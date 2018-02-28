@@ -279,13 +279,13 @@ namespace MonoIndication.Controllers
                     ranges.Cells[i + 5, 6].Value2 = list[i].UchCode;
                     ranges.Cells[i + 5, 7].Value2 = list[i].DatePod == default(DateTime) ? "" : list[i].DatePod.ToString("dd.MM.yy");
                     ranges.Cells[i + 5, 8].Value2 = list[i].DatePod == default(DateTime) ? "" : list[i].DatePod.ToString("HH:mm:ss");
-                    ranges.Cells[i + 5, 9].Value2 = Math.Round(list[i].PodHeat,2);
-                    ranges.Cells[i + 5, 10].Value2 = Math.Round(list[i].PodWaterLoseAll,0);
-                    ranges.Cells[i + 5, 11].Value2 = Math.Round(list[i].PodWaterLose,4);
+                    ranges.Cells[i + 5, 9].Value2 = Math.Round(list[i].PodHeat,1);
+                    ranges.Cells[i + 5, 10].Value2 = Math.Round(list[i].PodWaterLoseAll,1);
+                    ranges.Cells[i + 5, 11].Value2 = Math.Round(list[i].PodWaterLose,1);
                     ranges.Cells[i + 5, 12].Value2 = Math.Round(list[i].TempIn,0);
-                    ranges.Cells[i + 5, 13].Value2 = Math.Round(list[i].ObrHeat,2);
-                    ranges.Cells[i + 5, 14].Value2 = Math.Round(list[i].ObrWaterLoseAll,0);
-                    ranges.Cells[i + 5, 15].Value2 = Math.Round(list[i].ObrWaterLose,4);
+                    ranges.Cells[i + 5, 13].Value2 = Math.Round(list[i].ObrHeat,1);
+                    ranges.Cells[i + 5, 14].Value2 = Math.Round(list[i].ObrWaterLoseAll,1);
+                    ranges.Cells[i + 5, 15].Value2 = Math.Round(list[i].ObrWaterLose,1);
                     ranges.Cells[i + 5, 16].Value2 = Math.Round(list[i].TempOut,0);
                     ranges.Cells[i + 5, 17].Value2 = Math.Round(list[i].TempCold,0);
                     ranges.Cells[i + 5, 18].Value2 = list[i].TotalWorkHours.ToString();
@@ -302,7 +302,7 @@ namespace MonoIndication.Controllers
                 wBook.Close(0);
                 wBooks.Close();
                 
-                //appExl.Application.Quit();
+                appExl.Application.Quit();
 
                 /*
                 int id;
@@ -310,7 +310,7 @@ namespace MonoIndication.Controllers
                 Process excelProcess = Process.GetProcessById(id);
                 */
                 
-                appExl.Quit();
+                //appExl.Quit();
 
                 
 
