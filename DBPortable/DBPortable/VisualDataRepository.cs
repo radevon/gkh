@@ -335,6 +335,16 @@ namespace DBPortable
             return res;
         }
 
+        public int RemoveKonturValues(int Id)
+        {
+            int res = 0;
+            using (IDbConnection conn = new SQLiteConnection(this.db_.GetDefaultConnectionString()))
+            {
+                res = conn.Execute("delete from db_heat_parameter where id=:id_", new { id_ = Id });
+            }
+            return res;
+        }
+
 
  #endregion
 

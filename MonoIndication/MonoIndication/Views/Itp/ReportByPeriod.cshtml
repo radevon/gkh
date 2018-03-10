@@ -30,6 +30,24 @@
         var textError = $(elementA).data("errors");
         createModal("Информация по ошибкам на счетчике", textError, "");
     }
+
+    // удаление строки показания из базы
+
+    function removeFailRecord(idRec) {
+        if (confirm('Вы собираетесь удалить полученную запись о показаниях. Изменения не обратимы. Уверены?')) {
+            showLoading(true);
+            $.post('@Url.Action("RemoveKonturValues", "Itp")', { id: idRec }, function (data) {
+                createModal("Операция удаления записи о показаниях", data, "");
+            }).error(function (jqXHR, textStatus, errorThrown) {
+                alert('Ошибка при отправке запроса!');
+                console.log(jqXHR.responseText);
+            })
+                .complete(function () {
+                    showLoading(false);
+                });
+        }
+        
+    }
 </script>
 
 @if (Model.ReportKontur.Any())

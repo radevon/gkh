@@ -12,11 +12,12 @@
             
             <table class="reportItptable table table-bordered table-condensed table-hover">
                 <thead>
-                    <tr>
+                   <!-- <tr>
                         <td colspan="15">
-                            <h3 class="text-muted text-center"><strong>@ViewBag.address</strong></h3>
+                            <h3 class="text-muted text-center"><strong>@*ViewBag.address*@</strong></h3>
                         </td>
                     </tr>
+                       -->
                     <tr>
                         <td colspan="15">
                             <h3 class="text-primary text-center"><strong>ПОДРОБНАЯ ИНФОРМАЦИЯ <span class="text-danger "> ПО КОНТУРУ №@Model.KonturNumber - "@Model.KonturName.ToUpper()"</span></strong></h3>
@@ -42,7 +43,7 @@
                         <th title="Время наработки">t<sub>раб</sub> <span class="dim">(ч)</span></th>
                         <th title="Ошибки" class="tableexport-ignore"><img src='@Url.Content("~/img/warning.png")' height="20" /></th>
                         <th class="tableexport-ignore"></th>
-                        
+                        <th class="tableexport-ignore"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -71,6 +72,14 @@
     <a class="text-danger" data-errors="@item.errorList" href="javascript:void(0)" onclick="getDescriptionError($(this))">ошибки</a>
 }
                             </td>
+
+                            <td title="Удаление текущей записи о показаниях" class="tableexport-ignore">
+                                <a href="javascript:void(0)" onclick="removeFailRecord(@item.Id)" class="removeCress">
+                                    x
+                                </a>
+
+                            </td>
+
                             <td title="Коррекция по замене счетчика" class="tableexport-ignore" style="display:none">
                                 <a href="javascript:void(0)" onclick="getReplaceData(@item.Id)">
                                     <img src='@Url.Content("~/img/mechanica.png")' height="20" style="cursor: pointer" />
@@ -81,12 +90,32 @@
                     }
                     
                 </tbody>
-                <tfoot>
-                   
+                <tfoot style="font-weight:bold">
+                   <tr>
+                       <td>
+                           @period.Days дней @period.Hours ч.
+                       </td>
+                       <td></td>
+                       <td>@((Model.Parameters.OrderBy(x => x.recvDate).Last().heatValue - Model.Parameters.OrderBy(x => x.recvDate).First().heatValue).ToString("#0.0"))</td>
+                       <td></td>
+                       <td></td>
+                       <td>
+                           @((Model.Parameters.OrderBy(x => x.recvDate).Last().waterLoseAll - Model.Parameters.OrderBy(x => x.recvDate).First().waterLoseAll).ToString("#0.0"))
+                       </td>
+                       <td></td>
+                       <td></td>
+                       <td></td>
+                       <td></td>
+                       <td></td>
+                       <td></td>
+                       <td>@((Model.Parameters.OrderBy(x => x.recvDate).Last().totalWorkHours - Model.Parameters.OrderBy(x => x.recvDate).First().totalWorkHours).ToString())</td>
+                       <td></td>
+                       <td></td>
+                   </tr>
                 </tfoot>
             </table>
             
-            
+            @*
                             
                             <table class="reportItpsvod table table-bordered table-condensed">
                                 <thead>
@@ -196,7 +225,8 @@
                         </tbody>
                     </table>
            
-                
+                *@
+            
                 }
         else
         {

@@ -125,7 +125,7 @@ namespace MonoIndication.Controllers
             ReportItp model = new ReportItp();
             model.startDate = startDate.Date;
             model.endDate = endDate.Date.AddDays(1).Date.AddSeconds(-1);
-            ViewBag.address = address;
+            //ViewBag.address = address;
             try
             {
 
@@ -409,6 +409,52 @@ namespace MonoIndication.Controllers
                 return
                     Content(
                         "<h4 class='text-center text-danger'>Значения по счётчику не были скорректированы, обратитесь к администратору.</h4>");
+            }
+
+
+        }
+
+        [HttpPost]
+        public ActionResult RemoveKonturValues(int Id)
+        {
+            // обновление
+            try
+            {
+                int removed = repo.RemoveKonturValues(Id);
+
+                LogMessage message = new LogMessage()
+                {
+                    Id = 1,
+                    UserName = User.Identity.Name,
+                    MessageDate = DateTime.Now,
+                    MessageType = "remove heat parameters",
+                    MessageText =
+                        new JavaScriptSerializer().Serialize(new { id = Id, removedCount = removed })
+                };
+
+                loger.LogToFile(message);
+                loger.LogToDatabase(message);
+                return
+                    Content(
+                        String.Format(
+                            "<h4 class='text-center text-success'>Удалено {0} записей.<br/> <span class='text-warning'>Обновите страницу для отображения актуальной информации!<span></h4>",
+                            removed));
+            }
+            catch (Exception ex)
+            {
+                LogMessage message = new LogMessage()
+                {
+                    Id = -1,
+                    MessageDate = DateTime.Now,
+                    MessageType = "error",
+                    MessageText = ex.Message + ex.StackTrace
+                };
+
+                loger.LogToFile(message);
+                loger.LogToDatabase(message);
+                return
+                    Content(
+                        "<h4 class='text-center text-danger'>Значения по контуру не были удалены, обратитесь к администратору.</h4>");
             }
 
 

@@ -363,7 +363,16 @@ form[name='editform'] .row {
     font-size: 14px;
 }
 
+.removeCress {
+    cursor: pointer;
+    text-decoration:none;
+    color:#e69a9a
+}
 
+.removeCress:hover{
+    color:#b52808;
+    text-decoration:none;
+}
 
 .rotate{
     transform:rotate(45deg);
