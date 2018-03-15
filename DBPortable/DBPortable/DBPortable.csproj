@@ -67,6 +67,7 @@
     <Compile Include="Database.cs" />
     <Compile Include="ExternalRepository.cs" />
     <Compile Include="LogDbClass.cs" />
+    <Compile Include="Models\BuhReport.cs" />
     <Compile Include="Models\DataDiagrammItp.cs" />
     <Compile Include="Models\DataValue.cs" />
     <Compile Include="Models\Debrif.cs" />

@@ -40,6 +40,8 @@
             </div>
             <div class="col-md-6 col-sm-6 col-xs-6">
                 <a id="ReportToScreen" href="#" class="btn btn-default pull-right" title="Вывести таблицу отчета на экран (не требуется установка excel)">Отчет на экран</a>
+
+                <a id="ReportBuh" href="#" class="btn btn-default" title="">Отчет в бухгалтерию</a>
             </div>
         </div>
     
@@ -79,6 +81,12 @@
 
         $("#ReportToScreen").click(function (e) {
             window.location.href = '@Url.Action("GoReport","Report")' + '?from=' + moment($("#from").val(), 'DD.MM.YYYY').toISOString() + '&to=' + moment($("#to").val(), 'DD.MM.YYYY').toISOString() + '&GroupId=' + $("#GroupId").val();
+            e.preventDefault();
+            return false;
+        });
+
+        $("#ReportBuh").click(function (e) {
+            window.location.href = '@Url.Action("Buhgaltery","Report")' + '?from=' + moment($("#from").val(), 'DD.MM.YYYY').toISOString() + '&to=' + moment($("#to").val(), 'DD.MM.YYYY').toISOString() + '&GroupId=' + $("#GroupId").val();
             e.preventDefault();
             return false;
         });

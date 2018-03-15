@@ -1,0 +1,112 @@
+﻿@model IEnumerable<DBPortable.BuhReport>
+
+@{
+    ViewBag.Title = "Buhgaltery";
+    Layout = "~/Views/Shared/MainLayout.cshtml";
+    int i = 1;
+}
+
+<div style="text-align:center">
+    <h2>Отчетные данные по теплоэнергии для бухгалтерии</h2>
+</div>
+
+
+<table class="table table-condensed table-hover" style="width:1200px; margin:0 auto">
+    <thead>
+        <tr style="background-color:#ededed">
+            <th rowspan="2">№ пп</th>
+            <th rowspan="2">
+                Адрес
+            </th>
+           
+            <th rowspan="2">
+                Тип
+            </th>
+            <th rowspan="2">
+                № теплосч
+            </th>
+            <th colspan="3" style="text-align:center">
+                Начало месяца
+            </th>
+            
+            <th colspan="3" style="text-align:center">
+                Конец месяца
+            </th>
+            
+            <th rowspan="2" style="text-align:right">
+                Общий расход
+            </th>
+
+        </tr>
+        <tr style="background-color:#ededed">
+            
+            <th style="text-align:right">
+                Подача
+            </th>
+            <th style="text-align:right">
+                Обратка
+            </th>
+            <th style="text-align:right">
+                Разность
+            </th>
+            <th style="text-align:right">
+                Подача
+            </th>
+            <th style="text-align:right">
+                Обратка
+            </th>
+            <th style="text-align:right">
+                Разность
+            </th>
+           
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@i.ToString()</td>
+                <td>
+                    @item.Address
+                </td>
+                @*
+                    <td>
+                        @item.Phone
+                    </td>
+                *@
+                <td>
+                    @item.Uch
+                </td>
+
+                <td>
+                    @item.ZavN
+                </td>
+
+                <td style="text-align:right; background-color:#ffeaea">
+                    @item.PodHeatStart.ToString("0.#0")
+                </td>
+                <td style="text-align:right; background-color:#ddf5f7">
+                    @item.ObrHeatStart.ToString("0.#0")
+                </td>
+                <td style="text-align:right; font-weight:bold">
+                    @item.startMonthHeatDiff.ToString("0.#0")
+                </td>
+                <td style="text-align: right; background-color: #ffeaea">
+                    @item.PodHeatEnd.ToString("0.#0")
+                </td>
+                <td style="text-align: right; background-color: #ddf5f7">
+                    @item.ObrHeatEnd.ToString("0.#0")
+                </td>
+                <td style="text-align: right; font-weight: bold">
+                    @item.endMonthHeatDiff.ToString("0.#0")
+                </td>
+                <td style="text-align: right; font-weight: bold; background-color:#ffd800">
+                    @item.HeatUsed.ToString("0.#0")
+                </td>
+
+            </tr>
+            i++;
+        }
+    </tbody>
+</table>

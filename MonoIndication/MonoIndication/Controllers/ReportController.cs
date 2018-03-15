@@ -382,5 +382,12 @@ namespace MonoIndication.Controllers
         }
 
 
+        public ActionResult Buhgaltery(DateTime from, DateTime to, int GroupId)
+        {
+            IEnumerable<BuhReport> list = repo.GetBuhgalteryData(from, to, GroupId);
+            return View(list);
+        }
+
+
     }
 }

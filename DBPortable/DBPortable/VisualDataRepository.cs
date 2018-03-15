@@ -553,6 +553,8 @@ o.totalWorkHours from db_heat_parameter o left join db_konturs k  on k.phone=o.p
         }
 
         #region reports
+
+        /*
         public IEnumerable<SvodReportBy2Date> GetReportBy2Date(DateTime from, DateTime to)
         {
             IEnumerable<SvodReportBy2Date> parameters = Enumerable.Empty<SvodReportBy2Date>();
@@ -570,6 +572,7 @@ where o.recvDate=(select max(recvDate) from  db_heat_parameter where phone=o.pho
 
             return parameters;
         }
+         * */
 
         public IEnumerable<EnergosbitXls> GetEnSbReport(DateTime from, DateTime to, int GroupId=0)
         {
@@ -592,6 +595,116 @@ where o.recvDate=(select max(recvDate) from  db_heat_parameter where phone=o.pho
             return parameters;
         }
 
+        // посчитать расход теплоэнергии для бухгалтерии
+        public IEnumerable<BuhReport> GetBuhgalteryData(DateTime from, DateTime to, int GroupId = 0)
+        {
+            IEnumerable<BuhReport> parameters = Enumerable.Empty<BuhReport>();
+
+            using (IDbConnection conn = new SQLiteConnection(this.db_.GetDefaultConnectionString()))
+            {
+                DateTime per = to.Day > 5 ? to : (new DateTime(to.Year, to.Month, 1)).AddDays(-1);
+                if (GroupId > 0)
+                {
+                    parameters = conn.Query<BuhReport>(@"select m.address, 
+	   m.phone,
+	   m.Px as groupId,
+	   (select substr(k.Name,1,3) from db_konturs k where k.phone=m.phone and k.N=begin_month.n_pp) as Uch_begin,
+	   (select substr(k.Name,1,3) from db_konturs k where k.phone=m.phone and k.N=end_month.n_pp) as Uch_end,
+	   (select k.ZavN from db_konturs k where k.phone=m.phone and k.N=begin_month.n_pp) as ZavN_begin,
+	   (select k.ZavN from db_konturs k where k.phone=m.phone and k.N=end_month.n_pp) as ZavN_end,
+	   begin_month.podHeatStart,
+	   begin_month.obrHeatStart,
+	   begin_month.startMonthHeatDiff,
+	   
+	   end_month.podHeatEnd,
+	   end_month.obrHeatEnd,
+	   end_month.endMonthHeatDiff,
+	   
+	   ifnull(end_month.endMonthHeatDiff-begin_month.startMonthHeatDiff,0.0) as HeatUsed
+	   
+	   from db_object_marker m left join
+	   (select g_pod.phone, 
+						 g_pod.n_pp, 
+						 g_pod.heatValue as podHeatStart,
+						 ifnull(g_obr.heatValue,0.0) as obrHeatStart,
+						 g_pod.heatValue-ifnull(g_obr.heatValue,0.0) as startMonthHeatDiff 
+						 from groupingDayView g_pod 
+						 left join groupingDayView g_obr 
+						 on g_pod.n_pp=g_obr.n_pp-1 and g_pod.phone=g_obr.phone and date(g_obr.recvDate)=date(@from_) 
+						 where g_pod.n_pp%2=0 and date(g_pod.recvDate)=date(@from_) 
+						 order by g_pod.phone, g_pod.n_pp
+				 ) begin_month 
+			on	  m.phone=begin_month.phone 
+			left join
+			(select g_pod.phone, 
+						 g_pod.n_pp,
+						 g_pod.heatValue as podHeatEnd,
+						 ifnull(g_obr.heatValue,0.0) as obrHeatEnd,
+						 g_pod.heatValue-ifnull(g_obr.heatValue,0.0) as endMonthHeatDiff 
+						 from groupingDayView g_pod 
+						 left join groupingDayView g_obr 
+						 on g_pod.n_pp=g_obr.n_pp-1 and g_pod.phone=g_obr.phone and date(g_obr.recvDate)=date(@to_) 
+						 where g_pod.n_pp%2=0 and date(g_pod.recvDate)=date(@to_) 
+						 order by g_pod.phone, g_pod.n_pp
+				 ) end_month 
+			on	  m.phone=end_month.phone
+	   	   
+	   where m.Px=@groupId and begin_month.n_pp=end_month.n_pp or (begin_month.n_pp is null and end_month.n_pp is not null) or (begin_month.n_pp is not null and end_month.n_pp is null) or (begin_month.n_pp is null and end_month.n_pp is null)
+	  
+	   order by m.Px, m.Address, Uch_begin", new { from_ = from.ToString("yyyy-MM-dd"), to_ = to.ToString("yyyy-MM-dd"), groupId = GroupId });
+                }
+                else
+                    parameters = conn.Query<BuhReport>(@"select m.address, 
+	   m.phone,
+	   m.Px as groupId,
+	   (select substr(k.Name,1,3) from db_konturs k where k.phone=m.phone and k.N=begin_month.n_pp) as Uch_begin,
+	   (select substr(k.Name,1,3) from db_konturs k where k.phone=m.phone and k.N=end_month.n_pp) as Uch_end,
+	   (select k.ZavN from db_konturs k where k.phone=m.phone and k.N=begin_month.n_pp) as ZavN_begin,
+	   (select k.ZavN from db_konturs k where k.phone=m.phone and k.N=end_month.n_pp) as ZavN_end,
+	   begin_month.podHeatStart,
+	   begin_month.obrHeatStart,
+	   begin_month.startMonthHeatDiff,
+	   
+	   end_month.podHeatEnd,
+	   end_month.obrHeatEnd,
+	   end_month.endMonthHeatDiff,
+	   
+	   ifnull(end_month.endMonthHeatDiff-begin_month.startMonthHeatDiff,0.0) as HeatUsed
+	   
+	   from db_object_marker m left join
+	   (select g_pod.phone, 
+						 g_pod.n_pp, 
+						 g_pod.heatValue as podHeatStart,
+						 ifnull(g_obr.heatValue,0.0) as obrHeatStart,
+						 g_pod.heatValue-ifnull(g_obr.heatValue,0.0) as startMonthHeatDiff 
+						 from groupingDayView g_pod 
+						 left join groupingDayView g_obr 
+						 on g_pod.n_pp=g_obr.n_pp-1 and g_pod.phone=g_obr.phone and date(g_obr.recvDate)=date(@from_) 
+						 where g_pod.n_pp%2=0 and date(g_pod.recvDate)=date(@from_) 
+						 order by g_pod.phone, g_pod.n_pp
+				 ) begin_month 
+			on	  m.phone=begin_month.phone 
+			left join
+			(select g_pod.phone, 
+						 g_pod.n_pp,
+						 g_pod.heatValue as podHeatEnd,
+						 ifnull(g_obr.heatValue,0.0) as obrHeatEnd,
+						 g_pod.heatValue-ifnull(g_obr.heatValue,0.0) as endMonthHeatDiff 
+						 from groupingDayView g_pod 
+						 left join groupingDayView g_obr 
+						 on g_pod.n_pp=g_obr.n_pp-1 and g_pod.phone=g_obr.phone and date(g_obr.recvDate)=date(@to_) 
+						 where g_pod.n_pp%2=0 and date(g_pod.recvDate)=date(@to_) 
+						 order by g_pod.phone, g_pod.n_pp
+				 ) end_month 
+			on	  m.phone=end_month.phone
+	   	   
+	   where begin_month.n_pp=end_month.n_pp or (begin_month.n_pp is null and end_month.n_pp is not null) or (begin_month.n_pp is not null and end_month.n_pp is null) or (begin_month.n_pp is null and end_month.n_pp is null)
+	  
+	   order by m.Px, m.Address, Uch_begin", new { from_ = from.ToString("yyyy-MM-dd"), to_ = to.ToString("yyyy-MM-dd") });
+            }
+
+            return parameters;
+        }
 
 
         //public IEnumerable

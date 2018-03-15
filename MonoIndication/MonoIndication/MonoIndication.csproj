@@ -315,6 +315,7 @@
     <Content Include="Static\Acts\monthactNew.docx" />
     <Content Include="Static\Energosbit.xls" />
     <Content Include="Static\Energosbit_new.xls" />
+    <Content Include="Views\Report\Buhgaltery.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Account\Login.cshtml" />
