@@ -65,3 +65,4 @@ E:\dev\vs\gkh\DBPortable\DBPortable\obj\Release\DBPortable.dll
 E:\dev\vs\gkh\DBPortable\DBPortable\obj\Release\DBPortable.pdb
 E:\dev\vs\gkh\DBPortable\DBPortable\obj\Release\DBPortable.csproj.ResolveComReference.cache
 D:\code\.NET\Rogachev\DBPortable\DBPortable\obj\Release\DBPortable.csproj.ResolveComReference.cache
+E:\dev\vs\gkh\DBPortable\DBPortable\obj\Release\DBPortable.csprojResolveAssemblyReference.cache

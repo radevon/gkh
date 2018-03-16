@@ -34,25 +34,35 @@
            
         </div>
     </div>
-        <div class="row" style="padding:5px 0">
-            <div class="col-md-6 col-sm-6 col-xs-6">
-                <input type="submit" class="btn btn-primary" value="Получить отчёт в Excel" title="На компьютере обязательно должен быть установлен Microsoft Office Excel" />
-            </div>
-            <div class="col-md-6 col-sm-6 col-xs-6">
-                <a id="ReportToScreen" href="#" class="btn btn-default pull-right" title="Вывести таблицу отчета на экран (не требуется установка excel)">Отчет на экран</a>
-
-                <a id="ReportBuh" href="#" class="btn btn-default" title="">Отчет в бухгалтерию</a>
+    <div class="row" style="margin-top:25px">
+        
+        <div class="col-md-4 col-md-offset-8 col-sm-6 col-sm-offset-6 col-xs-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Формы отчетов
+                </div>
+                <div class="panel-body">
+                    <div class="row" style="padding:2px 0">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <a id="ReportToScreen" href="#" class="btn btn-default" title="Вывести таблицу отчета на экран (не требуется установка excel)">В энергосбыт (на экран)</a>
+                        </div>
+                    </div>
+                    <div class="row" style="padding:2px 0">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <input type="submit" class="btn btn-warning" value="В энергосбыт (Excel)" title="На компьютере обязательно должен быть установлен Microsoft Office Excel" />
+                        </div>
+                    </div>
+                    <div class="row" style="padding:2px 0">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <a id="ReportBuh" href="#" class="btn btn-default" title="">В бухгалтерию (на экран)</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    
-    }
-    <div class="row">
-        <div class="col-md-4 col-xs-4 col-sm-4 col-xs-offset-8 col-sm-offset-8 col-md-offset-8">
-            
-        </div>
+        
     </div>
-</div>
-
+    }
 @section Scripts {
 <script type="text/javascript" src='@Url.Content("~/js/moment-with-locales.min.js")'></script>
 <script type="text/javascript" src='@Url.Content("~/js/bootstrap-datetimepicker.js")'></script>

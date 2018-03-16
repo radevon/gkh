@@ -649,7 +649,7 @@ where o.recvDate=(select max(recvDate) from  db_heat_parameter where phone=o.pho
 				 ) end_month 
 			on	  m.phone=end_month.phone
 	   	   
-	   where m.Px=@groupId and begin_month.n_pp=end_month.n_pp or (begin_month.n_pp is null and end_month.n_pp is not null) or (begin_month.n_pp is not null and end_month.n_pp is null) or (begin_month.n_pp is null and end_month.n_pp is null)
+	   where m.Px=@groupId and (begin_month.n_pp=end_month.n_pp or (begin_month.n_pp is null and end_month.n_pp is not null) or (begin_month.n_pp is not null and end_month.n_pp is null) or (begin_month.n_pp is null and end_month.n_pp is null))
 	  
 	   order by m.Px, m.Address, Uch_begin", new { from_ = from.ToString("yyyy-MM-dd"), to_ = to.ToString("yyyy-MM-dd"), groupId = GroupId });
                 }

@@ -254,6 +254,7 @@
     <Content Include="js\FileSaver.min.js" />
     <Content Include="js\html5shiv.js" />
     <Content Include="js\jquery-1.9.1.js" />
+    <Content Include="js\manualExcel.js" />
     <Content Include="js\moment-with-locales.min.js" />
     <Content Include="js\programm.js" />
     <Content Include="js\respond.js" />
