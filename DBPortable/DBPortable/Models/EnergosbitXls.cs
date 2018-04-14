@@ -73,9 +73,7 @@ namespace DBPortable
                     return false;
 
                 if (Uch.ToLower().Contains("гвс") || Uch.ToLower().Contains("общ"))
-                {
                     return true;
-                }
                 else
                     return false;
             }

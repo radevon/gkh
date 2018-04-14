@@ -20,18 +20,27 @@
     {
     <div class="row">
        
-        <div class="col-md-4 col-lg-4 col-sm-6">
+        <div class="col-md-3 col-lg-3 col-sm-6">
             Начальная дата
             <input type="text" id="from" name="from" required class="form-control"/>
         </div>
-        <div class="col-md-4 col-lg-4 col-sm-6">
+        <div class="col-md-3 col-lg-3 col-sm-6">
             Конечная дата
             <input type="text" id="to" name="to" required class="form-control" />
         </div>
-        <div class="col-md-4 col-lg-4 col-sm-6">
+        <div class="col-md-3 col-lg-3 col-sm-6">
             Группа объектов
             @Html.DropDownList("GroupId", Model, new { @class = "form-control" })
            
+        </div>
+        <div class="col-md-3 col-lg-3 col-sm-6">
+            Тип показаний
+            <select id="TypeId" name="TypeId" class="form-control">
+                <option value="0">Все</option>
+                <option value="2">ГВС</option>
+                <option value="1">ОТОПЛЕНИЕ</option>
+                
+            </select>
         </div>
     </div>
     <div class="row" style="margin-top:25px">
@@ -52,11 +61,13 @@
                             <input type="submit" class="btn btn-warning" value="В энергосбыт (Excel)" title="На компьютере обязательно должен быть установлен Microsoft Office Excel" />
                         </div>
                     </div>
-                    <div class="row" style="padding:2px 0">
-                        <div class="col-md-12 col-sm-12 col-xs-12">
-                            <a id="ReportBuh" href="#" class="btn btn-default" title="">В бухгалтерию (на экран)</a>
-                        </div>
-                    </div>
+                    @*
+    <div class="row" style="padding:2px 0">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <a id="ReportBuh" href="#" class="btn btn-default" title="">В бухгалтерию (на экран)</a>
+        </div>
+    </div>
+                    *@
                 </div>
             </div>
         </div>
@@ -90,16 +101,18 @@
 
 
         $("#ReportToScreen").click(function (e) {
-            window.location.href = '@Url.Action("GoReport","Report")' + '?from=' + moment($("#from").val(), 'DD.MM.YYYY').toISOString() + '&to=' + moment($("#to").val(), 'DD.MM.YYYY').toISOString() + '&GroupId=' + $("#GroupId").val();
+            window.location.href = '@Url.Action("GoReport","Report")' + '?from=' + moment($("#from").val(), 'DD.MM.YYYY').toISOString() + '&to=' + moment($("#to").val(), 'DD.MM.YYYY').toISOString() + '&GroupId=' + $("#GroupId").val() + "&TypeId=" + $("#TypeId").val();
             e.preventDefault();
             return false;
         });
 
+        @*
         $("#ReportBuh").click(function (e) {
             window.location.href = '@Url.Action("Buhgaltery","Report")' + '?from=' + moment($("#from").val(), 'DD.MM.YYYY').toISOString() + '&to=' + moment($("#to").val(), 'DD.MM.YYYY').toISOString() + '&GroupId=' + $("#GroupId").val();
             e.preventDefault();
             return false;
         });
+            *@
     });
     </script>
     }

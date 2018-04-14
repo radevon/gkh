@@ -53,6 +53,7 @@ namespace MonoIndication.Controllers
             
             
             
+            
             return View(groups);
         }
 
@@ -228,11 +229,18 @@ namespace MonoIndication.Controllers
         }
 
 
-       
-        public ActionResult GoReport(DateTime from, DateTime to, int GroupId)
+
+        public ActionResult GoReport(DateTime from, DateTime to, int GroupId, int TypeId)
         {
             IEnumerable<EnergosbitXls> list = repo.GetEnSbReport(from, to,GroupId);
-            return View(list);
+            switch (TypeId)
+            {
+                case 0: return View(list);
+                case 1: return View(list.Where(x => x.isOtop));
+                case 2: return View(list.Where(x => x.isGvs));
+                default: return View(list);
+            }
+           
         }
 
 
@@ -240,7 +248,7 @@ namespace MonoIndication.Controllers
         static extern int GetWindowThreadProcessId(int hWnd, out int lpdwProcessId);
 
         [HttpPost]
-        public ActionResult ToExcel(DateTime from, DateTime to, int GroupId)
+        public ActionResult ToExcel(DateTime from, DateTime to, int GroupId, int TypeId)
         {
             
             Excel.Application appExl=null;
@@ -253,9 +261,17 @@ namespace MonoIndication.Controllers
             try
             {
                 
-                List<EnergosbitXls> list = repo.GetEnSbReport(from,to,GroupId).ToList();
+                IEnumerable<EnergosbitXls> listEnu = repo.GetEnSbReport(from,to,GroupId);
 
-               
+                List <EnergosbitXls> list= new List<EnergosbitXls>();
+
+                switch (TypeId)
+                {
+                    case 0: list = listEnu.ToList(); break;
+                    case 1: list = listEnu.Where(x => x.isOtop).ToList(); break;
+                    case 2: list = listEnu.Where(x => x.isGvs).ToList(); break;
+                    default: list = listEnu.ToList(); break;
+                }
                 
                 appExl = new Excel.Application();
                 appExl.ScreenUpdating = false;
@@ -387,7 +403,8 @@ namespace MonoIndication.Controllers
             ViewBag.from = from;
             ViewBag.to = to;
             IEnumerable<BuhReport> list = repo.GetBuhgalteryData(from, to, GroupId);
-            return View(list);
+             return View(list);
+            
         }
 
 
