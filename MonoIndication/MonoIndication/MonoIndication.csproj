@@ -227,6 +227,7 @@
     <Content Include="js\angular\angular.min.js" />
     <Content Include="js\angular\app.js" />
     <Content Include="js\angular\directive.js" />
+    <Content Include="js\angular\event\events.js" />
     <Content Include="js\angular\request\request.js" />
     <Content Include="js\angular\service.js" />
     <Content Include="js\autocompleate\images\ui-icons_444444_256x240.png" />
@@ -317,6 +318,7 @@
     <Content Include="Static\Energosbit.xls" />
     <Content Include="Static\Energosbit_new.xls" />
     <Content Include="Views\Report\Buhgaltery.cshtml" />
+    <Content Include="Views\Request\EventList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Account\Login.cshtml" />
@@ -390,6 +392,7 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

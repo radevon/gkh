@@ -84,7 +84,7 @@ request.controller("reqctrl", function ($scope, $websocket, $interval, dataServi
 
         $scope.loadData();
 
-        $interval(function () { $scope.loadData(); }, 10000);
+        $interval(function () { $scope.loadData(); }, 8000);
     };
 
     

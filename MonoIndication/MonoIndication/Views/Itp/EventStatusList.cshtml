@@ -26,10 +26,10 @@
         </td>
         <td style="vertical-align:middle">
                 @switch (item.EventValue)
-                {
-                    case 0:  <img width="20px" src='@Url.Content("~/img/close_.jpg")' title="Состояние закрыто"/> <span>cостояние закрыто</span>
-                    break;
-                    case 1: <img width="20px" src='@Url.Content("~/img/open_.jpg")' title="Состояние открыто"/> <span>cостояние открыто</span>
+{
+    case 0:  <span class="bg-success"><img width="20px" src='@Url.Content("~/img/close_.jpg")' title="Состояние закрыто" /> <span>cостояние закрыто</span></span>
+        break;
+    case 1: <span class="bg-danger"><img width="20px" src='@Url.Content("~/img/open_.jpg")' title="Состояние открыто"/> <span>cостояние открыто</span></span>
                     break;
                     default: <img width="20px" src='#' title="Состояние неопределено: @item.EventValue.ToString()"/> <span>cостояние неопределено</span>
                     break;

@@ -1,0 +1,55 @@
+﻿@{
+    ViewBag.Title = "Состояние датчика проникновения на объектах";
+    Layout = "~/Views/Shared/MainLayout.cshtml";
+}
+
+@Html.Partial("topmenu")
+
+
+<div class="container" style="margin: 65px auto" data-ng-app="eventApp">
+    <div class="row">
+    <div class="col-md-12 col-sm-12 text-center">
+        <h2 class="text-primary">Отображение информации о проникновении на объекты</h2>
+    </div>
+</div>
+    <div class="row" data-ng-controller="evtctrl" data-ng-init="init()">
+        <div class="col-md-12 col-sm-12">
+            <table class="table table-condensed table-bordered">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Адресс</th>
+                        <th>№ sim</th>
+                        <th>Описание</th>
+                        <th>Время опроса датчика проникновения</th>
+                        <th>Состояние</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-ng-repeat="item in objects | orderBy:'addres'">
+                        <td data-ng-bind="item.id"></td>
+                        <td><a href='@Url.Action("Index", "Itp")?id={{item.id}}' target="_self">{{item.addres}}</a></td>
+                        <td data-ng-bind="item.phone"></td>
+                        <td data-ng-bind="item.descr"></td>
+                        <td data-ng-bind="prettyDate(item.evtTime)" title="Время получения последнего события с объекта"></td>
+                        <td data-ng-switch on="item.evtStat">
+                            <span class="text-muted" ng-switch-when="-1">не известн.</span>
+                            <span class="bg-success" ng-switch-when="0">закрыто</span>
+                            <span class="bg-danger" ng-switch-when="1">открыто</span>
+                            <span ng-switch-default>не известн.</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    </div>
+@section Scripts{
+    <script src="~/js/moment-with-locales.min.js"></script>
+
+    <script type="text/javascript">
+        moment.locale('ru-RU');
+    </script>
+    <script type="text/javascript" src='@Url.Content("~/js/angular/angular.min.js")'></script>
+    <script type="text/javascript" src='@Url.Content("~/js/angular/event/events.js")'></script>
+}

@@ -53,5 +53,17 @@ namespace MonoIndication.Controllers
 
         }
 
+
+        public ActionResult EventList()
+        {
+            return View();
+        }
+
+        public JsonResult GetObjectsEvents()
+        {
+            List<ObjectsEvents> objects = repo_data.GetObjectEventsData().ToList();
+            return Json(objects, JsonRequestBehavior.AllowGet);
+        }
+
     }
 }
