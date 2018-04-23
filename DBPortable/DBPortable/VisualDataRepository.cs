@@ -881,7 +881,18 @@ where o.recvDate=(select max(recvDate) from  db_heat_parameter where phone=o.pho
             IEnumerable<ObjectsEvents> evt = Enumerable.Empty<ObjectsEvents>();
             using (IDbConnection connection = new SQLiteConnection(this.db_.GetDefaultConnectionString()))
             {
-                evt = connection.Query<ObjectsEvents>(@"select m.MarkerId, m.phone, m.address, m.description, (select max(datetime(EventTime)) from events e where e.phone=m.phone) as EvtTime, 0 as EventStatus from db_object_marker m");
+                evt = connection.Query<ObjectsEvents>(@"select m.MarkerId, m.phone, m.address, m.description, (select max(datetime(EventTime)) from events e where e.phone=m.phone) as EvtTime,
+ ifnull(e.EventValue,-1) as EventStatus from db_object_marker m left join events e on m.phone=e.phone and datetime(e.EventTime)=datetime(EvtTime)");
+            }
+            return evt;
+        }
+
+        public IEnumerable<ObjectsEvents> GetObjectEventsDataLast(DateTime date)
+        {
+            IEnumerable<ObjectsEvents> evt = Enumerable.Empty<ObjectsEvents>();
+            using (IDbConnection connection = new SQLiteConnection(this.db_.GetDefaultConnectionString()))
+            {
+                evt = connection.Query<ObjectsEvents>(@"select e.EventTime as EvtTime, e.EventValue as EventStatus, m.phone, m.Address, m.MarkerId from events e, db_object_marker m where e.phone=m.phone and datetime(e.EventTime)>@date_;",new {date_=date});
             }
             return evt;
         }

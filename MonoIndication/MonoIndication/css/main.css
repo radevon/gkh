@@ -473,10 +473,10 @@ form[name='editform'] .row {
     left:0px;
 }
 
-@-moz-keyframes blink {0%{opacity:1;} 50%{opacity:0.4;} 100%{opacity:1;}} /* Firefox */
-@-webkit-keyframes blink {0%{opacity:1;} 50%{opacity:0.4;} 100%{opacity:1;}} /* Webkit */
-@-ms-keyframes blink {0%{opacity:1;} 50%{opacity:0.4;} 100%{opacity:1;}} /* IE */
-@keyframes blink {0%{opacity:1;} 50%{opacity:0.4;} 100%{opacity:1;}} /* Opera */
+@-moz-keyframes blink {0%{opacity:1;} 50%{opacity:0.2;} 100%{opacity:1;}} /* Firefox */
+@-webkit-keyframes blink {0%{opacity:1;} 50%{opacity:0.2;} 100%{opacity:1;}} /* Webkit */
+@-ms-keyframes blink {0%{opacity:1;} 50%{opacity:0.2;} 100%{opacity:1;}} /* IE */
+@keyframes blink {0%{opacity:1;} 50%{opacity:0.2;} 100%{opacity:1;}} /* Opera */
 
 .warning_event {
     background-color: red;
@@ -505,6 +505,38 @@ form[name='editform'] .row {
     border-radius: 5px;
 
 }
+
+ .fixedAlert {
+    position: fixed;
+    width: 100%;
+    bottom: 1px;
+    margin-bottom: 5px;
+    opacity: 0.98;
+     -moz-opacity: 0.98;
+    filter: alpha(opacity=98);
+    padding: 10px 35px 10px 10px;
+    font-family: Arial;
+    font-size: 14pt;
+    z-index:999;
+ }
+
+ .fixedAlert a, .fixedAlert a:focus, .fixedAlert a:visited{
+     color:#f6cf3e;
+ }
+
+ .dangerAlert{
+     background-color:#fb6363;
+     opacity:0.9;
+     filter:alpha(opasity=90);
+     color:#fff;
+ }
+
+  .successAlert{
+     background-color:#4db777;
+     opacity:0.9;
+     filter:alpha(opasity=90);
+     color:#fff;
+ }
 
 @media(min-width:1300px) {
     .reportItptable, .reportItpsvod, .tableJournal {

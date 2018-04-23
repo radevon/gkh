@@ -14,7 +14,7 @@
 </div>
     <div class="row" data-ng-controller="evtctrl" data-ng-init="init()">
         <div class="col-md-12 col-sm-12">
-            <table class="table table-condensed table-bordered">
+            <table class="table table-condensed table-bordered table-hover">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -33,9 +33,9 @@
                         <td data-ng-bind="item.descr"></td>
                         <td data-ng-bind="prettyDate(item.evtTime)" title="Время получения последнего события с объекта"></td>
                         <td data-ng-switch on="item.evtStat">
-                            <span class="text-muted" ng-switch-when="-1">не известн.</span>
-                            <span class="bg-success" ng-switch-when="0">закрыто</span>
-                            <span class="bg-danger" ng-switch-when="1">открыто</span>
+                            <span class="text-muted" ng-switch-when="-1">нет данных</span>
+                            <span style="background-color:#85ce9d; color:#000" ng-switch-when="0">закрыто</span>
+                            <span style="background-color:#ff5656; color:#fff" ng-switch-when="1">открыто</span>
                             <span ng-switch-default>не известн.</span>
                         </td>
                     </tr>

@@ -315,6 +315,7 @@
 
               setInterval(function () {
                   $("#EventInfoContent").load('@Url.Action("GetEventStatus","Itp",new {phone=@Model.PhoneNumber})');
+                  
               }, 10000);
 
         });

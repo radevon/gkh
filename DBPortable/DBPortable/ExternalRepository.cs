@@ -126,7 +126,7 @@ namespace DBPortable
                         {
                             command.Parameters.Add("@EventTime", System.Data.DbType.DateTime).Value = EventTime;
                             command.Parameters.Add("@phone", System.Data.DbType.String).Value = phone;
-                            command.Parameters.Add("@EventValue", System.Data.DbType.Double).Value = EventValue;
+                            command.Parameters.Add("@EventValue", System.Data.DbType.Int32).Value = EventValue;
                             
                             connection.Open();
                             command.ExecuteNonQuery();

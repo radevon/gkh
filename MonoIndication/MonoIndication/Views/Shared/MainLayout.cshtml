@@ -14,6 +14,8 @@
 	
     <link rel="stylesheet" type="text/css" href='@Url.Content("~/css/bootstrap.min.css")'>
 	<link rel="stylesheet" type="text/css" href='@Url.Content("~/css/main.css")'>
+
+   
 	
     @RenderSection("Css",false)
 	
@@ -32,9 +34,23 @@
 <body>
     
         @RenderBody()
+
     
     @RenderSection("Scripts", false)
     
+    
+
+        @if (User.Identity.IsAuthenticated)
+        {
+            <script type="text/javascript">
+                setInterval(function () {
+                trackEvents('@Url.Action("GetObjectsEventsLast","Request")', 1)
+                }, 5000);
+            </script>
+        };
+
+        
+   
     <div id="backgrounding"></div>
 </body>
 </html>
