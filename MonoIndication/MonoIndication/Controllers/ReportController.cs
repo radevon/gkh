@@ -141,6 +141,19 @@ namespace MonoIndication.Controllers
                     int low = 2 * (i - 1); // индекс для подачи (четное)
                     int high = low + 1;    // индекс для обратки (неч)
 
+                    KonturItem podInfo = repo.GetKonturByNumber(phone, low);
+                    // фильтр по типу контуров (гвс, отопл или все)
+                    if (podInfo != null)
+                    {
+                        switch (form.TypeId)
+                        {
+                            case 0: break;
+                            case 1: if (podInfo.Name.ToLower().Contains("ото") || podInfo.Name.ToLower().Contains("общ")) break; else continue;
+                            case 2: if (podInfo.Name.ToLower().Contains("гвс") || podInfo.Name.ToLower().Contains("общ")) break; else continue;
+                        } 
+
+                    }
+
                     SubKontur podacha = new SubKontur();
                     SubKontur obratka = new SubKontur();
                     // если есть контур подачи
@@ -172,7 +185,7 @@ namespace MonoIndication.Controllers
                         Obratka = obratka
                     };
 
-                    KonturItem podInfo = repo.GetKonturByNumber(phone, low);
+                    
                     if (podInfo != null)
                     {
                         objAdd.KonturName = podInfo.Name.Split(' ')[0];

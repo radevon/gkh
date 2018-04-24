@@ -36,5 +36,7 @@ namespace MonoIndication
         public string FioUser { get; set; }
 
         public string PhoneUser { get; set; }
+
+        public int TypeId { get; set; }
     }
 }
