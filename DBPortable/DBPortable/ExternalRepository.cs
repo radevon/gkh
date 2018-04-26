@@ -116,15 +116,16 @@ namespace DBPortable
 
         #region Events
 
-         public MethodResult InsertEvent(DateTime EventTime, string phone, int EventValue)
+         public MethodResult InsertEvent(int SmsNumber,DateTime EventTime, string phone, int EventValue)
             {
                 try
                 {
                     using (SQLiteConnection connection = CreateSqlConnection())
                     {
-                        using (SQLiteCommand command = new SQLiteCommand("insert into events (EventTime,phone,EventValue) values(@EventTime,@phone,@EventValue);", connection))
+                        using (SQLiteCommand command = new SQLiteCommand("insert into events (EventTime,EventNum,phone,EventValue) values(@EventTime,@num,@phone,@EventValue);", connection))
                         {
                             command.Parameters.Add("@EventTime", System.Data.DbType.DateTime).Value = EventTime;
+                            command.Parameters.Add("@num", System.Data.DbType.Int32).Value = SmsNumber;
                             command.Parameters.Add("@phone", System.Data.DbType.String).Value = phone;
                             command.Parameters.Add("@EventValue", System.Data.DbType.Int32).Value = EventValue;
                             

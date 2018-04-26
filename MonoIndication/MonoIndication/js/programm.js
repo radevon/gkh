@@ -19,10 +19,10 @@ function sendRequestLog(url,phone) {
     });
 }
 
-function trackEvents(url,minutes_ago) {
+function trackEvents(url, seconds_ago) {
     $.ajax({
         url: url,
-        data: { 'minute': minutes_ago },
+        data: { 'seconds': seconds_ago },
         dataType: 'json',
         method: 'GET',
         success: function (data) {

@@ -42,12 +42,13 @@
 
         @if (User.Identity.IsAuthenticated)
         {
+            @*запускаю каждые 5 сек запрос по состоянию данных за последние пол минуты*@
             <script type="text/javascript">
                 setInterval(function () {
-                trackEvents('@Url.Action("GetObjectsEventsLast","Request")', 1)
+                trackEvents('@Url.Action("GetObjectsEventsLast","Request")', 30)
                 }, 5000);
             </script>
-        };
+        }
 
         
    

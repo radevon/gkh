@@ -5,25 +5,25 @@
     <table style="width: 100%">
         <tr>
             <td style="vertical-align:middle">Статус:</td>
-            <td style="text-align: right; vertical-align:middle">
+            <td style="text-align: right; vertical-align:middle" title="Порядковый №: @Model.EventNum.ToString()">
                 @switch (Model.EventValue)
-{
-    case 0:
-        <span title="Состояние закрыто" style="color:yellow" class="success_event">ЗАКРЫТО</span>
-        break;
-    case 1:
-    <span title="Состояние открыто" style="color:yellow" class="warning_event">ОТКРЫТО</span>
+                {
+                    case 0:
+                        <span title="Состояние закрыто" style="color:yellow" class="success_event">ЗАКРЫТО</span>
+                        break;
+                    case 1:
+                    <span title="Состояние открыто" style="color:yellow" class="warning_event">ОТКРЫТО</span>
 
-        break;
-    default: <img width="40" src='#' title="Состояние неопределено: @Model.EventValue.ToString()" />
-        break;
-}
+                        break;
+                    default: <img width="40" src='#' title="Состояние неопределено: @Model.EventValue.ToString()" />
+                        break;
+                }
 
 
-</td>
+            </td>
         </tr>
         <tr>
-            <td colspan="2" class="text-primary">
+            <td colspan="2" class="text-primary" title="Время прихода информации о событии">
                 @Model.EventTime.ToString("dd.MM.yyyy HH:mm:ss")
             </td>
         </tr>

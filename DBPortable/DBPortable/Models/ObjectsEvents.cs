@@ -19,6 +19,8 @@ namespace DBPortable
 
         public DateTime EvtTime { get; set; }
 
+        public int EvtNum { get; set; }
+
         public int EventStatus { get; set; }
     }
 }

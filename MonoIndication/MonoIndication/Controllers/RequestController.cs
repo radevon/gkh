@@ -65,9 +65,9 @@ namespace MonoIndication.Controllers
             return Json(objects, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetObjectsEventsLast(int minute)
+        public JsonResult GetObjectsEventsLast(int seconds)
         {
-            List<ObjectsEvents> objects = repo_data.GetObjectEventsDataLast(DateTime.Now.AddMinutes(-minute)).OrderBy(x=>x.EvtTime).ToList();
+            List<ObjectsEvents> objects = repo_data.GetObjectEventsDataLast(DateTime.Now.AddSeconds(-seconds)).OrderBy(x => x.EvtTime).ToList();
             return Json(objects, JsonRequestBehavior.AllowGet);
         }
 

@@ -8,7 +8,7 @@ eventApp.controller("evtctrl", function ($scope, $interval, dataServise) {
 
     $scope.init = function () {
         $scope.loadData();
-        $interval(function () { $scope.loadData(); }, 10000);
+        $interval(function () { $scope.loadData(); }, 8000);
     }
 
     $scope.loadData = function () {

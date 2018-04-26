@@ -611,7 +611,7 @@ namespace MonoIndication.Controllers
             List<Events> lst=new List<Events>();
             try
             {
-                lst = repo.GetLastEvent(phone, DateTime.Now.AddMonths(-2)).OrderByDescending(x=>x.EventTime).ToList();
+                lst = repo.GetLastEvent(phone, 20).OrderByDescending(x=>x.EventNum).ToList();
             }
             catch (Exception ex)
             {

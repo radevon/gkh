@@ -92,6 +92,7 @@ from db_heat_parameter main;";
 
         private string EventTable = @"CREATE TABLE if not exists 'events' (
 	'Phone'	TEXT NOT NULL,
+    'EventNum' integer not null
 	'EventTime'	TEXT NOT NULL,
     'EventValue' integer not null
 )";

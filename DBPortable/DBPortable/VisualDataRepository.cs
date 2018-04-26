@@ -851,31 +851,23 @@ where o.recvDate=(select max(recvDate) from  db_heat_parameter where phone=o.pho
         {
             Events evt = null;
             using(IDbConnection connection=new SQLiteConnection(this.db_.GetDefaultConnectionString())){
-                evt = connection.Query<Events>(@"select evt.Phone, evt.EventTime, evt.EventValue from events evt where evt.phone=@phone_ and datetime(evt.EventTime)=(select max(datetime(EventTime)) from events where phone=@phone_);", new { phone_=phone}).FirstOrDefault<Events>();
+                evt = connection.Query<Events>(@"select evt.Phone, evt.EventNum, evt.EventTime, evt.EventValue from events evt where evt.phone=@phone_ and evt.EventNum=(select max(EventNum) from events where phone=@phone_) order by evt.EventTime desc;", new { phone_ = phone }).FirstOrDefault<Events>();
             }
             return evt;
         }
 
-        public IEnumerable<Events> GetLastEvent(string phone, DateTime after)
-        {
-            IEnumerable<Events> evt = Enumerable.Empty<Events>();
-            using (IDbConnection connection = new SQLiteConnection(this.db_.GetDefaultConnectionString()))
-            {
-                evt = connection.Query<Events>(@"select evt.Phone, evt.EventTime, evt.EventValue from events evt where evt.phone=@phone_ and datetime(evt.EventTime)>=@afterDate;", new { phone_ = phone, afterDate=after });
-            }
-            return evt;
-        }
+       
 
         public IEnumerable<Events> GetLastEvent(string phone, int topCount)
         {
             IEnumerable<Events> evt = Enumerable.Empty<Events>();
             using (IDbConnection connection = new SQLiteConnection(this.db_.GetDefaultConnectionString()))
             {
-                evt = connection.Query<Events>(@"select evt.Phone, evt.EventTime, evt.EventValue from events evt where evt.phone=@phone_ order by evt.eventTime desc limit @count", new { phone_ = phone, count=Math.Max(topCount,1) });
+                evt = connection.Query<Events>(@"select evt.Phone, evt.EventNum, evt.EventTime, evt.EventValue from events evt where evt.phone=@phone_ order by evt.EventNum desc, evt.EventTime desc limit @count", new { phone_ = phone, count = Math.Max(topCount, 1) });
             }
             return evt;
         }
-
+        /*
         public IEnumerable<ObjectsEvents> GetObjectEventsData()
         {
             IEnumerable<ObjectsEvents> evt = Enumerable.Empty<ObjectsEvents>();
@@ -886,13 +878,24 @@ where o.recvDate=(select max(recvDate) from  db_heat_parameter where phone=o.pho
             }
             return evt;
         }
+        */
+        public IEnumerable<ObjectsEvents> GetObjectEventsData()
+        {
+            IEnumerable<ObjectsEvents> evt = Enumerable.Empty<ObjectsEvents>();
+            using (IDbConnection connection = new SQLiteConnection(this.db_.GetDefaultConnectionString()))
+            {
+                evt = connection.Query<ObjectsEvents>(@"select m.MarkerId, m.phone, m.address, m.description, ifnull((select e.eventValue from events e  where e.phone=m.phone order by e.eventNum desc, e.eventTime desc limit 1),-1) as eventStatus, (select e.eventTime from events e  where e.phone=m.phone order by e.eventNum desc, e.eventTime desc limit 1 ) as EvtTime
+ from db_object_marker m");
+            }
+            return evt;
+        }
 
         public IEnumerable<ObjectsEvents> GetObjectEventsDataLast(DateTime date)
         {
             IEnumerable<ObjectsEvents> evt = Enumerable.Empty<ObjectsEvents>();
             using (IDbConnection connection = new SQLiteConnection(this.db_.GetDefaultConnectionString()))
             {
-                evt = connection.Query<ObjectsEvents>(@"select e.EventTime as EvtTime, e.EventValue as EventStatus, m.phone, m.Address, m.MarkerId from events e, db_object_marker m where e.phone=m.phone and datetime(e.EventTime)>@date_;",new {date_=date});
+                evt = connection.Query<ObjectsEvents>(@"select e.EventTime as EvtTime, e.EventValue as EventStatus, e.eventNum as evtNum, (select max(eventNum) from events where phone=e.phone) as maxNum, m.phone, m.Address, m.MarkerId from events e, db_object_marker m where e.phone=m.phone and datetime(e.EventTime)>@date_ and e.eventNum>=maxNum;", new { date_ = date });
             }
             return evt;
         }
