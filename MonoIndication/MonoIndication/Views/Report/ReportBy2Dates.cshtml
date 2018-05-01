@@ -61,13 +61,13 @@
                             <input type="submit" class="btn btn-warning" value="В энергосбыт (Excel)" title="На компьютере обязательно должен быть установлен Microsoft Office Excel" />
                         </div>
                     </div>
-                    @*
-    <div class="row" style="padding:2px 0">
-        <div class="col-md-12 col-sm-12 col-xs-12">
-            <a id="ReportBuh" href="#" class="btn btn-default" title="">В бухгалтерию (на экран)</a>
-        </div>
-    </div>
-                    *@
+
+                    <div class="row" style="padding:2px 0">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <a id="ReportBuh" href="#" class="btn btn-default" title="">В бухгалтерию (на экран)</a>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -106,13 +106,13 @@
             return false;
         });
 
-        @*
+        
         $("#ReportBuh").click(function (e) {
-            window.location.href = '@Url.Action("Buhgaltery","Report")' + '?from=' + moment($("#from").val(), 'DD.MM.YYYY').toISOString() + '&to=' + moment($("#to").val(), 'DD.MM.YYYY').toISOString() + '&GroupId=' + $("#GroupId").val();
+            window.location.href = '@Url.Action("Buhgaltery","Report")' + '?from=' + moment($("#from").val(), 'DD.MM.YYYY').toISOString() + '&to=' + moment($("#to").val(), 'DD.MM.YYYY').toISOString() + '&GroupId=' + $("#GroupId").val() + "&TypeId=" + $("#TypeId").val();
             e.preventDefault();
             return false;
         });
-            *@
+            
     });
     </script>
     }

@@ -411,12 +411,19 @@ namespace MonoIndication.Controllers
         }
 
 
-        public ActionResult Buhgaltery(DateTime from, DateTime to, int GroupId)
+        public ActionResult Buhgaltery(DateTime from, DateTime to, int GroupId, int TypeId)
         {
             ViewBag.from = from;
             ViewBag.to = to;
             IEnumerable<BuhReport> list = repo.GetBuhgalteryData(from, to, GroupId);
-             return View(list);
+
+            switch (TypeId)
+            {
+                case 0: return View(list);
+                case 1: return View(list.Where(x => x.Uch.ToLower().Contains("ото")));
+                case 2: return View(list.Where(x => x.Uch.ToLower().Contains("гвс")));
+                default: return View(list);
+            }
             
         }
 
