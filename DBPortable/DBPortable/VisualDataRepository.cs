@@ -120,7 +120,7 @@ namespace DBPortable
             List<KonturItem> result = new List<KonturItem>();
             using (IDbConnection conn = new SQLiteConnection(this.db_.GetDefaultConnectionString()))
             {
-                result = conn.Query<KonturItem>("select phone, N, Name, vNorma, TipSh, ZavN, KodSchSbut from db_konturs;").ToList();
+                result = conn.Query<KonturItem>("select phone, N, Name, vNorma, NormaKoef, TipSh, ZavN, KodSchSbut from db_konturs;").ToList();
             }
             return result;
         }
@@ -130,7 +130,7 @@ namespace DBPortable
             KonturItem result;
             using (IDbConnection conn = new SQLiteConnection(this.db_.GetDefaultConnectionString()))
             {
-                result = conn.Query<KonturItem>("select phone, N, Name, vNorma, TipSh, ZavN, KodSchSbut from db_konturs where phone=@phone_ and N=@n_", new { phone_=phone, n_=n}).SingleOrDefault();
+                result = conn.Query<KonturItem>("select phone, N, Name, vNorma, NormaKoef, TipSh, ZavN, KodSchSbut from db_konturs where phone=@phone_ and N=@n_", new { phone_ = phone, n_ = n }).SingleOrDefault();
             }
             return result;
         }
@@ -140,7 +140,7 @@ namespace DBPortable
             List<KonturItem> result = new List<KonturItem>();
             using (IDbConnection conn = new SQLiteConnection(this.db_.GetDefaultConnectionString()))
             {
-                result = conn.Query<KonturItem>("select phone, N, Name, vNorma, TipSh, ZavN, KodSchSbut from db_konturs where phone=@phone_;", new { phone_ = phone }).ToList();
+                result = conn.Query<KonturItem>("select phone, N, Name, vNorma, NormaKoef, TipSh, ZavN, KodSchSbut from db_konturs where phone=@phone_;", new { phone_ = phone }).ToList();
             }
             return result;
         }
@@ -151,7 +151,7 @@ namespace DBPortable
 
             using (IDbConnection conn = new SQLiteConnection(this.db_.GetDefaultConnectionString()))
             {
-                return conn.ExecuteScalar<int>("insert into db_konturs (phone,N, Name,vNorma, TipSh, ZavN, KodSchSbut) values(@phone,@N,@Name,@vNorma, @TipSh, @ZavN, @KodSchSbut);", item);
+                return conn.ExecuteScalar<int>("insert into db_konturs (phone,N, Name,vNorma,NormaKoef, TipSh, ZavN, KodSchSbut) values(@phone,@N,@Name,@vNorma,@NormaKoef, @TipSh, @ZavN, @KodSchSbut);", item);
             }
 
         }
@@ -181,7 +181,7 @@ namespace DBPortable
         {
             using (IDbConnection conn = new SQLiteConnection(this.db_.GetDefaultConnectionString()))
             {
-                conn.Execute("update db_konturs set Name=@name, vNorma=@vNorma, TipSh=@TipSh, ZavN=@ZavN, KodSchSbut=@KodSchSbut where phone=@phone and n=@n", item);
+                conn.Execute("update db_konturs set Name=@name, vNorma=@vNorma,NormaKoef=@NormaKoef, TipSh=@TipSh, ZavN=@ZavN, KodSchSbut=@KodSchSbut where phone=@phone and n=@n", item);
             } 
         }
 

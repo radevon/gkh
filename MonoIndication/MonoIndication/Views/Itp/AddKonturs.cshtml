@@ -51,6 +51,15 @@
         </tr>
         <tr>
             <td>
+               Допустимое отклон от нормы, % 
+            </td>
+            <td>
+                <input type="text" class="form-control text-center" name="NormaKoef" id="NormaKoef_kontur" style="font-size:18px" value='@Model.NormaKoef' />
+                @Html.ValidationMessageFor(x => x.NormaKoef)
+            </td>
+        </tr>
+        <tr>
+            <td>
                 Зав № счетчика
             </td>
             <td>

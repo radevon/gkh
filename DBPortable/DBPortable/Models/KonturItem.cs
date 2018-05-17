@@ -18,6 +18,9 @@ namespace DBPortable
         // норма расхода в м3 в час
         public double VNorma { get; set; }
 
+        // предельный допустимый коеффициент отклонения от VNorma
+        
+        public double NormaKoef { get; set; }
         // тип счетчика (строка ТЭМ-05M или др)
         public string TipSh { get; set; }
 
@@ -26,5 +29,11 @@ namespace DBPortable
 
         // № счетчика в энергосбыте
         public string KodSchSbut { get; set; }
+
+        // нижний расчетный предел нормы
+        public double VNormaMin { get { return VNorma * (100 - NormaKoef) / 100.0; } }
+
+        // верхний расчетный предел нормы
+        public double VNormaMax { get { return VNorma * (100 + NormaKoef) / 100.0; } }
     }
 }

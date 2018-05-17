@@ -215,7 +215,7 @@
                 method: 'GET',
                 dataType: 'html',
                 cache: false,
-                data: JSON.stringify({ 'startDate': moment(startDate).format(), 'endDate': moment(endDate).format(), 'PhoneNumber': '@Model.PhoneNumber', 'address': '@Html.Raw(Json.Encode(Model.Address))' }), // предотвращаю нерабочий код если в Model.Address есть многострочный текст
+                data: { 'startDate': moment(startDate).format(), 'endDate': moment(endDate).format(), 'PhoneNumber': '@Model.PhoneNumber', 'address': '@Html.Raw(Json.Encode(Model.Address))' }, // предотвращаю нерабочий код если в Model.Address есть многострочный текст
                 beforeSend: function () {
                     $("#ReportContainer").html('');
                     $("#waitingDiv").show();

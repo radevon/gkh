@@ -82,6 +82,7 @@ from db_heat_parameter main;";
     'TipSh' TEXT DEFAULT '',
     'ZavN' TEXT DEFAULT '',
     'KodSchSbut' TEXT DEFAULT '',
+    'NormaKoef'	REAL NOT NULL DEFAULT 0,
 	unique(phone,n)
 )";
 
