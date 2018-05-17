@@ -215,7 +215,7 @@
                 method: 'GET',
                 dataType: 'html',
                 cache: false,
-                data: { 'startDate': moment(startDate).format(), 'endDate': moment(endDate).format(), 'PhoneNumber': '@Model.PhoneNumber', 'address': '@Model.Address' },
+                data: { 'startDate': moment(startDate).format(), 'endDate': moment(endDate).format(), 'PhoneNumber': '@Model.PhoneNumber', 'address': '@Html.Raw(Json.Encode(Model.Address))' },
                 beforeSend: function () {
                     $("#ReportContainer").html('');
                     $("#waitingDiv").show();
