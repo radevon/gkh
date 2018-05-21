@@ -55,7 +55,7 @@ namespace MonoIndication.Controllers
                     return HttpNotFound();
                 
                 ItpInfo itp = Mapper.Map<Marker, ItpInfo>(m);
-                itp.ListKonturs = repo.GetNumberKonturs(m.Phone);
+                
 
                 return View(itp);
             }
@@ -80,24 +80,21 @@ namespace MonoIndication.Controllers
 
         // берем последнюю информацию по прибору (по всем 1, 2 или > контурам-счетчикам)
         [ChildActionOnly]
-        public ActionResult LastInformationItp(string PhoneNumber, Dictionary<int, string> listKonturs)
+        public ActionResult LastInformationItp(string PhoneNumber)
         {
             // новый пустой список показаний
             List<ItpRow> listInformation = new List<ItpRow>();
             try
             {
-
-                // беру последние показания по каждому контуру
-                if (listKonturs != null)
-                    foreach (KeyValuePair<int, string> kontur in listKonturs)
+             List<KonturItem> konturs = repo.GetAllKonturs(PhoneNumber).OrderBy(x=>x.N).ToList();
+             foreach (KonturItem item in konturs)
                     {
-                        HeateInfo heatInf = repo.GetHeatInfoLast(PhoneNumber, kontur.Key);
-                        if (heatInf != null)
-                            listInformation.Add(new ItpRow()
+                        HeateInfo heatInf = repo.GetHeatInfoLast(PhoneNumber, item.N);
+
+                        listInformation.Add(new ItpRow()
                             {
                                 HeatLastInfo = heatInf,
-                                KonturName = kontur.Value,
-                                KonturNumber = kontur.Key
+                                KonturInfo=item
                             });
                     }
 

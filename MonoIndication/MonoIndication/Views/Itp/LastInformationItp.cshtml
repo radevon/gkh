@@ -7,16 +7,16 @@
     
         foreach (ItpRow item in Model)
         {
-            if(item.KonturNumber%2==0)
+            if(item.KonturInfo.N%2==0)
             {
                 <div class="clearfix"></div>
             }
         <div class="col-md-6 col-sm-6">
-            <table class="table table-condensed tableKontur"  style='border: 1px solid lightgray; background-color: @(item.KonturNumber % 2 == 0 ? "#ffefef" : "#eef3fb")'>
-                <thead style="border: 1px solid lightgray">
+            <table class="table table-condensed tableKontur"  style='border: 1px solid lightgray;'>
+                <thead style="border: 1px solid lightgray; background-color: @(item.KonturInfo.N % 2 == 0 ? "#ffefef" : "#eef3fb")">
                     <tr>
                         <th colspan="2" class="text-center" style="color: #de5a53; font-size:20px">
-                            КОНТУР №@item.KonturNumber "@item.KonturName.ToUpper()"
+                            КОНТУР №@item.KonturInfo.N "@item.KonturInfo.Name.ToUpper()"
                         </th>
                     </tr>
                     <tr style="background-color: #BDE3F4">
@@ -25,7 +25,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                    @if (item.HeatLastInfo != null)
+                    {
+                        <tr>
                         <td class="label_table">Время получения данных</td>
                         <td class="value text-right">@item.HeatLastInfo.recvDate.ToString("dd MMM yy г. HH:mm:ss", CultureInfo.CreateSpecificCulture("ru-RU"))</td>
                     </tr>
@@ -39,7 +41,29 @@
                     </tr>
                     <tr>
                         <td class="label_table">Объёмный расход воды (текущий) <small>[м<sup>3</sup>/ч]</small></td>
-                        <td class="value text-right">@item.HeatLastInfo.waterLose.ToString("#0.0#")</td>
+                        <td class="value text-right">
+                            @if (item.KonturInfo.VNorma > 0 && (item.HeatLastInfo.waterLose < item.KonturInfo.VNormaMin || item.HeatLastInfo.waterLose > item.KonturInfo.VNormaMax))
+                            {
+                                <span class="warning_event" title="Текущий расход выходит за пределы допустимого диаппазона">@item.HeatLastInfo.waterLose.ToString("#0.0#")</span>
+                            }else
+                            {
+                                <span>@item.HeatLastInfo.waterLose.ToString("#0.0#")</span>
+                            }
+                        
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="text-right" style="border-top:none; font-size:16px">
+                            @if (@item.KonturInfo.VNorma > 0)
+                            {
+                                @: норма расхода, <small>[м<sup>3</sup>/ч]</small>: <span class="text-success">@item.KonturInfo.VNormaMin.ToString("#0.0#")</span>~<span class="text-success">@item.KonturInfo.VNormaMax.ToString("#0.0#")</span>
+                            }else
+                            {
+                                @: норма расхода не задана
+                            }
+                        
+                        </td>
+                        
                     </tr>
                     <tr>
                         <td class="label_table">Объёмный расход воды (общий) <small>[м<sup>3</sup>]</small></td>
@@ -80,6 +104,15 @@
                             <span style="font-size:13px" class='@(item.HeatLastInfo.errorList.Trim().Length>0?"text-danger":"text-success")'>@item.HeatLastInfo.errorList</span>
                         </td>
                     </tr>
+                    }else
+                    {
+                        <tr>
+                            <td colspan="2" class="text-center text-danger">
+                                Отсутствуют данные по контуру
+                            </td>
+                        </tr>
+                    }
+                    
 
                 </tbody>
             </table>
@@ -93,7 +126,7 @@
 else
 {
     <div class="col-md-12 col-sm-12 text-center">
-        <h3 class="text-danger">Отсутствует информация по прибору</h3>
+        <h4 class="bg-danger">Не заведено ни одного контура на объекте. Добавьте имеющиеся подключенные счетчики в базу по кнопке "Контуры"</h4>
     </div>
 }
 

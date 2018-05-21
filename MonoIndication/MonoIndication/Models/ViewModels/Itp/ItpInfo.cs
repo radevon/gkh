@@ -10,7 +10,7 @@ namespace MonoIndication
 
         public ItpInfo()
         {
-            ListKonturs=new Dictionary<int, string>();
+           
         }
 
         public int Id { get; set; }
@@ -20,13 +20,8 @@ namespace MonoIndication
 
         public string Description { get; set; }
 
-        // список контуров и их названий
-        public Dictionary<int, string> ListKonturs { get; set; }
+       
 
-        public string GetStringType
-        {
-            get{ return (this.Type==0?"ИТП":"ЦТП"); }
-        }
 
     }
 }

@@ -185,6 +185,9 @@ namespace DBPortable
             } 
         }
 
+
+       
+
         // получить список контуров у прибора по таблице показаний
         public Dictionary<int, string> GetNumberKonturs(string phone)
         {
