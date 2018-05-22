@@ -16,6 +16,8 @@ namespace MonoIndication.Controllers
         
         public ActionResult Login()
         {
+            if (HttpContext.Request.IsAjaxRequest())
+                return Content("<script type='text/javascript'>window.location.reload(true);</script>");
             UserLogin user=new UserLogin();
             return View(user);
         }

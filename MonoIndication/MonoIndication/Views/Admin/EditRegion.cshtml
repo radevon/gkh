@@ -34,13 +34,17 @@
             $.get('@Url.Action("ListRegions", "Admin")', {},
                 function (data) {
                     $("#editDbContainer").html(data);
+                    showLoading(false);
                 })
                 .error(function (jqXHR, textStatus, errorThrown) {
                     $("#editDbContainer").html("<h4 class='text-danger'>Возникла ошибка! Подробные сведения можно помотреть в консоли браузера</h4>");
                     console.log(jqXHR.responseText);
-                }).complete(function () { showLoading(false); });
-            e.preventDefault();
-        });
+                    showLoading(false);
+                }); 
+        e.preventDefault();
+    });
+            
+       
 
 </script>
 

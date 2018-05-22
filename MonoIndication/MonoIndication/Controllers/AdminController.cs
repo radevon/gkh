@@ -14,7 +14,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MonoIndication.Controllers
 {
-    [Authorize(Roles = "administrators")]
+    [Authorize]
     public class AdminController : Controller
     {
 
@@ -38,7 +38,7 @@ namespace MonoIndication.Controllers
             return View();
         }
 
-        
+        [Authorize(Roles = "administrators")]
         public ActionResult DbStatus()
         {
             DbStatistic stat = this.getStat();
@@ -48,6 +48,7 @@ namespace MonoIndication.Controllers
             return PartialView();
         }
 
+        [Authorize(Roles = "administrators")]
         [HttpPost]
         public ActionResult RecreateDb()
         {
@@ -81,12 +82,14 @@ namespace MonoIndication.Controllers
             return RedirectToAction("DbStatus");
         }
 
+        [Authorize(Roles = "administrators")]
         public ActionResult CreateNewUser()
         {
             NewUser user=new NewUser();
             return PartialView(user);
         }
 
+        [Authorize(Roles = "administrators")]
         [HttpPost]
         public ActionResult CreateNewUser(NewUser user)
         {
@@ -101,7 +104,9 @@ namespace MonoIndication.Controllers
                     try
                     {
                         WebSecurity.CreateUserAndAccount(user.UserName, user.Password, new { Description = this.Reverse(user.Password) });
-                        return Content(String.Format("<h4 class='text-success'>Пользователь '{0}'создан</h4>",user.UserName));
+                        if (Roles.FindUsersInRole("users", user.UserName).Count() == 0)
+                            Roles.AddUserToRole(user.UserName, "users");
+                        return Content(String.Format("<h4 class='text-success'>Пользователь '{0}'создан и добавлен в группу 'пользователи'</h4>",user.UserName));
                     }
                     catch (Exception)
                     {
@@ -114,12 +119,15 @@ namespace MonoIndication.Controllers
             return PartialView(user);
         }
 
+        [Authorize(Roles = "administrators")]
         public ActionResult ViewUsers()
         {
             List<UserInfoMembership> userInfo = repo.GetUserInformation();
+            userInfo.ForEach(x => x.Roles = Roles.GetRolesForUser(x.UserName));
             return PartialView(userInfo);
         }
 
+        [Authorize(Roles = "administrators")]
         [HttpPost]
         public ActionResult DeleteAccount(string UserName)
         {
@@ -127,6 +135,10 @@ namespace MonoIndication.Controllers
             {
                 if (!WebSecurity.UserExists(UserName))
                     return Content(String.Format("<h4 class='text-danger'>Не найден пользователь '{0}'</h4>", UserName));
+                if (User.Identity.Name == UserName)
+                {
+                    return Content(String.Format("<h4 class='text-danger'>Запрещено удалять текущего авторизированного пользователя '{0}'</h4>", UserName));
+                }
 
                 string[] userRoles = Roles.GetRolesForUser(UserName);
                 if (userRoles.Count() > 0)
@@ -339,6 +351,7 @@ namespace MonoIndication.Controllers
         }
          
 
+        [Authorize(Roles="administrators")]
         // get запрос на список телефонов перед изменением
         public ActionResult PhoneEdit()
         {
@@ -365,6 +378,7 @@ namespace MonoIndication.Controllers
            
         }
 
+        [Authorize(Roles = "administrators")]
         [HttpPost]
         public ActionResult PhoneEdit(string phones, string newNumber, int? includeOtherTables)
         {
@@ -413,11 +427,13 @@ namespace MonoIndication.Controllers
         }
 
 
+        [Authorize(Roles = "administrators")]
         public ActionResult ChangeAdminPassword()
         {
             return PartialView();
         }
 
+        [Authorize(Roles = "administrators")]
         [HttpPost]
         public ActionResult ChangeAdminPassword(string oldPassword,string newPassword)
         {
@@ -450,6 +466,32 @@ namespace MonoIndication.Controllers
                 return Content("<h4 class='text-danger'>Не удалось изменить пароль. Возникло исключение. Данные записаны в лог.</h4>");
             }
             
+        }
+
+        public ActionResult TempPodObrEdit()
+        {
+            double TempPod = repo_data.GetRealParam("TempPod");
+            double TempObr=repo_data.GetRealParam("TempObr");
+
+            ViewBag.TempPod = TempPod;
+            ViewBag.TempObr = TempObr;
+
+            return PartialView();
+        }
+        [HttpPost]
+        public ActionResult TempPodObrEdit(double TempPod, double TempObr)
+        {
+            if (TempObr < 0 || TempPod < 0)
+            {
+                ViewBag.TempPod = TempPod;
+                ViewBag.TempObr = TempObr;
+                ViewBag.message = "Значения должны быть >=0!";
+                return PartialView();
+            }
+            repo_data.AddRealParam("TempPod", TempPod);
+            repo_data.AddRealParam("TempObr", TempObr);
+
+            return Content("<h4 class='text-success'>Значения сохранены</h4>");
         }
 
         public ActionResult TestMethod(string phone)

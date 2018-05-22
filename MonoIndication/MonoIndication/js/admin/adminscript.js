@@ -5,15 +5,18 @@ $(function() {
     $("#DbSettingLink").click(
         function (e) {
             showLoading(true);
-            $.get('././DbStatus', {},
-                function(data) {
+            $.ajax({
+                url: '././DbStatus',
+                type: "GET",
+                
+                success: function (data) {
                     $("#AdminContainer").html(data);
-                })
-            .error(function (jqXHR, textStatus, errorThrown) {
-                $("#AdminContainer").html("<h4 class='text-danger'>Возникла ошибка! Подробные сведения можно помотреть в консоли браузера</h4>");
-                console.log(jqXHR.responseText);
-            }).complete(function () {
-                showLoading(false);
+                    showLoading(false);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    $("#AdminContainer").html("<h4 class='text-danger'>Возникла ошибка! </h4>");
+                    showLoading(false);
+                }
             });
 
             e.preventDefault();
@@ -25,16 +28,20 @@ $(function() {
     $("#UserCreateLink").click(
         function (e) {
             showLoading(true);
-            $.get('././CreateNewUser', {},
-                function (data) {
-                    $("#AdminContainer").html(data);
-                })
-            .error(function (jqXHR, textStatus, errorThrown) {
-                $("#AdminContainer").html("<h4 class='text-danger'>Возникла ошибка! Подробные сведения можно помотреть в консоли браузера</h4>");
-                console.log(jqXHR.responseText);
-            }).complete(function () {
-                showLoading(false);
-            });
+            $.ajax(
+                {
+                    url: '././CreateNewUser',
+                    type: "GET",
+                    success: function (data) {
+                        $("#AdminContainer").html(data);
+                        showLoading(false);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        $("#AdminContainer").html("<h4 class='text-danger'>Возникла ошибка! </h4>");
+
+                        showLoading(false);
+                    }
+                });
             e.preventDefault();
         }
     );
@@ -43,16 +50,19 @@ $(function() {
     $("#UserEditLink").click(
         function (e) {
             showLoading(true);
-            $.get('././ViewUsers', {},
-                function (data) {
-                    $("#AdminContainer").html(data);
-                })
-            .error(function (jqXHR, textStatus, errorThrown) {
-                $("#AdminContainer").html("<h4 class='text-danger'>Возникла ошибка! Подробные сведения можно помотреть в консоли браузера</h4>");
-                console.log(jqXHR.responseText);
-            }).complete(function () {
-                showLoading(false);
-            });
+            $.ajax(
+                {
+                    url: '././ViewUsers', type: "GET",
+                    success: function (data) {
+                        $("#AdminContainer").html(data);
+                        showLoading(false);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        $("#AdminContainer").html("<h4 class='text-danger'>Возникла ошибка! </h4>");
+
+                        showLoading(false);
+                    }
+                });
             e.preventDefault();
         }
     );
@@ -60,16 +70,19 @@ $(function() {
     $("#LogViewLink").click(
         function (e) {
             showLoading(true);
-            $.get('././ViewLog', {},
-                function (data) {
-                    $("#AdminContainer").html(data);
-                })
-            .error(function (jqXHR, textStatus, errorThrown) {
-                $("#AdminContainer").html("<h4 class='text-danger'>Возникла ошибка! Подробные сведения можно помотреть в консоли браузера</h4>");
-                console.log(jqXHR.responseText);
-            }).complete(function () {
-                showLoading(false);
-            });
+            $.ajax(
+                {
+                    url: '././ViewLog',
+                    success: function (data) {
+                        $("#AdminContainer").html(data);
+                        showLoading(false);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        $("#AdminContainer").html("<h4 class='text-danger'>Возникла ошибка!</h4>");
+
+                        showLoading(false);
+                    }
+                });
             e.preventDefault();
         }
     );
@@ -77,15 +90,17 @@ $(function() {
     $("#DbEditLink").click(
         function (e) {
             showLoading(true);
-            $.get('././DbEditor', {},
-                function (data) {
+            $.ajax({
+                url: '././DbEditor',
+                success: function (data) {
                     $("#AdminContainer").html(data);
-                })
-            .error(function (jqXHR, textStatus, errorThrown) {
-                $("#AdminContainer").html("<h4 class='text-danger'>Возникла ошибка! Подробные сведения можно помотреть в консоли браузера</h4>");
-                console.log(jqXHR.responseText);
-            }).complete(function () {
-                showLoading(false);
+                    showLoading(false);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    $("#AdminContainer").html("<h4 class='text-danger'>Возникла ошибка! </h4>");
+
+                    showLoading(false);
+                }
             });
 
             e.preventDefault();
@@ -96,16 +111,18 @@ $(function() {
 
     $("#PhoneEditLink").click(function (e) {
         showLoading(true);
-        $.get('././PhoneEdit', {},
-            function (data) {
-                $("#AdminContainer").html(data);
-            })
-        .error(function (jqXHR, textStatus, errorThrown) {
-            $("#AdminContainer").html("<h4 class='text-danger'>Возникла ошибка! Подробные сведения можно помотреть в консоли браузера</h4>");
-            console.log(jqXHR.responseText);
-        }).complete(function () {
-            showLoading(false);
-        });
+        $.ajax({
+                    url: '././PhoneEdit',
+                    success: function (data) {
+                        $("#AdminContainer").html(data);
+                        showLoading(false);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        $("#AdminContainer").html("<h4 class='text-danger'>Возникла ошибка! </h4>");
+
+                        showLoading(false);
+                    }
+                });
         e.preventDefault();
     });
     
@@ -113,15 +130,17 @@ $(function() {
     $("#AdminPasswordChange").click(
     function (e) {
         showLoading(true);
-        $.get('././ChangeAdminPassword', {},
-            function (data) {
+        $.ajax({
+            url: '././ChangeAdminPassword',
+            success: function (data) {
                 $("#AdminContainer").html(data);
-            })
-        .error(function (jqXHR, textStatus, errorThrown) {
-            $("#AdminContainer").html("<h4 class='text-danger'>Возникла ошибка! Подробные сведения можно помотреть в консоли браузера</h4>");
-            console.log(jqXHR.responseText);
-        }).complete(function () {
-            showLoading(false);
+                showLoading(false);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                $("#AdminContainer").html("<h4 class='text-danger'>Возникла ошибка!</h4>");
+
+                showLoading(false);
+            }
         });
         e.preventDefault();
     }

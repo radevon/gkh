@@ -49,8 +49,8 @@
     </span>
 </p>
 
- <script src='@Url.Content("~/js/jqueryval/jquery.validate.min.js")'></script>
- <script src='@Url.Content("~/js/jqueryval/jquery.validate.unobtrusive.min.js")'></script>
+ @*<script src='@Url.Content("~/js/jqueryval/jquery.validate.min.js")'></script>
+ <script src='@Url.Content("~/js/jqueryval/jquery.validate.unobtrusive.min.js")'></script>*@
 
 <script type="text/javascript">
 
@@ -94,13 +94,12 @@
                 beforeSend: function () { showLoading(true); },
                 success: function (response) {
                     $("#editDbContainer").html(response);
-                },
-                complete: function () {
                     showLoading(false);
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     $("#editDbContainer").html("<h4 class='text-danger'>Возникла ошибка! Подробные сведения можно помотреть в консоли браузера</h4>");
                     console.log(xhr.responseText);
+                    showLoading(false);
                 }
             });
             return false;
@@ -115,13 +114,12 @@
                 beforeSend: function () { showLoading(true); },
                 success: function (response) {
                     $("#editDbContainer").html(response);
-                },
-                complete: function () {
                     showLoading(false);
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     $("#editDbContainer").html("<h4 class='text-danger'>Возникла ошибка! Подробные сведения можно помотреть в консоли браузера</h4>");
                     console.log(xhr.responseText);
+                    showLoading(false);
                 }
             });
             return false;

@@ -117,6 +117,14 @@ from db_heat_parameter main;";
 	'MessageText'	TEXT
 );";
 
+        private string CustomParamsTable = @"CREATE TABLE IF NOT EXISTS 'db_params' (
+	'NameParam'	TEXT NOT NULL UNIQUE,
+	'intValue'	integer NOT NULL default 0,
+	'realValue'	REAL NOT NULL default 0,
+	'dateValue'	TEXT NOT NULL default CURRENT_TIMESTAMP,
+	'textValue'	TEXT default ''
+);";
+
 
 
         public Database(string filePath)
@@ -169,7 +177,8 @@ from db_heat_parameter main;";
                               && this.ExecuteSqlCreateTable(this.DebrifTable).isSuccess
                               && this.ExecuteSqlCreateTable(this.LogTable).isSuccess
                               && this.ExecuteSqlCreateTable(this.groupingDayView).isSuccess
-                              && this.ExecuteSqlCreateTable(this.RegionInfo).isSuccess;
+                              && this.ExecuteSqlCreateTable(this.RegionInfo).isSuccess
+                              && this.ExecuteSqlCreateTable(this.CustomParamsTable).isSuccess;
             return allSuccess;
         }
 

@@ -17,6 +17,7 @@
         <th>
             Дата создания
         </th>
+        <th>Роли</th>
         <th>
             Посл. дата ошибочн. входа
         </th>
@@ -36,6 +37,10 @@
         </td>
         <td>
             @(item.CreateDate.HasValue?item.CreateDate.Value.ToString("dd MMM yy HH:mm:ss",CultureInfo.CreateSpecificCulture("ru-Ru")):String.Empty)
+        </td>
+        <td>
+            @String.Join(",",item.Roles)        
+            
         </td>
         <td>
             @(item.LastPasswordFailureDate.HasValue?item.LastPasswordFailureDate.Value.ToString("dd MMM yy HH:mm:ss",CultureInfo.CreateSpecificCulture("ru-Ru")):String.Empty)

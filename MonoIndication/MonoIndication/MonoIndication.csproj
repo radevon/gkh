@@ -319,6 +319,7 @@
     <Content Include="Static\Energosbit_new.xls" />
     <Content Include="Views\Report\Buhgaltery.cshtml" />
     <Content Include="Views\Request\EventList.cshtml" />
+    <Content Include="Views\Admin\TempPodObrEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Account\Login.cshtml" />

@@ -1,0 +1,45 @@
+﻿
+<h4>Номинальные параметры температуры носителя для контура</h4>
+<form name="TempPodObr" action='@Url.Action("TempPodObrEdit", "Admin")' method="post">
+    <label for="TempPod">Tемпература подачи, &deg;C</label> <input type="text" name="TempPod" class="form-control" style="width:200px" value="@ViewBag.TempPod.ToString()" required="required" />
+    <label for="TempObr">Tемпература обратки, &deg;C</label> <input type="text" name="TempObr" class="form-control" style="width:200px" value="@ViewBag.TempObr.ToString()" required="required" />
+
+    <input type="submit" value="Сохранить" style="margin:3px 0" class="btn btn-default" />
+</form>
+<div
+    <span class="text-danger">
+
+        @(ViewBag.message ?? "")
+    </span>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $("form[name='TempPodObr']").submit(
+               function (event) {
+
+                   var valid = $(this).valid();
+
+                   if (valid) {
+                       $.ajax({
+                           url: $(this).attr('action'),
+                           type: $(this).attr('method'),
+                           data: $(this).serialize(),
+                           beforeSend: function () { showLoading(true); },
+                           success: function (response) {
+                               $("#editDbContainer").html(response);
+                               showLoading(false);
+                           },
+                           error: function (xhr, ajaxOptions, thrownError) {
+                               $("#editDbContainer").html("<h4 class='text-danger'>Возникла ошибка! Проверьте правильность введенных значений (вещественные числа, обяз знач)</h4>");
+
+                               showLoading(false);
+                           }
+                       });
+                   }
+                   if (event.preventDefault) event.preventDefault();
+                   event.returnValue = false;
+                   return false;
+               });
+    });
+</script>

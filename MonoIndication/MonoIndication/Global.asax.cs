@@ -36,17 +36,27 @@ namespace MonoIndication
 
             
             if (!WebSecurity.UserExists("admin"))
-                WebSecurity.CreateUserAndAccount("admin", "admin", new {Description = "super admin"});
+                WebSecurity.CreateUserAndAccount("admin", "superadmin", new {Description = "super admin"});
+            
+
             if (!Roles.RoleExists("administrators"))
             {
-                Roles.CreateRole("administrators");
-                if (WebSecurity.UserExists("admin"))
-                {
-                    if(Roles.FindUsersInRole("administrators","admin").Count()==0)
-                        Roles.AddUserToRole("admin","administrators");
-                }
+                Roles.CreateRole("administrators");                
             }
 
+           
+            if (Roles.FindUsersInRole("administrators", "admin").Count() == 0)
+                    Roles.AddUserToRole("admin", "administrators");
+
+
+            if (!Roles.RoleExists("users"))
+            {
+                Roles.CreateRole("users");
+            }
+           
+
+            if (Roles.FindUsersInRole("users", "admin").Count() == 0)
+                Roles.AddUserToRole("admin", "users");
             
             CultureInfo newCulture = (CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
             newCulture.NumberFormat.NumberDecimalSeparator = ".";

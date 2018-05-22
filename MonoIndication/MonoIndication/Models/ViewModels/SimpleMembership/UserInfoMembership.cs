@@ -12,6 +12,8 @@ namespace MonoIndication
         public String Description { get; set; }
         public DateTime? CreateDate { get; set; }
         public DateTime? LastPasswordFailureDate { get; set; }
+
+        public string[] Roles { get; set; }
         
     }
 }

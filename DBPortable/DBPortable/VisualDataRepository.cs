@@ -903,5 +903,73 @@ where o.recvDate=(select max(recvDate) from  db_heat_parameter where phone=o.pho
             return evt;
         }
         #endregion
+
+        #region customParams
+        public int AddIntParam(string Name, int value)
+        {
+            using (IDbConnection conn = new SQLiteConnection(this.db_.GetDefaultConnectionString()))
+            {
+                return conn.ExecuteScalar<int>("insert or replace into db_params (NameParam,intValue) values(@name,@value);", new { name=Name, value=value});
+            }
+        }
+
+        public int AddRealParam(string Name, double value)
+        {
+            using (IDbConnection conn = new SQLiteConnection(this.db_.GetDefaultConnectionString()))
+            {
+                return conn.ExecuteScalar<int>("insert or replace into db_params (NameParam,realValue) values(@name,@value);", new { name = Name, value = value });
+            }
+        }
+
+        public int AddDateParam(string Name, DateTime value)
+        {
+            using (IDbConnection conn = new SQLiteConnection(this.db_.GetDefaultConnectionString()))
+            {
+                return conn.ExecuteScalar<int>("insert or replace into db_params (NameParam,dateValue) values(@name,@value);", new { name = Name, value = value });
+            }
+        }
+
+        public int AddTextParam(string Name, string value)
+        {
+            using (IDbConnection conn = new SQLiteConnection(this.db_.GetDefaultConnectionString()))
+            {
+                return conn.ExecuteScalar<int>("insert or replace into db_params (NameParam,textValue) values(@name,@value);", new { name = Name, value = value });
+            }
+        }
+
+        public int GetIntParam(string key)
+        {
+            using (IDbConnection conn = new SQLiteConnection(this.db_.GetDefaultConnectionString()))
+            {
+                return conn.Query<int>("select intValue from db_params where NameParam=@key", new { key = key }).FirstOrDefault();
+            }
+        }
+
+        public double GetRealParam(string key)
+        {
+            using (IDbConnection conn = new SQLiteConnection(this.db_.GetDefaultConnectionString()))
+            {
+                return conn.Query<double>("select realValue from db_params where NameParam=@key", new { key = key }).FirstOrDefault();
+            }
+        }
+
+
+        public DateTime GetDateParam(string key)
+        {
+            using (IDbConnection conn = new SQLiteConnection(this.db_.GetDefaultConnectionString()))
+            {
+                return conn.Query<DateTime>("select dateValue from db_params where NameParam=@key", new { key = key }).FirstOrDefault();
+            }
+        }
+
+        public string GetTextParam(string key)
+        {
+            using (IDbConnection conn = new SQLiteConnection(this.db_.GetDefaultConnectionString()))
+            {
+                return conn.Query<string>("select textValue from db_params where NameParam=@key", new { key = key }).FirstOrDefault();
+            }
+        }
+
+        #endregion
     }
 }
