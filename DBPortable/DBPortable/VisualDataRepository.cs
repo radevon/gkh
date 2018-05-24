@@ -557,25 +557,7 @@ o.totalWorkHours from db_heat_parameter o left join db_konturs k  on k.phone=o.p
 
         #region reports
 
-        /*
-        public IEnumerable<SvodReportBy2Date> GetReportBy2Date(DateTime from, DateTime to)
-        {
-            IEnumerable<SvodReportBy2Date> parameters = Enumerable.Empty<SvodReportBy2Date>();
-
-            using (IDbConnection conn = new SQLiteConnection(this.db_.GetDefaultConnectionString()))
-            {
-                parameters = conn.Query<SvodReportBy2Date>(@"select m.MarkerId idObject, m.phone phone, m.address address, m.description, p.recvDate recvDate, p.n_pp n_pp, ifnull(p.k_name,'-') k_name, p.heatValue heatValue, p.waterLose waterLose, p.waterLoseAll waterLoseAll, p.powerValue powerValue, p.tempIn tempIn, p.tempOut tempOut, p.statusInput statusInput, p.eventCode eventCode, 
-p.presure1 presure1, p.presure2 presure2, p.errorList errorList, p.totalWorkHours totalWorkHours, p.tempCold tempCold
-from db_object_marker m left join 
-(select o.Id, o.recvDate, o.phone, o.n_pp, (select k.Name from db_konturs k where k.phone=o.phone and k.N=o.n_pp) k_name, o.heatValue, o.waterLose, o.waterLoseAll, o.powerValue,  o.tempIn, o.tempOut, o.statusInput, o.eventCode, o.presure1, o.presure2, o.errorList, o.totalWorkHours, o.tempCold from db_heat_parameter o 
-where o.recvDate=(select max(recvDate) from  db_heat_parameter where phone=o.phone and n_pp=o.n_pp and strftime('%d%m%Y',recvDate)=@from_)  or o.recvDate=(select max(recvDate) from  db_heat_parameter where phone=o.phone and n_pp=o.n_pp and strftime('%d%m%Y',recvDate)=@to_)) p
- on m.phone=p.phone
- order by m.address, p.n_pp, p.recvDate", new { from_ = from.ToString("ddMMyyyy"), to_ = to.ToString("ddMMyyyy") });
-            }
-
-            return parameters;
-        }
-         * */
+      
 
         public IEnumerable<EnergosbitXls> GetEnSbReport(DateTime from, DateTime to, int GroupId=0)
         {

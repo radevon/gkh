@@ -82,7 +82,6 @@
     <Compile Include="Models\ObjectsEvents.cs" />
     <Compile Include="Models\Regions.cs" />
     <Compile Include="Models\RequestStatistic.cs" />
-    <Compile Include="Models\SvodReportBy2Date.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilite.cs" />
     <Compile Include="VisualDataRepository.cs" />
