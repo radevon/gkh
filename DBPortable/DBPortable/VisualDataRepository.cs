@@ -555,6 +555,23 @@ o.totalWorkHours from db_heat_parameter o left join db_konturs k  on k.phone=o.p
             return parameters;
         }
 
+        public IEnumerable<JournalRow> GetJournalCompact()
+        {
+            IEnumerable<JournalRow> parameters = Enumerable.Empty<JournalRow>();
+
+            using (IDbConnection conn = new SQLiteConnection(this.db_.GetDefaultConnectionString()))
+            {
+                parameters = conn.Query<JournalRow>(@"select m.MarkerId, m.address, ifnull(k.name,'-') as kNamePod, ifnull(k.TipSh,'-') as PodTipSch, ifnull(k.VNorma,0.0) as VNormaPod, ifnull(k.NormaKoef,0.0) as NormaKoefPod,
+       pod.recvDate as datePod,pod.heatValue as heatPod, pod.powerValue as powerPod, pod.tempIn as TempPod, pod.TempOut as TempObr, pod.n_pp as npod, pod.waterLose as waterLosePod, pod.waterLoseAll as waterLoseAllPod, pod.presure1 as waterLoseMPod, pod.presure2 as waterLoseAllMPod, pod.totalWorkHours, pod.TempCold, pod.errorList, 
+	   obr.recvDate as dateObr,obr.heatValue as heatObr, obr.powerValue as powerObr, obr.waterLose as waterLoseObr, obr.waterLoseAll as waterLoseAllObr, obr.presure1 as waterLoseMObr, obr.presure2 as waterLoseAllMObr from db_object_marker m 
+left join db_heat_parameter pod on m.phone=pod.phone left join db_konturs k on pod.phone=k.phone and pod.n_pp=k.n
+join (select phone, n_pp, max(recvDate) as maxDate from db_heat_parameter group by phone, n_pp) grp on pod.phone=grp.phone and pod.n_pp%2=0 and pod.n_pp=grp.n_pp  and pod.recvDate=grp.maxDate
+left join db_heat_parameter obr on obr.phone=pod.phone and obr.n_pp=pod.n_pp+1 and date(obr.recvDate)=date(pod.recvDate)");
+            }
+
+            return parameters;
+        }
+
         #region reports
 
       

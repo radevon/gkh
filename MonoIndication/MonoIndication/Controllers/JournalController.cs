@@ -32,6 +32,7 @@ namespace MonoIndication.Controllers
 
         public ActionResult Journal(string sorted_field, string sorted_way="asc")
         {
+            /*
             IEnumerable<HeatFullView> list = repo.GetJournal();
             if (!String.IsNullOrEmpty(sorted_field) && !String.IsNullOrWhiteSpace(sorted_field))
             {
@@ -44,6 +45,11 @@ namespace MonoIndication.Controllers
                
             }
             return View(list);
+             * */
+            List<JournalRow> list = repo.GetJournalCompact().OrderBy(x=>x.Address).ThenBy(x=>x.kNamePod).ToList();
+
+            return View("JournalCompact", list);
+
         }
 
     }

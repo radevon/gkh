@@ -1,0 +1,239 @@
+﻿@model IEnumerable<DBPortable.JournalRow>
+
+@{
+    ViewBag.Title = "Журнал последних показаний с приборов учета";
+    Layout = "~/Views/Shared/MainLayout.cshtml";
+}
+
+@section Css{
+    <style type="text/css">
+        #journal {
+            font-size: 13px;
+            background-color:#fff;
+        }
+
+            #journal thead tr th {
+                text-align: center;
+            }
+
+            #journal thead {
+                background-color:#f8f8f8;
+            }
+
+            #journal tr td, #journal tr th {
+                padding: 2px;
+            }
+
+        @@media print {
+            a[href]:after {
+                content: "";
+            }
+        }
+    </style>
+}
+
+@Html.Partial("topmenu")
+
+<div class="container-fluid" style="margin-top: 45px">
+    <div class="row">
+        <div class="col-md-12 col-lg-12">
+
+            <h2 class="text-center text-primary">Журнал последних показаний на объектах, оборудованных приборами учета</h2>
+
+
+            <table id="journal" class="table table-condensed table-bordered">
+                <thead class="text-muted">
+                   
+                    <tr>
+
+                        <th rowspan="2">
+                            Адрес
+                        </th>
+                        <th rowspan="2">
+                            Тип контура
+                        </th>
+                        <th rowspan="2">
+                            Тип прибора
+                        </th>
+
+                        <th rowspan="2">
+                            Время получ
+                        </th>
+                        <th colspan="9">
+                            Подающий трубопровод
+                        </th>
+
+                        <th colspan="7">
+                            Обратный трубопровод
+                        </th>
+
+                       
+                        
+
+
+                       
+
+                        
+                        <th rowspan="2">
+                            T<sub>х</sub>&deg;C
+                        </th>
+
+                        <th rowspan="2">
+                            Часы раб
+                        </th>
+                        <th rowspan="2">
+                            Сообщение
+                        </th>
+
+                    </tr>
+                    <tr>
+                        <!-- Подача -->
+                        <th>
+                            Теплоэн, ГКал
+                        </th>
+                        <th>
+                            Мощность, КВт
+                        </th>
+                        <th>
+                            T<sub>под</sub>&deg;C
+                        </th>
+                       
+                        <th>
+                            Тек расх воды, м<sup>3</sup>/ч
+                        </th>
+                        <th>
+                            Норма расх, м<sup>3</sup>/ч
+                        </th>
+                        <th>
+                            Доп откл, %
+                        </th>
+                        <th>
+                            Общ расх воды, м<sup>3</sup>
+                        </th>
+                        <th>
+                            Тек расх воды, т/ч
+                        </th>
+                        <th>
+                            Общ расх воды, т
+                        </th>
+
+                        <!-- Обратка-->
+                        <th>
+                            Теплоэн, ГКал
+                        </th>
+                        <th>
+                            Мощность, КВт
+                        </th>
+                        <th>
+                            T<sub>обр</sub>&deg;C
+                        </th>
+
+                        <th>
+                            Тек расх воды, м<sup>3</sup>/ч
+                        </th>
+                        <th>
+                            Общ расх воды, м<sup>3</sup>
+                        </th>
+                        <th>
+                            Тек расх воды, т/ч
+                        </th>
+                        <th>
+                            Общ расх воды, т
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+
+                            <td>
+                                @Html.ActionLink(item.Address, "Index", "Itp", new { id = item.MarkerId }, new { })
+                            </td>
+                            <td>
+                                @item.kNamePod
+                            </td>
+                            <td>
+                                @item.PodTipSch
+                            </td>
+
+                            <td>
+                                @item.datePod.ToString("dd MMM yyг hh:mm:ss")
+                            </td>
+                            <td>
+                                @item.heatPod.ToString("0.00")
+                            </td>
+                            <td>
+                                @item.powerPod.ToString("0.0")
+                            </td>
+                            <td>
+                                @item.TempPod.ToString("0.0")
+                            </td>
+                            
+
+                            <td>
+                                @item.waterLosePod.ToString("0.00")
+                            </td>
+                            <td>
+                                @item.VNormaPod.ToString("0.#0")
+                            </td>
+                            <td>
+                                @item.NormaKoefPod.ToString("0.0")
+                            </td>
+                            <td>
+                                @item.waterLoseAllPod.ToString("0.#0")
+                            </td>
+                            <td>
+                                @item.waterLoseMPod.ToString("0.00")
+                            </td>
+                            <td>
+                                @item.waterLoseAllMPod.ToString("0.#0")
+                            </td>
+                           
+
+                            <td>
+                                @item.heatObr.ToString("0.00")
+                            </td>
+                            <td>
+                                @item.powerObr.ToString("0.0")
+                            </td>
+                            <td>
+                                @item.TempObr.ToString("0.0")
+                            </td>
+                            <td>
+                                @item.waterLoseObr.ToString("0.00")
+                            </td>
+                            <td>
+                                @item.waterLoseAllObr.ToString("0.#0")
+                            </td>
+                            <td>
+                                @item.waterLoseMObr.ToString("0.00")
+                            </td>
+                            <td>
+                                @item.waterLoseAllMObr.ToString("0.#0")
+                            </td>
+
+                            <td>
+                                @item.TempCold.ToString("0.0")
+                            </td>
+
+                            <td>
+                                @item.totalWorkHours.ToString()
+                            </td>
+                           
+
+                            <td>
+                                <span class="text-danger" style="font-size:12px">
+                                    @item.errorList
+                                </span>
+
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
+</div>
+</div>
+</div>

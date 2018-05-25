@@ -76,6 +76,7 @@
     <Compile Include="Models\HeateInfo.cs" />
     <Compile Include="Models\HeatFullView.cs" />
     <Compile Include="Models\HeatInfoView.cs" />
+    <Compile Include="Models\JournalRow.cs" />
     <Compile Include="Models\KonturItem.cs" />
     <Compile Include="Models\LogRecord.cs" />
     <Compile Include="Models\Marker.cs" />
