@@ -1,0 +1,179 @@
+﻿@model List<DBPortable.JournalRow>
+
+<table id="journal" class="table table-condensed table-bordered">
+    <thead class="text-muted">
+
+        <tr>
+            <th rowspan="2">
+                Адрес
+            </th>
+            <th rowspan="2">
+                Тип контура
+            </th>
+            <th rowspan="2">
+                Тип прибора
+            </th>
+            <th rowspan="2">
+                Время получ
+            </th>
+            <th colspan="8">
+                Подающий трубопровод
+            </th>
+            <th colspan="7">
+                Обратный трубопровод
+            </th>
+
+
+
+
+
+            <th rowspan="2">
+                T<sub>х</sub>&deg;C
+            </th>
+            <th rowspan="2">
+                Часы раб
+            </th>
+            <th rowspan="2">
+                Сообщение
+            </th>
+        </tr>
+        <tr>
+            <!-- Подача -->
+            <th>
+                Теплоэн, ГКал
+            </th>
+            <th>
+                Мощность, КВт
+            </th>
+            <th>
+                T<sub>под</sub>&deg;C
+            </th>
+
+            <th>
+                Тек расх воды, м<sup>3</sup>/ч
+            </th>
+            <th>
+                Норма расх, м<sup>3</sup>/ч
+            </th>
+
+            <th>
+                Общ расх воды, м<sup>3</sup>
+            </th>
+            <th>
+                Тек расх воды, т/ч
+            </th>
+            <th>
+                Общ расх воды, т
+            </th>
+            <!-- Обратка-->
+            <th>
+                Теплоэн, ГКал
+            </th>
+            <th>
+                Мощность, КВт
+            </th>
+            <th>
+                T<sub>обр</sub>&deg;C
+            </th>
+            <th>
+                Тек расх воды, м<sup>3</sup>/ч
+            </th>
+            <th>
+                Общ расх воды, м<sup>3</sup>
+            </th>
+            <th>
+                Тек расх воды, т/ч
+            </th>
+            <th>
+                Общ расх воды, т
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td title="Перейти на подробный просмотр объекта">
+                    @Html.ActionLink(item.Address, "Index", "Itp", new { id = item.MarkerId }, new { })
+                </td>
+                <td title="Наименование контура">
+                    @item.kNamePod
+                </td>
+                <td title="Тип прибора учета">
+                    @item.PodTipSch
+                </td>
+                <td title="Дата и время получения показаний">
+                    @item.datePod.ToString("dd MMM yyг hh:mm:ss")
+                </td>
+                <td title="Показания теплоэнергии в подающей магистрали">
+                    @item.heatPod.ToString("0.00")
+                </td>
+                <td title="Мощность">
+                    @item.powerPod.ToString("0.0")
+                </td>
+                <td title="Температура в подающей магистрали">
+                    @item.TempPod.ToString("0.0")
+                </td>
+
+                <td>
+                    @if (item.VNormaPod > 0 && (item.waterLosePod < item.MinNormaV || item.waterLosePod > item.MaxNormaV))
+                    {
+                        <span class="blink" title="Текущий расход воды не соответствует заданной норме расхода!">@item.waterLosePod.ToString("0.00")</span>
+                    }
+                    else
+                    {
+                        <span title="Текущий объемный расход воды">@item.waterLosePod.ToString("0.00")</span>
+                    }
+
+                </td>
+                <td title="Предельное отклонение расхода воды (если заведена норма и коэффициент)">
+                    @item.MinNormaV.ToString("0.#0")~@item.MaxNormaV.ToString("0.#0")
+                </td>
+
+                <td title="Общий объемный расход воды">
+                    @item.waterLoseAllPod.ToString("0.#0")
+                </td>
+                <td title="Текущий массовый расход воды">
+                    @item.waterLoseMPod.ToString("0.00")
+                </td>
+                <td title="Общий массовый расход воды">
+                    @item.waterLoseAllMPod.ToString("0.#0")
+                </td>
+
+                <td title="Показания теплоэнергии в обратной магистрали">
+                    @item.heatObr.ToString("0.00")
+                </td>
+                <td title="Мощность">
+                    @item.powerObr.ToString("0.0")
+                </td>
+                <td title="Температура в обратной магистрали">
+                    @item.TempObr.ToString("0.0")
+                </td>
+                <td title="Текущий объемный расход воды обратки">
+                    @item.waterLoseObr.ToString("0.00")
+                </td>
+                <td title="Общий расход воды обратки">
+                    @item.waterLoseAllObr.ToString("0.#0")
+                </td>
+                <td title="Текущий массовый расход воды обратки">
+                    @item.waterLoseMObr.ToString("0.00")
+                </td>
+                <td title="Общий массовый расход обратки">
+                    @item.waterLoseAllMObr.ToString("0.#0")
+                </td>
+                <td title="Температура холодной воды">
+                    @item.TempCold.ToString("0.0")
+                </td>
+                <td title="Общее время наработки прибора">
+                    @item.totalWorkHours.ToString()
+                </td>
+
+                <td title="Сообщения об ошибках и др.">
+                    <span class="text-danger" style="font-size:12px">
+                        @item.errorList
+                    </span>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

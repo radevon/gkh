@@ -30,26 +30,18 @@ namespace MonoIndication.Controllers
             Thread.CurrentThread.CurrentCulture = cult;
         }
 
-        public ActionResult Journal(string sorted_field, string sorted_way="asc")
+        public ActionResult Journal()
         {
-            /*
-            IEnumerable<HeatFullView> list = repo.GetJournal();
-            if (!String.IsNullOrEmpty(sorted_field) && !String.IsNullOrWhiteSpace(sorted_field))
-            {
-                PropertyInfo info = typeof (HeatFullView).GetProperty(sorted_field);
-                if(sorted_way.ToLower()=="asc")
-                    list = list.OrderBy(info.GetValue);
-                else
-                    if (sorted_way.ToLower()=="desc")
-                        list = list.OrderByDescending(info.GetValue);
-               
-            }
+            
+            return View("JournalCompact");
+
+        }
+
+        public ActionResult PartialData()
+        {
+
+            List<JournalRow> list = repo.GetJournalCompact().OrderBy(x => x.Address).ThenBy(x => x.kNamePod).ToList();
             return View(list);
-             * */
-            List<JournalRow> list = repo.GetJournalCompact().OrderBy(x=>x.Address).ThenBy(x=>x.kNamePod).ToList();
-
-            return View("JournalCompact", list);
-
         }
 
     }
