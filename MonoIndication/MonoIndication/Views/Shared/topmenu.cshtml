@@ -47,6 +47,7 @@
                 </li>
                
             </ul>
+           
             
             <ul class="nav navbar-nav navbar-right">
                 @if (Roles.IsUserInRole("administrators"))
@@ -67,6 +68,10 @@
                     </ul>
                 </li>
             </ul>
+
+            <p id="currentTemp" class="navbar-text pull-right" title="Нет информации по температуре окружающего воздуха">
+                - &deg;C
+            </p>
         </div>
         <!-- /.navbar-collapse -->
     </div>
@@ -98,6 +103,18 @@
             event.stopPropagation();
         });
         
-        
+        //беру данные о текущей температуре из сервиса openweathermap.org
+        openweathermap(function (data) {
+            
+                var temp = +data.main.temp;
+                var dt = new Date(data.dt * 1000);
+                $("#currentTemp").html(temp + ' &deg;C');
+                $("#currentTemp").attr('title', 'Температура воздуха по состоянию на: ' + dt.toLocaleString());
+            
+                var rgb = new RedBlueColorGenerator(-30, 40);
+                
+
+                $("#currentTemp").css('color', rgb.RGB(temp));
+        });
     });
 </script>
