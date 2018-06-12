@@ -31,3 +31,12 @@ D:\code\.NET\Rogachev\DBPortable\DBPortable\obj\Debug\DBPortable.csprojResolveAs
 D:\code\.NET\Rogachev\DBPortable\DBPortable\obj\Debug\DBPortable.dll
 D:\code\.NET\Rogachev\DBPortable\DBPortable\obj\Debug\DBPortable.pdb
 D:\code\.NET\Rogachev\DBPortable\DBPortable\obj\Debug\DBPortable.csproj.ResolveComReference.cache
+E:\dev\vs\gkh\DBPortable\DBPortable\bin\Debug\DBPortable.dll.config
+E:\dev\vs\gkh\DBPortable\DBPortable\bin\Debug\DBPortable.dll
+E:\dev\vs\gkh\DBPortable\DBPortable\bin\Debug\DBPortable.pdb
+E:\dev\vs\gkh\DBPortable\DBPortable\bin\Debug\Dapper.dll
+E:\dev\vs\gkh\DBPortable\DBPortable\bin\Debug\Dapper.xml
+E:\dev\vs\gkh\DBPortable\DBPortable\obj\Debug\DBPortable.csprojResolveAssemblyReference.cache
+E:\dev\vs\gkh\DBPortable\DBPortable\obj\Debug\DBPortable.csproj.ResolveComReference.cache
+E:\dev\vs\gkh\DBPortable\DBPortable\obj\Debug\DBPortable.dll
+E:\dev\vs\gkh\DBPortable\DBPortable\obj\Debug\DBPortable.pdb

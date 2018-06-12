@@ -970,5 +970,33 @@ left join db_heat_parameter obr on obr.phone=pod.phone and obr.n_pp=pod.n_pp+1 a
         }
 
         #endregion
+
+        // температурные параметры гвс, отопления
+        #region temperetureGraph
+
+        // все данные
+        public IEnumerable<TempGraph> GetGraph()
+        {
+            IEnumerable<TempGraph> parameters = Enumerable.Empty<TempGraph>();
+
+            using (IDbConnection conn = new SQLiteConnection(this.db_.GetDefaultConnectionString()))
+            {
+                parameters = conn.Query<TempGraph>(@"select EnvironmentTemp, PodTemp, ObrTemp from temperatureGraph");
+            }
+
+            return parameters;
+        }
+
+        // обновление строки
+        public int InsertOrUpdateTempGraph(TempGraph item)
+        {
+            using (IDbConnection conn = new SQLiteConnection(this.db_.GetDefaultConnectionString()))
+            {
+                return conn.Execute("insert or replace into temperatureGraph (EnvironmentTemp,PodTemp, ObrTemp) values(@EnvironmentTemp,@PodTemp,@ObrTemp);", item);
+            }
+        }
+
+
+        #endregion
     }
 }

@@ -125,6 +125,12 @@ from db_heat_parameter main;";
 	'textValue'	TEXT default ''
 );";
 
+        private string temperatureGraphTable = @"CREATE TABLE IF NOT EXISTS 'temperatureGraph' (
+	'EnvironmentTemp'	integer NOT NULL UNIQUE,
+	'PodTemp'	real NOT NULL default 0,
+	'ObrTemp'	REAL NOT NULL default 0
+);";
+
 
 
         public Database(string filePath)
@@ -178,7 +184,8 @@ from db_heat_parameter main;";
                               && this.ExecuteSqlCreateTable(this.LogTable).isSuccess
                               && this.ExecuteSqlCreateTable(this.groupingDayView).isSuccess
                               && this.ExecuteSqlCreateTable(this.RegionInfo).isSuccess
-                              && this.ExecuteSqlCreateTable(this.CustomParamsTable).isSuccess;
+                              && this.ExecuteSqlCreateTable(this.CustomParamsTable).isSuccess
+                              && this.ExecuteSqlCreateTable(this.temperatureGraphTable).isSuccess;
             return allSuccess;
         }
 

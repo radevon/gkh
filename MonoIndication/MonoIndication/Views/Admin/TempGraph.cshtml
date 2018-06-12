@@ -1,0 +1,48 @@
+﻿@model List<DBPortable.TempGraph>
+
+<h4>Справочник зависимости температуры сетевой воды от температуры окружающего воздуха</h4>
+@using (Ajax.BeginForm("TempPodObrEdit", "Admin", new AjaxOptions { UpdateTargetId = "editDbContainer", HttpMethod = "POST", OnFailure = "failture", OnBegin = "showLoading(true);", OnSuccess = "showLoading(false);" }, new { name = "tempGraphForm" }))
+{
+    <table class="table table-condensed table-bordered" style="width:400px">
+    <tr>
+        <th class="text-center">
+            Температура воздуха, &deg;C
+        </th>
+        <th class="text-center">
+            Подача, &deg;C
+        </th>
+        <th class="text-center">
+            Обратка, &deg;C
+        </th>
+    </tr>
+
+    @for (int i = 0; i < Model.Count(); i++)
+    {
+        <tr>
+            <td class="text-center" style="vertical-align:middle">
+                <span class="text-muted">
+                    @Model[i].EnvironmentTemp.ToString()
+                    @Html.HiddenFor(x => Model[i].EnvironmentTemp)
+                    
+                </span>
+                   
+            </td>
+            <td class="text-right">                
+                @Html.TextBoxFor(x => Model[i].PodTemp, new { @class = "form-control text-center", style = "padding:1px; height:auto" })
+           </td>
+                       
+            <td class="text-right">
+                @Html.TextBoxFor(x => Model[i].ObrTemp, new { @class = "form-control text-center", style = "padding:1px; height:auto" })
+            </td>
+        </tr>
+    }
+
+</table>
+    <input type="submit"  value="Сохранить" class="btn btn-success"/>
+    @Html.ActionLink("Отмена","Settings", "Admin", null, new { @class = "btn btn-default" })
+}
+
+
+<script type="text/javascript">
+    $.validator.unobtrusive.parse($("form[name='tempGraphForm']"));
+</script>

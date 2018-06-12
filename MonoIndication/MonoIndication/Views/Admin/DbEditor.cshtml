@@ -27,7 +27,11 @@
 </div>
 
 <script type="text/javascript">
-    
+    function failture(jqXHR, textStatus, errorThrown) {
+        showLoading(false);
+        $("#editDbContainer").html("<h4 class='text-danger'>Возникла ошибка!</h4>" + jqXHR.responseText);
+    }
+
     $(function () {
 
         $("#editGroups").click(function (e) {
@@ -37,11 +41,7 @@
                     $("#editDbContainer").html(data);
                     showLoading(false);
                 })
-                .error(function (jqXHR, textStatus, errorThrown) {
-                    $("#editDbContainer").html("<h4 class='text-danger'>Возникла ошибка!</h4>");
-                    
-                    showLoading(false);
-                });
+                .error(failture);
             e.preventDefault();
         });
 
@@ -54,11 +54,7 @@
                     $("#editDbContainer").html(data);
                     showLoading(false);
                 },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    $("#editDbContainer").html("<h4 class='text-danger'>Возникла ошибка! </h4>");
-
-                    showLoading(false);
-                }
+                error: failture
             });
             e.preventDefault();
         });

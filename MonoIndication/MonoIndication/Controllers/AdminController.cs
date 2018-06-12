@@ -11,6 +11,7 @@ using AutoMapper;
 using DBPortable;
 using WebMatrix.WebData;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 
 namespace MonoIndication.Controllers
 {
@@ -30,7 +31,10 @@ namespace MonoIndication.Controllers
             repo=new LocalDbRepository();
             repo_data = new VisualDataRepository(ConfigurationManager.AppSettings["dbPath"]);
 
-            //Thread.CurrentThread.CurrentCulture.
+            CultureInfo cult = (CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
+            cult.NumberFormat.NumberDecimalSeparator = ".";
+            cult.NumberFormat.CurrencyDecimalSeparator = ".";
+            Thread.CurrentThread.CurrentCulture = cult;
         }
 
         public ActionResult Settings()
@@ -210,6 +214,7 @@ namespace MonoIndication.Controllers
 
         public ActionResult ListRegions()
         {
+            
             List<Regions> list = new List<Regions>();
 
             try
@@ -470,28 +475,97 @@ namespace MonoIndication.Controllers
 
         public ActionResult TempPodObrEdit()
         {
-            double TempPod = repo_data.GetRealParam("TempPod");
-            double TempObr=repo_data.GetRealParam("TempObr");
+            List<TempGraph> initial = new List<TempGraph>();
+            /*
+            for (int i = -30; i <=20; i++)
+            {
+                initial.Add(new TempGraph() { EnvironmentTemp = i, PodTemp = 0, ObrTemp = 0 });
+            }*/
 
-            ViewBag.TempPod = TempPod;
-            ViewBag.TempObr = TempObr;
 
-            return PartialView();
+            initial.Add(new TempGraph() { EnvironmentTemp = -30, PodTemp = 0, ObrTemp = 0 });
+            initial.Add(new TempGraph() { EnvironmentTemp = -29, PodTemp = 0, ObrTemp = 0 });
+            initial.Add(new TempGraph() { EnvironmentTemp = -28, PodTemp = 0, ObrTemp = 0 });
+            initial.Add(new TempGraph() { EnvironmentTemp = -27, PodTemp = 0, ObrTemp = 0 });
+            initial.Add(new TempGraph() { EnvironmentTemp = -26, PodTemp = 0, ObrTemp = 0 });
+            initial.Add(new TempGraph() { EnvironmentTemp = -25, PodTemp = 0, ObrTemp = 0 });
+            initial.Add(new TempGraph() { EnvironmentTemp = -24, PodTemp = 95, ObrTemp = 70 });
+            initial.Add(new TempGraph() { EnvironmentTemp = -23, PodTemp = 92.2, ObrTemp = 68.4 });
+            initial.Add(new TempGraph() { EnvironmentTemp = -22, PodTemp = 89.4, ObrTemp = 67.5 });
+            initial.Add(new TempGraph() { EnvironmentTemp = -21, PodTemp = 85.4, ObrTemp = 64.7 });
+            initial.Add(new TempGraph() { EnvironmentTemp = -20, PodTemp = 82.1, ObrTemp = 62.9 });
+            initial.Add(new TempGraph() { EnvironmentTemp = -19, PodTemp = 81.3, ObrTemp = 62.3 });
+            initial.Add(new TempGraph() { EnvironmentTemp = -18, PodTemp = 80, ObrTemp = 61.9 });
+            initial.Add(new TempGraph() { EnvironmentTemp = -17, PodTemp = 78.4, ObrTemp = 61 });
+            initial.Add(new TempGraph() { EnvironmentTemp = -16, PodTemp = 76.8, ObrTemp = 60 });
+            initial.Add(new TempGraph() { EnvironmentTemp = -15, PodTemp = 75.3, ObrTemp = 59 });
+            initial.Add(new TempGraph() { EnvironmentTemp = -14, PodTemp = 73.6, ObrTemp = 58.6 });
+            initial.Add(new TempGraph() { EnvironmentTemp = -13, PodTemp = 71.9, ObrTemp = 57.1 });
+            initial.Add(new TempGraph() { EnvironmentTemp = -12, PodTemp = 70, ObrTemp = 56.1 });
+            initial.Add(new TempGraph() { EnvironmentTemp = -11, PodTemp = 69.2, ObrTemp = 55.7 });
+            initial.Add(new TempGraph() { EnvironmentTemp = -10, PodTemp = 68.7, ObrTemp = 55.2 });
+            initial.Add(new TempGraph() { EnvironmentTemp = -9, PodTemp = 68.1, ObrTemp = 54.6 });
+            initial.Add(new TempGraph() { EnvironmentTemp = -8, PodTemp = 67.1, ObrTemp = 54 });
+            initial.Add(new TempGraph() { EnvironmentTemp = -7, PodTemp = 66.8, ObrTemp = 53.8 });
+            initial.Add(new TempGraph() { EnvironmentTemp = -6, PodTemp = 66, ObrTemp = 53.6 });
+            initial.Add(new TempGraph() { EnvironmentTemp = -5, PodTemp = 66, ObrTemp = 53.4 });
+            initial.Add(new TempGraph() { EnvironmentTemp = -4, PodTemp = 65, ObrTemp = 52 });
+            initial.Add(new TempGraph() { EnvironmentTemp = -3, PodTemp = 65, ObrTemp = 52 });
+            initial.Add(new TempGraph() { EnvironmentTemp = -2, PodTemp = 65, ObrTemp = 52 });
+            initial.Add(new TempGraph() { EnvironmentTemp = -1, PodTemp = 65, ObrTemp = 52 });
+            initial.Add(new TempGraph() { EnvironmentTemp = 0, PodTemp = 63.2, ObrTemp = 52 });
+            initial.Add(new TempGraph() { EnvironmentTemp = 1, PodTemp = 61.5, ObrTemp = 50.6 });
+            initial.Add(new TempGraph() { EnvironmentTemp = 2, PodTemp = 60, ObrTemp = 50 });
+            initial.Add(new TempGraph() { EnvironmentTemp = 3, PodTemp = 60, ObrTemp = 50 });
+            initial.Add(new TempGraph() { EnvironmentTemp = 4, PodTemp = 60, ObrTemp = 50 });
+            initial.Add(new TempGraph() { EnvironmentTemp = 5, PodTemp = 60, ObrTemp = 50 });
+            initial.Add(new TempGraph() { EnvironmentTemp = 6, PodTemp = 60, ObrTemp = 50 });
+            initial.Add(new TempGraph() { EnvironmentTemp = 7, PodTemp = 60, ObrTemp = 50 });
+            initial.Add(new TempGraph() { EnvironmentTemp = 8, PodTemp = 60, ObrTemp = 50 });
+            initial.Add(new TempGraph() { EnvironmentTemp = 9, PodTemp = 60, ObrTemp = 50 });
+            initial.Add(new TempGraph() { EnvironmentTemp = 10, PodTemp = 0, ObrTemp = 0 });
+            initial.Add(new TempGraph() { EnvironmentTemp = 11, PodTemp = 0, ObrTemp = 0 });
+            initial.Add(new TempGraph() { EnvironmentTemp = 12, PodTemp = 0, ObrTemp = 0 });
+            initial.Add(new TempGraph() { EnvironmentTemp = 13, PodTemp = 0, ObrTemp = 0 });
+            initial.Add(new TempGraph() { EnvironmentTemp = 14, PodTemp = 0, ObrTemp = 0 });
+            initial.Add(new TempGraph() { EnvironmentTemp = 15, PodTemp = 0, ObrTemp = 0 });
+            initial.Add(new TempGraph() { EnvironmentTemp = 16, PodTemp = 0, ObrTemp = 0 });
+            initial.Add(new TempGraph() { EnvironmentTemp = 17, PodTemp = 0, ObrTemp = 0 });
+            initial.Add(new TempGraph() { EnvironmentTemp = 18, PodTemp = 0, ObrTemp = 0 });
+            initial.Add(new TempGraph() { EnvironmentTemp = 19, PodTemp = 0, ObrTemp = 0 });
+            initial.Add(new TempGraph() { EnvironmentTemp = 20, PodTemp = 0, ObrTemp = 0 });
+            
+
+            List<TempGraph> dbValues = repo_data.GetGraph().ToList();
+            foreach (TempGraph item in dbValues)
+            {
+                TempGraph find = initial.Find(x => x.EnvironmentTemp == item.EnvironmentTemp);
+                if (find != null)
+                {
+                    initial[initial.IndexOf(find)] = item;
+                }
+            }
+            return View("TempGraph",initial.OrderByDescending(x=>x.EnvironmentTemp).ToList());
         }
         [HttpPost]
-        public ActionResult TempPodObrEdit(double TempPod, double TempObr)
+        public ActionResult TempPodObrEdit(TempGraph[] items)
         {
-            if (TempObr < 0 || TempPod < 0)
+           
+            if (ModelState.IsValid)
             {
-                ViewBag.TempPod = TempPod;
-                ViewBag.TempObr = TempObr;
-                ViewBag.message = "Значения должны быть >=0!";
-                return PartialView();
+                int count = 0;
+                foreach (TempGraph item in items)
+                {
+                    count+=repo_data.InsertOrUpdateTempGraph(item);
+                    
+                }
+                return Content("<h4 class='text-success'>"+count.ToString()+" значения сохранены</h4>");
+            }else
+            {
+                return View("TempGraph", items.ToList());
             }
-            repo_data.AddRealParam("TempPod", TempPod);
-            repo_data.AddRealParam("TempObr", TempObr);
-
-            return Content("<h4 class='text-success'>Значения сохранены</h4>");
+            
+            
         }
 
         public ActionResult TestMethod(string phone)

@@ -108,7 +108,7 @@
             
                 var temp = +data.main.temp;
                 var dt = new Date(data.dt * 1000);
-                $("#currentTemp").html(temp + ' &deg;C');
+                $("#currentTemp").html(temp.toFixed(1) + ' &deg;C');
                 $("#currentTemp").attr('title', 'Температура воздуха по состоянию на: ' + dt.toLocaleString());
             
                 var rgb = new RedBlueColorGenerator(-30, 40);
