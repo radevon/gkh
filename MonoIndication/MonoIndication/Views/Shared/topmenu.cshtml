@@ -115,6 +115,14 @@
                 
 
                 $("#currentTemp").css('color', rgb.RGB(temp));
+
+            // сохраняю температуру в базу
+                $.ajax({
+                    url: '@Url.Action("SaveCurrentTemp","Request")',
+                    data: { 'temp': temp },
+                    dataType: 'json',
+                    method: 'POST'
+                });
         });
     });
 </script>

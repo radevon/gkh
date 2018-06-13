@@ -997,6 +997,24 @@ left join db_heat_parameter obr on obr.phone=pod.phone and obr.n_pp=pod.n_pp+1 a
         }
 
 
+        // получаю первое значение температуры воздуха из базы за период 1 час до интересующей даты и 1 час после интересующей даты
+        public double? GetCurrentTemp(DateTime date_)
+        {
+            using (IDbConnection conn = new SQLiteConnection(this.db_.GetDefaultConnectionString()))
+            {
+                return conn.Query<double?>("select AirTemp from temperatureAir where datetime(DateTemp)<=datetime(@date_,'+1 hours') and datetime(DateTemp)>=datetime(@date_,'-1 hours') and AirTemp is not null order by DateTemp", new { date_ = date_ }).FirstOrDefault();
+            }
+        }
+
+
+        public int InsertNewTemp(DateTime when_, double? temp)
+        {
+            using (IDbConnection conn = new SQLiteConnection(this.db_.GetDefaultConnectionString()))
+            {
+                return conn.Execute("insert or replace into temperatureAir (DateTemp,AirTemp) values(@date_,@temp_);", new { date_=new DateTime(when_.Year,when_.Month,when_.Day,when_.Hour,when_.Minute/30*30,0), temp_=temp});
+            }
+        }
+
         #endregion
     }
 }

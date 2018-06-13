@@ -130,7 +130,10 @@ from db_heat_parameter main;";
 	'PodTemp'	real NOT NULL default 0,
 	'ObrTemp'	REAL NOT NULL default 0
 );";
-
+        private string temperatureAir = @"CREATE TABLE IF NOT EXISTS 'temperatureAir' (
+	'DateTemp' text  NOT NULL UNIQUE,
+	'AirTemp'	real 
+);";
 
 
         public Database(string filePath)
@@ -185,7 +188,8 @@ from db_heat_parameter main;";
                               && this.ExecuteSqlCreateTable(this.groupingDayView).isSuccess
                               && this.ExecuteSqlCreateTable(this.RegionInfo).isSuccess
                               && this.ExecuteSqlCreateTable(this.CustomParamsTable).isSuccess
-                              && this.ExecuteSqlCreateTable(this.temperatureGraphTable).isSuccess;
+                              && this.ExecuteSqlCreateTable(this.temperatureGraphTable).isSuccess
+                              && this.ExecuteSqlCreateTable(this.temperatureAir).isSuccess;
             return allSuccess;
         }
 

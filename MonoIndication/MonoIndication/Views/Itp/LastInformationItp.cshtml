@@ -71,11 +71,47 @@
                     </tr>
                     <tr>
                         <td class="label_table">Температура подачи <small>[C&deg;]</small></td>
-                        <td class="value text-right">@item.HeatLastInfo.tempIn.ToString("#0.0")</td>
+                        <td class="value text-right">
+                            @if (item.KonturInfo.Name.ToLower().Contains("гвс")&&item.GetCurrentNominal() != null)
+                            {
+                                if(item.GetCurrentNominal().PodTemp > item.HeatLastInfo.tempIn)
+                                {
+                                    <span class="warning_event" title='Температура подачи не соответствует норме. Норма @item.GetCurrentNominal().PodTemp.ToString("#0.0")'>@item.HeatLastInfo.tempIn.ToString("#0.0")</span>
+                                }else
+                                {
+                                    <span title='Норма @item.GetCurrentNominal().PodTemp.ToString("#0.0")'>@item.HeatLastInfo.tempIn.ToString("#0.0")</span>
+                                }
+                                
+                            }else
+                            {
+                                @item.HeatLastInfo.tempIn.ToString("#0.0")
+                            }
+                        
+                        </td>
                     </tr>
                     <tr>
                         <td class="label_table">Температура обратки <small>[C&deg;]</small></td>
-                        <td class="value text-right">@item.HeatLastInfo.tempOut.ToString("#0.0")</td>
+                        <td class="value text-right">
+                            @if (item.KonturInfo.Name.ToLower().Contains("гвс")&&item.GetCurrentNominal() != null)
+                            {
+                                if (item.GetCurrentNominal().ObrTemp > item.HeatLastInfo.tempOut)
+                                {
+                                    <span class="warning_event" title='Температура обратки не соответствует норме. Норма @item.GetCurrentNominal().ObrTemp.ToString("#0.0")'>@item.HeatLastInfo.tempOut.ToString("#0.0")</span>
+                                }
+                                else
+                                {
+                                    <span title='Норма @item.GetCurrentNominal().ObrTemp.ToString("#0.0")'>@item.HeatLastInfo.tempOut.ToString("#0.0")</span>
+                                }
+
+                            }
+                            else
+                            {
+                                @item.HeatLastInfo.tempOut.ToString("#0.0")
+                            }
+
+
+                        
+                        </td>
                     </tr>
 
                     <tr>

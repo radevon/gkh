@@ -56,7 +56,7 @@ function trackEvents(url, seconds_ago) {
 function openweathermap(fn) {
     
         var url = 'http://api.openweathermap.org/data/2.5/weather?q=Chojniki&appid=f62c1e09b0f0ac4468daf91c3fd39089&units=metric';
-        $.getJSON(url + '&callback=?', {}, function (data) {
+        $.getJSON(url + '&callback=?', {  }, function (data) {
             
             fn(data);
         });

@@ -87,6 +87,8 @@ namespace MonoIndication.Controllers
             try
             {
              List<KonturItem> konturs = repo.GetAllKonturs(PhoneNumber).OrderBy(x=>x.N).ToList();
+             List<TempGraph> NominalTemp = repo.GetGraph().ToList();
+             double? val = repo.GetCurrentTemp(DateTime.Now);
              foreach (KonturItem item in konturs)
                     {
                         HeateInfo heatInf = repo.GetHeatInfoLast(PhoneNumber, item.N);
@@ -94,7 +96,9 @@ namespace MonoIndication.Controllers
                         listInformation.Add(new ItpRow()
                             {
                                 HeatLastInfo = heatInf,
-                                KonturInfo=item
+                                KonturInfo=item,
+                                CurrentTempAir=val,
+                                NominalTemp=NominalTemp
                             });
                     }
 
