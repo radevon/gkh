@@ -41,7 +41,13 @@ namespace MonoIndication.Controllers
         {
 
             List<JournalRow> list = repo.GetJournalCompact().OrderBy(x => x.Address).ThenBy(x => x.kNamePod).ToList();
-            return View(list);
+            List<TempGraph> NominalTemp = repo.GetGraph().ToList();
+            JournalVM j = new JournalVM()
+            {
+                Parameters=list,
+                NominalTemp=NominalTemp
+            };
+            return View(j);
         }
 
     }

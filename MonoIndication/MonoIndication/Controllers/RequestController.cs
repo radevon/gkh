@@ -71,6 +71,7 @@ namespace MonoIndication.Controllers
             return Json(objects, JsonRequestBehavior.AllowGet);
         }
 
+        [AllowAnonymous]
         public JsonResult SaveCurrentTemp(double temp)
         {
             int res=repo_data.InsertNewTemp(DateTime.Now, temp);

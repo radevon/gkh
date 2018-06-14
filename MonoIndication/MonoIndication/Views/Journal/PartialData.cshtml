@@ -1,4 +1,4 @@
-﻿@model List<DBPortable.JournalRow>
+﻿@model MonoIndication.JournalVM
 
 <table id="journal" class="table table-condensed table-bordered">
     <thead class="text-muted">
@@ -90,8 +90,9 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in Model.Parameters)
         {
+            DBPortable.TempGraph nominal=Model.GetTempForAirTemp(item.AirTemp);
             <tr>
                 <td title="Перейти на подробный просмотр объекта">
                     @Html.ActionLink(item.Address, "Index", "Itp", new { id = item.MarkerId }, new { })
@@ -102,36 +103,62 @@
                 <td title="Тип прибора учета">
                     @item.PodTipSch
                 </td>
-                <td title="Дата и время получения показаний">
+                <td title='Дата и время получения показаний, @(item.AirTemp.HasValue? item.AirTemp.Value.ToString("0.#0 C"):"")' >
                     @item.datePod.ToString("dd MMM yyг hh:mm:ss")
                 </td>
                 <td title="Показания теплоэнергии в подающей магистрали">
-                    @item.heatPod.ToString("0.00")
+                    <b>@item.heatPod.ToString("0.00")</b>
                 </td>
                 <td title="Мощность">
                     @item.powerPod.ToString("0.0")
                 </td>
                 <td title="Температура в подающей магистрали">
-                    @item.TempPod.ToString("0.0")
-                </td>
 
-                <td>
-                    @if (item.VNormaPod > 0 && (item.waterLosePod < item.MinNormaV || item.waterLosePod > item.MaxNormaV))
+                    @if (item.kNamePod.ToLower().Contains("гвс") && nominal != null)
                     {
-                        <span class="blink" title="Текущий расход воды не соответствует заданной норме расхода!">@item.waterLosePod.ToString("0.00")</span>
-                    }
-                    else
+                        if (nominal.PodTemp > item.TempPod)
+                        {
+                            <span class="blink" title='Температура подачи не соответствует норме. Норма @nominal.PodTemp.ToString("#0.0")'>@item.TempPod.ToString("#0.0")</span>
+                        }
+                        else
+                        {
+                            <span title='Норма @nominal.PodTemp.ToString("#0.0")'>@item.TempPod.ToString("#0.0")</span>
+                        }
+                    }else
                     {
-                        <span title="Текущий объемный расход воды">@item.waterLosePod.ToString("0.00")</span>
+                        @item.TempPod.ToString("0.0")
                     }
 
+                    
                 </td>
+                @*
+                    <td>
+                        @if (item.VNormaPod > 0 && (item.waterLosePod < item.MinNormaV || item.waterLosePod > item.MaxNormaV))
+                        {
+                            <span class="blink" title="Текущий расход воды не соответствует заданной норме расхода!">@item.waterLosePod.ToString("0.00")</span>
+                        }
+                        else
+                        {
+                            <span title="Текущий объемный расход воды">@item.waterLosePod.ToString("0.00")</span>
+                        }
+
+                    </td>
+                *@
+                @if (item.VNormaPod > 0 && (item.waterLosePod < item.MinNormaV || item.waterLosePod > item.MaxNormaV))
+                {
+                    <td class="blink" title="Текущий расход воды не соответствует заданной норме расхода!">@item.waterLosePod.ToString("0.00")</td>
+                }
+                else
+                {
+                    <td title="Текущий объемный расход воды">@item.waterLosePod.ToString("0.00")</td>
+                }
+
                 <td title="Предельное отклонение расхода воды (если заведена норма и коэффициент)">
                     @item.MinNormaV.ToString("0.#0")~@item.MaxNormaV.ToString("0.#0")
                 </td>
 
                 <td title="Общий объемный расход воды">
-                    @item.waterLoseAllPod.ToString("0.#0")
+                    <b>@item.waterLoseAllPod.ToString("0.#0")</b>
                 </td>
                 <td title="Текущий массовый расход воды">
                     @item.waterLoseMPod.ToString("0.00")
@@ -141,19 +168,33 @@
                 </td>
 
                 <td title="Показания теплоэнергии в обратной магистрали">
-                    @item.heatObr.ToString("0.00")
+                    <b>@item.heatObr.ToString("0.00")</b>
                 </td>
                 <td title="Мощность">
                     @item.powerObr.ToString("0.0")
                 </td>
                 <td title="Температура в обратной магистрали">
-                    @item.TempObr.ToString("0.0")
+                    @if (item.kNamePod.ToLower().Contains("гвс") && nominal != null)
+                    {
+                        if (nominal.ObrTemp > item.TempObr)
+                        {
+                            <span class="blink" title='Температура обратки не соответствует норме. Норма @nominal.ObrTemp.ToString("#0.0")'>@item.TempObr.ToString("#0.0")</span>
+                        }
+                        else
+                        {
+                            <span title='Норма @nominal.ObrTemp.ToString("#0.0")'>@item.TempObr.ToString("#0.0")</span>
+                        }
+                    }
+                    else
+                    {
+                        @item.TempObr.ToString("0.0")
+                    }
                 </td>
                 <td title="Текущий объемный расход воды обратки">
                     @item.waterLoseObr.ToString("0.00")
                 </td>
                 <td title="Общий расход воды обратки">
-                    @item.waterLoseAllObr.ToString("0.#0")
+                    <b>@item.waterLoseAllObr.ToString("0.#0")</b>
                 </td>
                 <td title="Текущий массовый расход воды обратки">
                     @item.waterLoseMObr.ToString("0.00")
@@ -168,9 +209,9 @@
                     @item.totalWorkHours.ToString()
                 </td>
 
-                <td title="Сообщения об ошибках и др.">
-                    <span class="text-danger" style="font-size:12px">
-                        @item.errorList
+                <td title="Сообщения об ошибках и др." style="line-height:0.9">
+                    <span class="text-danger" title="@item.errorList" style="font-size:12px">
+                        @(item.errorList.Length > 30 ? item.errorList.Substring(0, 30) + "..." : item.errorList)
                     </span>
                 </td>
             </tr>

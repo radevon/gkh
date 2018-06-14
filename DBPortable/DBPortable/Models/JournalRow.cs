@@ -37,8 +37,11 @@ namespace DBPortable
         public double waterLoseMObr { get; set; }
         public double waterLoseAllMObr { get; set; }
 
+        public double? AirTemp { get; set; }
 
         public double MinNormaV { get { return VNormaPod * (100 - NormaKoefPod) / 100.0; } }
         public double MaxNormaV { get { return VNormaPod * (100 + NormaKoefPod) / 100.0; } }
+
+
     }
 }

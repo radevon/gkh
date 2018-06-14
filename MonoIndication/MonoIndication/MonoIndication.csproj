@@ -179,6 +179,7 @@
     <Compile Include="Models\ViewModels\Itp\ReportItp.cs" />
     <Compile Include="Models\ViewModels\Itp\ReportItpByKontur.cs" />
     <Compile Include="Models\ViewModels\Itp\UpdateCounterInfo.cs" />
+    <Compile Include="Models\ViewModels\Journal\JournalVM.cs" />
     <Compile Include="Models\ViewModels\Planing\PlaningVM.cs" />
     <Compile Include="Models\ViewModels\SimpleMembership\UserInfoMembership.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -321,8 +322,8 @@
     <Content Include="Views\Request\EventList.cshtml" />
     <Content Include="Views\Admin\TempPodObrEdit.cshtml" />
     <Content Include="Views\Journal\JournalCompact.cshtml" />
-    <Content Include="Views\Journal\PartialData.cshtml" />
     <Content Include="Views\Admin\TempGraph.cshtml" />
+    <Content Include="Views\Journal\PartialData.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Account\Login.cshtml" />

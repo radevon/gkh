@@ -507,10 +507,10 @@ form[name='editform'] .row {
 
 }
 
-.blink{
+.blink {
     background-color: red;
-    text-align:center;
-    border-radius: 5px;
+    
+    
     -moz-transition:all 0.5s ease-in-out;
     -webkit-transition:all 0.5s ease-in-out;
     -o-transition:all 0.5s ease-in-out;
@@ -521,6 +521,7 @@ form[name='editform'] .row {
     -ms-animation:blink normal 1.5s infinite ease-in-out; /* IE */
     animation:blink normal 1.5s infinite ease-in-out; /* Opera */
     color:#fad41e;
+    
 }
 
  .fixedAlert {

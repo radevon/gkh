@@ -27,6 +27,12 @@
             background-color: #fef6f6;
         }
 
+        #excelExp {
+            top: 45px;
+            position:absolute;
+            right: 15px;
+        }
+
         @@media print {
             a[href]:after {
                 content: "";
@@ -42,6 +48,7 @@
         <div class="col-md-12 col-lg-12">
             Данные обновлены: <span id="updateTime" class="label label-success"></span>
             <h2 class="text-center text-primary">Журнал последних показаний на объектах, оборудованных приборами учета</h2>
+            <button id="excelExp" style="float:right" class="btn btn-success">в Excel</button>
 
             <div id="dataUpdate">@Html.Action("PartialData")</div>
            
@@ -57,6 +64,12 @@
                 $("#updateTime").text(''+dt.getHours()+':'+dt.getMinutes()+':'+dt.getSeconds());
             });
         }
+
+        $("#excelExp").click(function () {
+            var dt = new Date();
+            toExcel($("#journal"), "Последние показания на объектах");
+        });
+
 
         setInterval(updateJournal, 15000);
     </script>

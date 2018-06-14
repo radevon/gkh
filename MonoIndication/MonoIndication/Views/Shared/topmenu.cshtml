@@ -103,7 +103,8 @@
             event.stopPropagation();
         });
         
-        //беру данные о текущей температуре из сервиса openweathermap.org
+        //беру данные о текущей температуре из сервиса openweathermap.org 
+        // обновляю в интерфейсе программы и в базе если >3 мин не обновлялось
         openweathermap(function (data) {
             
                 var temp = +data.main.temp;
@@ -111,18 +112,43 @@
                 $("#currentTemp").html(temp.toFixed(1) + ' &deg;C');
                 $("#currentTemp").attr('title', 'Температура воздуха по состоянию на: ' + dt.toLocaleString());
             
-                var rgb = new RedBlueColorGenerator(-30, 40);
-                
+                var rgb = new RedBlueColorGenerator(-30, 40);                
 
                 $("#currentTemp").css('color', rgb.RGB(temp));
 
-            // сохраняю температуру в базу
+                // Проверка на сохраненную температуру в базе чтобы не сохранять по 100 раз одинаковые данные (на основе локалсторадж)
+
+                var oldData = JSON.parse(localStorage.getItem("savedTemp"));
+                if (oldData != null) {
+                    var curDate = new Date();
+                    oldData = new Date(oldData);
+                    var timeDiff = Math.abs(curDate.getTime() - oldData.getTime());
+                    var diff = timeDiff / (1000*60);
+                    
+                    if (diff < 3) { // если данные ложились > 3 мин назад то обновляю
+                        return;
+                    }
+                }
+                
+            // сохраняю температуру в базу если с момента последнего сохранения прошло >
                 $.ajax({
                     url: '@Url.Action("SaveCurrentTemp","Request")',
                     data: { 'temp': temp },
                     dataType: 'json',
-                    method: 'POST'
+                    method: 'POST',
+                    success: function (data) {
+                        if (data == 1) {
+                            localStorage.setItem("savedTemp", JSON.stringify(new Date()));
+                        } else {
+                            localStorage.removeItem("savedTemp");
+                        }
+
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        localStorage.removeItem("savedTemp");
+                    }
                 });
+           
         });
     });
 </script>
