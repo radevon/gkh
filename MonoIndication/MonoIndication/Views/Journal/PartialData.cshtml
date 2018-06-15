@@ -114,7 +114,7 @@
                 </td>
                 <td title="Температура в подающей магистрали">
 
-                    @if (item.kNamePod.ToLower().Contains("гвс") && nominal != null)
+                    @if (item.kNamePod.ToLower().Contains(System.Configuration.ConfigurationManager.AppSettings["TempControl"]) && nominal != null)
                     {
                         if (nominal.PodTemp > item.TempPod)
                         {
@@ -131,7 +131,7 @@
 
                     
                 </td>
-                @*
+                
                     <td>
                         @if (item.VNormaPod > 0 && (item.waterLosePod < item.MinNormaV || item.waterLosePod > item.MaxNormaV))
                         {
@@ -143,7 +143,8 @@
                         }
 
                     </td>
-                *@
+               
+                @*
                 @if (item.VNormaPod > 0 && (item.waterLosePod < item.MinNormaV || item.waterLosePod > item.MaxNormaV))
                 {
                     <td class="blink" title="Текущий расход воды не соответствует заданной норме расхода!">@item.waterLosePod.ToString("0.00")</td>
@@ -152,7 +153,7 @@
                 {
                     <td title="Текущий объемный расход воды">@item.waterLosePod.ToString("0.00")</td>
                 }
-
+                    *@
                 <td title="Предельное отклонение расхода воды (если заведена норма и коэффициент)">
                     @item.MinNormaV.ToString("0.#0")~@item.MaxNormaV.ToString("0.#0")
                 </td>
@@ -174,7 +175,7 @@
                     @item.powerObr.ToString("0.0")
                 </td>
                 <td title="Температура в обратной магистрали">
-                    @if (item.kNamePod.ToLower().Contains("гвс") && nominal != null)
+                    @if (item.kNamePod.ToLower().Contains(System.Configuration.ConfigurationManager.AppSettings["TempControl"]) && nominal != null)
                     {
                         if (nominal.ObrTemp > item.TempObr)
                         {

@@ -72,7 +72,7 @@
                     <tr>
                         <td class="label_table">Температура подачи <small>[C&deg;]</small></td>
                         <td class="value text-right">
-                            @if (item.KonturInfo.Name.ToLower().Contains("гвс")&&item.GetCurrentNominal() != null)
+                            @if (item.KonturInfo.Name.ToLower().Contains(System.Configuration.ConfigurationManager.AppSettings["TempControl"]) && item.GetCurrentNominal() != null)
                             {
                                 if(item.GetCurrentNominal().PodTemp > item.HeatLastInfo.tempIn)
                                 {
@@ -92,7 +92,7 @@
                     <tr>
                         <td class="label_table">Температура обратки <small>[C&deg;]</small></td>
                         <td class="value text-right">
-                            @if (item.KonturInfo.Name.ToLower().Contains("гвс")&&item.GetCurrentNominal() != null)
+                            @if (item.KonturInfo.Name.ToLower().Contains(System.Configuration.ConfigurationManager.AppSettings["TempControl"]) && item.GetCurrentNominal() != null)
                             {
                                 if (item.GetCurrentNominal().ObrTemp > item.HeatLastInfo.tempOut)
                                 {
