@@ -69,14 +69,16 @@ namespace DBPortable
         /// <param name="totalWorkHours">Общее время работы часов</param>
         /// <param name="errorList">Список ошибок</param>
         /// <param name="tempCold">Температура хол воды</param>
+        /// <param name="workWithError">Время работы с ошибкой</param>
+        /// <param name="waterPress">Давление в магистрали</param>
         /// <returns>объект MethodResult - характеризующий успешность операции</returns>
-        public MethodResult InsertNewRow(DateTime recvDate, string phone, int Nkontur, double heatValue, double powerValue, double waterLose, double waterLoseAll, double tempIn, double tempOut, double presure1, double presure2, int totalWorkHours, string errorList="", int statusInput = 0, int eventCode = 0, double tempCold=0)
+        public MethodResult InsertNewRow(DateTime recvDate, string phone, int Nkontur, double heatValue, double powerValue, double waterLose, double waterLoseAll, double tempIn, double tempOut, double presure1, double presure2, int totalWorkHours, string errorList = "", int statusInput = 0, int eventCode = 0, double tempCold = 0, int workWithError = 0, double waterPress=0)
         {
             try
             {
                 using (SQLiteConnection connection = CreateSqlConnection())
                 {
-                    using (SQLiteCommand command = new SQLiteCommand("insert into db_heat_parameter (recvDate,phone,heatValue,powerValue,waterLose,waterLoseAll,tempIn,tempOut,n_pp,statusInput,eventCode, heatCorect, presure1, presure2, totalWorkHours,tempCold, errorList) values(@recvDate,@phone,@heatValue,@powerValue,@waterLose,@waterLoseAll,@tempIn,@tempOut,@nkontur,@statusInput,@eventCode,0,@presure1,@presure2,@totalWorkHours,@tempCold,@errorList)", connection))
+                    using (SQLiteCommand command = new SQLiteCommand("insert into db_heat_parameter (recvDate,phone,heatValue,powerValue,waterLose,waterLoseAll,tempIn,tempOut,n_pp,statusInput,eventCode, heatCorect, presure1, presure2, totalWorkHours,tempCold, errorList, workWithError, waterPress) values(@recvDate,@phone,@heatValue,@powerValue,@waterLose,@waterLoseAll,@tempIn,@tempOut,@nkontur,@statusInput,@eventCode,0,@presure1,@presure2,@totalWorkHours,@tempCold,@errorList, @workWithError, @waterPress)", connection))
                     {
                         command.Parameters.Add("@recvDate", System.Data.DbType.DateTime).Value = recvDate;
                         command.Parameters.Add("@phone", System.Data.DbType.String).Value = phone;
@@ -94,7 +96,8 @@ namespace DBPortable
                         command.Parameters.Add("@totalWorkHours", System.Data.DbType.Int32).Value = totalWorkHours;
                         command.Parameters.Add("@tempCold", System.Data.DbType.Double).Value = tempCold;
                         command.Parameters.Add("@errorList", System.Data.DbType.String).Value = errorList;
-
+                        command.Parameters.Add("@workWithError", System.Data.DbType.Int32).Value = workWithError;
+                        command.Parameters.Add("@waterPress", System.Data.DbType.Double).Value = waterPress;
                         connection.Open();
                         command.ExecuteNonQuery();
                         connection.Close();

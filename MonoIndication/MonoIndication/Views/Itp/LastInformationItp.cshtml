@@ -127,11 +127,20 @@
                         <td class="label_table">Накопленный массовый расход воды <small>[т]</small></td>
                         <td class="value text-right">@item.HeatLastInfo.presure2.ToString("#0.0#")</td>
                     </tr>
-
+                    <tr>
+                        <td class="label_table">Давление <small>[МПа]</small></td>
+                        <td class="value text-right">@item.HeatLastInfo.waterPress.ToString("#0.0#")</td>
+                    </tr>
                     <tr>
                         <td class="label_table">Время наработки <small>[ч]</small></td>
                         <td class="value text-right">
                             @item.HeatLastInfo.totalWorkHours.ToString()
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label_table">Время раб с ошибкой <small>[ч]</small></td>
+                        <td class="value text-right">
+                            @item.HeatLastInfo.workWithError.ToString()
                         </td>
                     </tr>
                     <tr>

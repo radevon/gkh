@@ -318,6 +318,7 @@ namespace MonoIndication.Controllers
                     ranges.Cells[i + 5, 16].Value2 = Math.Round(list[i].TempOut,0);
                     ranges.Cells[i + 5, 17].Value2 = Math.Round(list[i].TempCold,0);
                     ranges.Cells[i + 5, 18].Value2 = list[i].TotalWorkHours.ToString();
+                    ranges.Cells[i + 5, 19].Value2 = list[i].workWithError.ToString();
                     ranges.Cells[i + 5, 21].Value2 = list[i].isOtop;
                     ranges.Cells[i + 5, 22].Value2 = list[i].isGvs;
                     ranges.Cells[i + 5, 23].Value2 = list[i].period.Month;

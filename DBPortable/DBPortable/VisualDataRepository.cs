@@ -233,7 +233,7 @@ namespace DBPortable
            
                 using (IDbConnection conn = new SQLiteConnection(this.db_.GetDefaultConnectionString()))
                 {
-                    parameters = conn.Query<HeateInfo>("select Id, recvDate, phone, heatValue, powerValue, waterLose, waterLoseAll, tempIn, tempOut, n_pp, statusInput, eventCode, heatCorect, presure1, presure2, errorList, totalWorkHours, tempCold from db_heat_parameter where phone=@phone and n_pp=@kontur_ and datetime(recvDate) between @start and @end;", new { phone = phone, start = start, end = end, kontur_ = kontur });
+                    parameters = conn.Query<HeateInfo>("select Id, recvDate, phone, heatValue, powerValue, waterLose, waterLoseAll, tempIn, tempOut, n_pp, statusInput, eventCode, heatCorect, presure1, presure2, errorList, totalWorkHours, tempCold, workWithError, waterPress from db_heat_parameter where phone=@phone and n_pp=@kontur_ and datetime(recvDate) between @start and @end;", new { phone = phone, start = start, end = end, kontur_ = kontur });
                 }
             
             return parameters;
@@ -246,7 +246,7 @@ namespace DBPortable
         public HeateInfo GetHeatInfo(DateTime dateValue, string phone, int kontur, bool include_time=true)
         {
             HeateInfo last = null;
-            string sql = @"select Id, recvDate, phone, heatValue, powerValue, waterLose, waterLoseAll, tempIn, tempOut, n_pp, statusInput, eventCode, heatCorect, presure1, presure2,errorList, totalWorkHours, tempCold from db_heat_parameter where phone=@phone and n_pp=@kontur_ ";
+            string sql = @"select Id, recvDate, phone, heatValue, powerValue, waterLose, waterLoseAll, tempIn, tempOut, n_pp, statusInput, eventCode, heatCorect, presure1, presure2,errorList, totalWorkHours, tempCold, workWithError, waterPress from db_heat_parameter where phone=@phone and n_pp=@kontur_ ";
             if (include_time)
             {
                 sql += " and recvDate=@date_";
@@ -274,7 +274,7 @@ namespace DBPortable
 
             using (IDbConnection conn = new SQLiteConnection(this.db_.GetDefaultConnectionString()))
             {
-                last = conn.Query<HeateInfo>("select Id, recvDate, phone, heatValue, powerValue, waterLose, waterLoseAll, tempIn, tempOut, n_pp, statusInput, eventCode, heatCorect, presure1, presure2, errorList, totalWorkHours,tempCold from db_heat_parameter where id=@id_;", new { id_ = id }).FirstOrDefault();
+                last = conn.Query<HeateInfo>("select Id, recvDate, phone, heatValue, powerValue, waterLose, waterLoseAll, tempIn, tempOut, n_pp, statusInput, eventCode, heatCorect, presure1, presure2, errorList, totalWorkHours,tempCold, workWithError, waterPress from db_heat_parameter where id=@id_;", new { id_ = id }).FirstOrDefault();
             }
 
             return last;
@@ -308,7 +308,7 @@ namespace DBPortable
             HeateInfo last = null;
             using (IDbConnection conn = new SQLiteConnection(this.db_.GetDefaultConnectionString()))
                 {
-                    last = conn.Query<HeateInfo>("select Id, recvDate, phone, heatValue, powerValue, waterLose, waterLoseAll, tempIn, tempOut, n_pp, statusInput, eventCode, heatCorect, presure1, presure2, errorList, totalWorkHours, tempCold from db_heat_parameter where phone=@phone_ and n_pp=@kontur_ and datetime(recvDate)=(select max(datetime(recvDate)) from db_heat_parameter where phone=@phone_ and n_pp=@kontur_);", new { phone_ = phone, kontur_ = kontur }).FirstOrDefault();
+                    last = conn.Query<HeateInfo>("select Id, recvDate, phone, heatValue, powerValue, waterLose, waterLoseAll, tempIn, tempOut, n_pp, statusInput, eventCode, heatCorect, presure1, presure2, errorList, totalWorkHours, tempCold, workWithError, waterPress from db_heat_parameter where phone=@phone_ and n_pp=@kontur_ and datetime(recvDate)=(select max(datetime(recvDate)) from db_heat_parameter where phone=@phone_ and n_pp=@kontur_);", new { phone_ = phone, kontur_ = kontur }).FirstOrDefault();
                 }
             return last;
         }
@@ -321,7 +321,7 @@ namespace DBPortable
             
                 using (IDbConnection conn = new SQLiteConnection(this.db_.GetDefaultConnectionString()))
                 {
-                    parameters = conn.Query<HeatInfoView>("select Id, recvDate, phone, heatValue, heatUsed, powerValue, waterLose, waterLoseAll, waterUsed, tempIn, tempOut, n_pp, statusInput, eventCode, heatCorect, presure1, presure2, errorList, totalWorkHours, tempCold from heatInfoView where phone=@phone_ and n_pp=@kontur_ and datetime(recvDate) between @start_ and @end_;", new { phone_ = phone, kontur_ = kontur, start_ = start, end_ = end });
+                    parameters = conn.Query<HeatInfoView>("select Id, recvDate, phone, heatValue, heatUsed, powerValue, waterLose, waterLoseAll, waterUsed, tempIn, tempOut, n_pp, statusInput, eventCode, heatCorect, presure1, presure2, errorList, totalWorkHours, tempCold, workWithError, waterPress from heatInfoView where phone=@phone_ and n_pp=@kontur_ and datetime(recvDate) between @start_ and @end_;", new { phone_ = phone, kontur_ = kontur, start_ = start, end_ = end });
                 }
             
             return parameters;
@@ -539,21 +539,21 @@ on   start_select.n_month = second_select.n_month + 1;";
         }
 
         #endregion
-        public IEnumerable<HeatFullView> GetJournal()
-        {
-            IEnumerable<HeatFullView> parameters = Enumerable.Empty<HeatFullView>();
+//        public IEnumerable<HeatFullView> GetJournal()
+//        {
+//            IEnumerable<HeatFullView> parameters = Enumerable.Empty<HeatFullView>();
 
-            using (IDbConnection conn = new SQLiteConnection(this.db_.GetDefaultConnectionString()))
-            {
-                parameters = conn.Query<HeatFullView>(@"select m.MarkerId idObject, m.address address, m.description, p.recvDate recvDate,p.phone phone, p.n_pp n_pp, p.k_name as k_name, p.vNorma, p.heatValue heatValue, p.waterLose waterLose, p.waterLoseAll waterLoseAll, p.powerValue powerValue, p.tempIn tempIn, 
-p.tempOut tempOut, p.statusInput statusInput, p.eventCode eventCode, p.presure1 presure1, p.presure2 presure2, p.errorList errorList, p.totalWorkHours totalWorkHours from db_object_marker m left join 
-(select o.Id, o.recvDate, o.phone, o.n_pp, k.Name as k_name, k.vNorma, o.heatValue, o.waterLose, o.waterLoseAll, o.powerValue,  o.tempIn, o.tempOut, o.statusInput, o.eventCode, o.presure1, o.presure2, o.errorList, 
-o.totalWorkHours from db_heat_parameter o left join db_konturs k  on k.phone=o.phone and k.N=o.n_pp where o.recvDate=(select max(inn.recvDate) from db_heat_parameter inn where inn.phone=o.phone and inn.n_pp=o.n_pp)) p
- on m.phone=p.phone");
-            }
+//            using (IDbConnection conn = new SQLiteConnection(this.db_.GetDefaultConnectionString()))
+//            {
+//                parameters = conn.Query<HeatFullView>(@"select m.MarkerId idObject, m.address address, m.description, p.recvDate recvDate,p.phone phone, p.n_pp n_pp, p.k_name as k_name, p.vNorma, p.heatValue heatValue, p.waterLose waterLose, p.waterLoseAll waterLoseAll, p.powerValue powerValue, p.tempIn tempIn, 
+//p.tempOut tempOut, p.statusInput statusInput, p.eventCode eventCode, p.presure1 presure1, p.presure2 presure2, p.errorList errorList, p.totalWorkHours totalWorkHours from db_object_marker m left join 
+//(select o.Id, o.recvDate, o.phone, o.n_pp, k.Name as k_name, k.vNorma, o.heatValue, o.waterLose, o.waterLoseAll, o.powerValue,  o.tempIn, o.tempOut, o.statusInput, o.eventCode, o.presure1, o.presure2, o.errorList, 
+//o.totalWorkHours from db_heat_parameter o left join db_konturs k  on k.phone=o.phone and k.N=o.n_pp where o.recvDate=(select max(inn.recvDate) from db_heat_parameter inn where inn.phone=o.phone and inn.n_pp=o.n_pp)) p
+// on m.phone=p.phone");
+//            }
 
-            return parameters;
-        }
+//            return parameters;
+//        }
 
         public IEnumerable<JournalRow> GetJournalCompact()
         {
@@ -562,9 +562,9 @@ o.totalWorkHours from db_heat_parameter o left join db_konturs k  on k.phone=o.p
             using (IDbConnection conn = new SQLiteConnection(this.db_.GetDefaultConnectionString()))
             {
                 parameters = conn.Query<JournalRow>(@"select m.MarkerId, m.address, ifnull(k.name,'-') as kNamePod, ifnull(k.TipSh,'-') as PodTipSch, ifnull(k.VNorma,0.0) as VNormaPod, ifnull(k.NormaKoef,0.0) as NormaKoefPod,
-       pod.recvDate as datePod,pod.heatValue as heatPod, pod.powerValue as powerPod, pod.tempIn as TempPod, pod.TempOut as TempObr, pod.n_pp as npod, pod.waterLose as waterLosePod, pod.waterLoseAll as waterLoseAllPod, pod.presure1 as waterLoseMPod, pod.presure2 as waterLoseAllMPod, pod.totalWorkHours, pod.TempCold, pod.errorList, 
+       pod.recvDate as datePod,pod.heatValue as heatPod, pod.powerValue as powerPod, pod.tempIn as TempPod, pod.TempOut as TempObr, pod.n_pp as npod, pod.waterLose as waterLosePod, pod.waterLoseAll as waterLoseAllPod, pod.presure1 as waterLoseMPod, pod.presure2 as waterLoseAllMPod, pod.totalWorkHours, pod.workWithError, pod.waterPress as waterPressPod, pod.TempCold, pod.errorList, 
 (select AirTemp from temperatureAir where datetime(DateTemp)<=datetime(pod.recvDate,'+1 hours') and datetime(DateTemp)>=datetime(pod.recvDate,'-1 hours') and AirTemp is not null order by DateTemp) as AirTemp,	   
-obr.recvDate as dateObr,obr.heatValue as heatObr, obr.powerValue as powerObr, obr.waterLose as waterLoseObr, obr.waterLoseAll as waterLoseAllObr, obr.presure1 as waterLoseMObr, obr.presure2 as waterLoseAllMObr from db_object_marker m 
+obr.recvDate as dateObr,obr.heatValue as heatObr, obr.powerValue as powerObr, obr.waterLose as waterLoseObr, obr.waterLoseAll as waterLoseAllObr, obr.presure1 as waterLoseMObr, obr.presure2 as waterLoseAllMObr, obr.waterPress as waterPressObr from db_object_marker m 
 left join db_heat_parameter pod on m.phone=pod.phone left join db_konturs k on pod.phone=k.phone and pod.n_pp=k.n
 join (select phone, n_pp, max(recvDate) as maxDate from db_heat_parameter group by phone, n_pp) grp on pod.phone=grp.phone and pod.n_pp%2=0 and pod.n_pp=grp.n_pp  and pod.recvDate=grp.maxDate
 left join db_heat_parameter obr on obr.phone=pod.phone and obr.n_pp=pod.n_pp+1 and date(obr.recvDate)=date(pod.recvDate)");
@@ -586,11 +586,11 @@ left join db_heat_parameter obr on obr.phone=pod.phone and obr.n_pp=pod.n_pp+1 a
                 DateTime per = to.Day > 5 ? to : (new DateTime(to.Year, to.Month, 1)).AddDays(-1);
                 if(GroupId>0)
                 {
-                    parameters = conn.Query<EnergosbitXls>(@"select m.address, m.px, m.MarkerType as Ngao, date(@period_) as period, pod.recvDate as DatePod, pod.phone, substr(k.Name,1,3) as uch, k.ZavN, k.KodSchSbut, k.TipSh, pod.heatValue as PodHeat, pod.tempIn, pod.tempOut, pod.waterLose as PodWaterLose, pod.waterLoseAll as podWaterLoseAll, pod.totalWorkHours, pod.tempCold, pod.n_pp, pod.g_npp,
+                    parameters = conn.Query<EnergosbitXls>(@"select m.address, m.px, m.MarkerType as Ngao, date(@period_) as period, pod.recvDate as DatePod, pod.phone, substr(k.Name,1,3) as uch, k.ZavN, k.KodSchSbut, k.TipSh, pod.heatValue as PodHeat, pod.tempIn, pod.tempOut, pod.waterLose as PodWaterLose, pod.waterLoseAll as podWaterLoseAll, pod.totalWorkHours, pod.workWithError, pod.tempCold, pod.n_pp, pod.g_npp,
 	    obr.heatValue as ObrHeat, obr.waterLose as ObrWaterLose, obr.waterLoseAll as ObrWaterLoseAll
  from db_object_marker m left join groupingDayView pod on m.phone=pod.phone and pod.n_pp % 2 = 0 and (date(pod.recvDate)=date(@from_) or date(pod.recvDate)=date(@to_)) left join  db_konturs k on k.phone=pod.phone and k.N=pod.n_pp left join groupingDayView obr on pod.phone=obr.phone and pod.g_npp=obr.g_npp and date(pod.recvDate)=date(obr.recvDate) and pod.n_pp=obr.n_pp-1 where m.Px=@groupId order by m.px, m.address, pod.phone, pod.g_npp, pod.recvDate", new { from_ = from.ToString("yyyy-MM-dd"), to_ = to.ToString("yyyy-MM-dd"), period_ = per.ToString("yyyy-MM-dd"), groupId = GroupId });
                 }else
-                parameters = conn.Query<EnergosbitXls>(@"select m.address, m.px, m.MarkerType as Ngao, date(@period_) as period, pod.recvDate as DatePod, pod.phone, substr(k.Name,1,3) as uch, k.ZavN, k.KodSchSbut, k.TipSh, pod.heatValue as PodHeat, pod.tempIn, pod.tempOut, pod.waterLose as PodWaterLose, pod.waterLoseAll as podWaterLoseAll, pod.totalWorkHours, pod.tempCold, pod.n_pp, pod.g_npp,
+                    parameters = conn.Query<EnergosbitXls>(@"select m.address, m.px, m.MarkerType as Ngao, date(@period_) as period, pod.recvDate as DatePod, pod.phone, substr(k.Name,1,3) as uch, k.ZavN, k.KodSchSbut, k.TipSh, pod.heatValue as PodHeat, pod.tempIn, pod.tempOut, pod.waterLose as PodWaterLose, pod.waterLoseAll as podWaterLoseAll, pod.totalWorkHours,  pod.workWithError,  pod.tempCold, pod.n_pp, pod.g_npp,
 	    obr.heatValue as ObrHeat, obr.waterLose as ObrWaterLose, obr.waterLoseAll as ObrWaterLoseAll
  from db_object_marker m left join groupingDayView pod on m.phone=pod.phone and pod.n_pp % 2 = 0 and (date(pod.recvDate)=date(@from_) or date(pod.recvDate)=date(@to_)) left join  db_konturs k on k.phone=pod.phone and k.N=pod.n_pp left join groupingDayView obr on pod.phone=obr.phone and pod.g_npp=obr.g_npp and date(pod.recvDate)=date(obr.recvDate) and pod.n_pp=obr.n_pp-1  order by m.px, m.address, pod.phone, pod.g_npp, pod.recvDate", new { from_ = from.ToString("yyyy-MM-dd"), to_ = to.ToString("yyyy-MM-dd"), period_ = per.ToString("yyyy-MM-dd") });
             }

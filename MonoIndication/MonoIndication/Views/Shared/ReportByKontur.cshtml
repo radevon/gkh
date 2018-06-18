@@ -19,7 +19,7 @@
                     </tr>
                        -->
                     <tr>
-                        <td colspan="15">
+                        <td colspan="17">
                             <h3 class="text-primary text-center"><strong>ПОДРОБНАЯ ИНФОРМАЦИЯ <span class="text-danger "> ПО КОНТУРУ №@Model.KonturNumber - "@Model.KonturName.ToUpper()"</span></strong></h3>
                         </td>
                     </tr>
@@ -36,14 +36,13 @@
                         <th title="Температура теплоносителя холодного">Т<sub>x</sub> <span class="dim">(C&deg;)</span></th>
                         <th title="Текущий массовый расход воды">V<sub>m/t</sub> <span class="dim">(т/ч)</span></th>
                         <th title="Накопленный массовый расход воды">V<sub>m</sub> <span class="dim">(т)</span></th>
-                        @*
-    <th title="Событие проникновения в помещение"><img src='@Url.Content("~/img/entered.jpg")' height="20" /></th>
-    <th title="Сигнал аварии"><img src='@Url.Content("~/img/warning.png")' height="20"/></th>
-                        *@
+                        <th title="Давление">P <span class="dim">(МПа)</span></th>
                         <th title="Время наработки">t<sub>раб</sub> <span class="dim">(ч)</span></th>
+                        <th title="Время работы с ошибкой">t<sub>ошб</sub> <span class="dim">(ч)</span></th>
                         <th title="Ошибки" class="tableexport-ignore"><img src='@Url.Content("~/img/warning.png")' height="20" /></th>
+                        
                         <th class="tableexport-ignore"></th>
-                        <th class="tableexport-ignore"></th>
+                        
                     </tr>
                 </thead>
                 <tbody>
@@ -62,16 +61,21 @@
                             <td>@item.tempCold.ToString("#0")</td>
                             <td>@item.presure1.ToString("#0.0")</td>
                             <td>@item.presure2.ToString("#0.0")</td>
+                            <td>@item.waterPress.ToString("#0.0")</td>
                             @*
     <td class="@(item.statusInput == 0 ? "text-success" : "text-danger")">@(item.statusInput == 0 ? "нет" : "да")</td>
     <td class="@(item.eventCode == 0 ? "text-success" : "text-danger")">@(item.eventCode == 0 ? "нет" : "да")</td>
                             *@<td>@item.totalWorkHours.ToString()</td>
+                            <td>
+                                @item.workWithError.ToString()
+                            </td>
                             <td class="tableexport-ignore">
                                 @if (item.errorList!=null&&item.errorList.Trim().Length > 0)
 {
     <a class="text-danger" data-errors="@item.errorList" href="javascript:void(0)" onclick="getDescriptionError($(this))">ошибки</a>
 }
                             </td>
+                           
 
                             <td title="Удаление текущей записи о показаниях" class="tableexport-ignore">
                                 <a href="javascript:void(0)" onclick="removeFailRecord(@item.Id)" class="removeCress">
@@ -79,13 +83,13 @@
                                 </a>
 
                             </td>
-
-                            <td title="Коррекция по замене счетчика" class="tableexport-ignore" style="display:none">
+                           
+                            @*<td title="Коррекция по замене счетчика" class="tableexport-ignore" style="display:none">
                                 <a href="javascript:void(0)" onclick="getReplaceData(@item.Id)">
                                     <img src='@Url.Content("~/img/mechanica.png")' height="20" style="cursor: pointer" />
                                 </a>
 
-                            </td>
+                            </td>*@
                         </tr>
                     }
                     
@@ -108,124 +112,17 @@
                        <td></td>
                        <td></td>
                        <td></td>
+                       <td></td>
                        <td>@((Model.Parameters.OrderBy(x => x.recvDate).Last().totalWorkHours - Model.Parameters.OrderBy(x => x.recvDate).First().totalWorkHours).ToString())</td>
                        <td></td>
                        <td></td>
+                       <td></td>
+                       
                    </tr>
                 </tfoot>
             </table>
             
-            @*
-                            
-                            <table class="reportItpsvod table table-bordered table-condensed">
-                                <thead>
-                                    <tr>
-                                        <td colspan="10">
-                                            <h3 class="text-primary text-center"><strong>СВОДНЫЕ ПОКАЗАТЕЛИ <span class="text-danger ">ПО КОНТУРУ №@Model.KonturNumber - "@Model.KonturName.ToUpper()"</span></strong></h3>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th colspan="2">
-                                            Период
-                                        </th>
-                                        <th>
-                                            Расход тепл. (ГKал)
-                                        </th>
-                                        <th>
-                                            Расход воды (м<sup>3</sup>)
-                                        </th>
-                                        <th colspan="2">
-                                            Мощность (КBт)
-                                        </th>
-                                        <th colspan="2">
-                                            Темп. вх.(C&deg;)
-                                        </th>
-                                        <th colspan="2">
-                                            Темп. вых.(C&deg;)
-                                        </th>
-                                    </tr>
-                                </thead>
-                        <tbody>
-                            <tr>
-                                <td rowspan="3" colspan="2" style="vertical-align: middle; text-align: center; color:red">
-                                    @period.Days дней @period.Hours ч.
-                                </td>
-                                <td rowspan="3" style="vertical-align: middle; text-align: center; color:red">
-                                    @((Model.Parameters.Sum(x=>x.heatUsed)-Model.Parameters.OrderBy(x=>x.recvDate).First().heatUsed).ToString("#0.0"))
-                                    
-                                </td>
-                        
-                                <td rowspan="3" style="vertical-align: middle; text-align: center; color:red">
-                                    @((Model.Parameters.OrderBy(x=>x.recvDate).Last().waterLoseAll - Model.Parameters.OrderBy(x=>x.recvDate).First().waterLoseAll).ToString("#0.0"))
-                                </td>
-                                
-                                 <td class="bg-danger text-center">
-                                    MAX
-                                </td>
-                                <td class="bg-danger text-right">
-                                    @Model.Parameters.Max(x => x.powerValue).ToString("#0.0")
-                                </td>
-                                <td class="bg-danger text-center">
-                                    MAX
-                                </td>
-                                <td class="bg-danger text-right">
-                                    @Model.Parameters.Max(x => x.tempIn).ToString("#0.0")
-                                </td>
-                                <td class="bg-danger text-center">
-                                    MAX
-                                </td>
-                                <td class="bg-danger text-right">
-                                    @Model.Parameters.Max(x => x.tempOut).ToString("#0.0")
-                                </td>
-                                
-                            </tr>
-                            <tr>
-                                 <td class="bg-warning text-center">
-                                    Ср.
-                                </td>
-                                <td class="bg-warning text-right">
-                                    @Model.Parameters.Average(x => x.powerValue).ToString("#0.0")
-                                </td>
-                                <td class="bg-warning text-center">
-                                    Ср.
-                                </td>
-                                <td class="bg-warning text-right">
-                                    @Model.Parameters.Average(x => x.tempIn).ToString("#0.0")
-                                </td>
-                                <td class="bg-warning text-center">
-                                    Ср.
-                                </td>
-                                <td class="bg-warning text-right">
-                                    @Model.Parameters.Average(x => x.tempOut).ToString("#0.0")
-                                </td>
-                                
-                            </tr>
-                            <tr>
-                              
-                                  <td class="bg-info text-center">
-                                    MIN
-                                </td>
-                                <td class="bg-info text-right">
-                                    @Model.Parameters.Min(x => x.powerValue).ToString("#0.0")
-                                </td>
-                                <td class="bg-info text-center">
-                                    MIN
-                                </td>
-                                <td class="bg-info text-right">
-                                    @Model.Parameters.Min(x => x.tempIn).ToString("#0.0")
-                                </td>
-                                <td class="bg-info text-center">
-                                    MIN
-                                </td>
-                                <td class="bg-info text-right">
-                                    @Model.Parameters.Min(x => x.tempOut).ToString("#0.0")
-                                </td>
-
-                            </tr>
-                        </tbody>
-                    </table>
-           
-                *@
+      
             
                 }
         else

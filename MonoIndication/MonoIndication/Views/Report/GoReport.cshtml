@@ -151,7 +151,7 @@
             <td title="Температура обратки" class="obratka">@item.TempOut.ToString("f0",culture)</td>
             <td title="Температура холодной воды">@item.TempCold.ToString("f0",culture)</td>
             <td title="Время работы прибора">@item.TotalWorkHours.ToString()</td>
-            <td></td>
+            <td title="Время работы прибора в режиме ошибки">@item.workWithError.ToString()</td>
             <td></td>
             <td>@(item.isOtop?"ИСТИНА":"ЛОЖЬ")</td>
             <td>@(item.isGvs?"ИСТИНА":"ЛОЖЬ")</td>

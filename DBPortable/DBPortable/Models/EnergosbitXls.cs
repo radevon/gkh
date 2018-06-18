@@ -43,6 +43,7 @@ namespace DBPortable
 
         public int TotalWorkHours { get; set; }
 
+        public int workWithError { get; set; }
         public double ObrHeat { get; set; }
 
         public double ObrWaterLose { get; set; }

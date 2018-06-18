@@ -54,6 +54,11 @@ namespace DBPortable
         // список ошибок
         public string errorList { get; set; }
 
+        // время работы с ошибкой
+        public int workWithError { get; set; }
+
+        // давление в магистрали
+        public double waterPress { get; set; }
         public string StatusInputText
         {
             get

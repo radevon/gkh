@@ -42,6 +42,8 @@ namespace DBPortable
     'presure2' real not null,
     'totalWorkHours' INTEGER NOT NULL DEFAULT 0,
     'tempCold' real not null,
+    'workWithError' integer  not null,
+    'waterPress' real not null,
     'errorList' TEXT DEFAULT ''
 );";
 
@@ -65,10 +67,12 @@ namespace DBPortable
       main.presure2,
       main.totalWorkHours,
       main.tempCold,
-      main.errorList
+      main.errorList,
+      main.workWithError,
+      main.waterPress
 from db_heat_parameter main;";
 
-        private string groupingDayView = @"create view if not exists groupingDayView as select p.phone, p.recvDate, p.n_pp, p.n_pp/2+1 as g_npp, p.heatValue, p.tempIn, p.tempOut, p.waterLose, p.waterLoseAll, p.TotalworkHours, p.tempCold 
+        private string groupingDayView = @"create view if not exists groupingDayView as select p.phone, p.recvDate, p.n_pp, p.n_pp/2+1 as g_npp, p.heatValue, p.tempIn, p.tempOut, p.waterLose, p.waterLoseAll, p.TotalworkHours, p.workWithError, p.tempCold 
             from db_heat_parameter p 
                 join 
                 (select inn.phone, max(inn.RecvDate) as maxdayparam, inn.n_pp from db_heat_parameter inn group by date(inn.RecvDate),inn.phone,inn.n_pp) groupingParam

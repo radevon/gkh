@@ -16,10 +16,10 @@
             <th rowspan="2">
                 Время получ
             </th>
-            <th colspan="8">
+            <th colspan="9">
                 Подающий трубопровод
             </th>
-            <th colspan="7">
+            <th colspan="8">
                 Обратный трубопровод
             </th>
 
@@ -32,6 +32,9 @@
             </th>
             <th rowspan="2">
                 Часы раб
+            </th>
+            <th rowspan="2">
+                Час ошиб
             </th>
             <th rowspan="2">
                 Сообщение
@@ -65,6 +68,9 @@
             <th>
                 Общ расх воды, т
             </th>
+            <th>
+                Давл, МПа
+            </th>
             <!-- Обратка-->
             <th>
                 Теплоэн, ГКал
@@ -87,6 +93,9 @@
             <th>
                 Общ расх воды, т
             </th>
+            <th>
+                Давл, МПа
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -106,13 +115,13 @@
                 <td title='Дата и время получения показаний, @(item.AirTemp.HasValue? item.AirTemp.Value.ToString("0.#0 C"):"")' >
                     @item.datePod.ToString("dd MMM yyг hh:mm:ss")
                 </td>
-                <td title="Показания теплоэнергии в подающей магистрали">
+                <td title="Показания теплоэнергии в подающей магистрали" class="podacha">
                     <b>@item.heatPod.ToString("0.00")</b>
                 </td>
-                <td title="Мощность">
+                <td title="Мощность" class="podacha">
                     @item.powerPod.ToString("0.0")
                 </td>
-                <td title="Температура в подающей магистрали">
+                <td title="Температура в подающей магистрали" class="podacha">
 
                     @if (item.kNamePod.ToLower().Contains(System.Configuration.ConfigurationManager.AppSettings["TempControl"]) && nominal != null)
                     {
@@ -124,25 +133,28 @@
                         {
                             <span title='Норма @nominal.PodTemp.ToString("#0.0")'>@item.TempPod.ToString("#0.0")</span>
                         }
-                    }else
+                    }
+                    else
                     {
                         @item.TempPod.ToString("0.0")
                     }
 
-                    
+
                 </td>
                 
-                    <td>
-                        @if (item.VNormaPod > 0 && (item.waterLosePod < item.MinNormaV || item.waterLosePod > item.MaxNormaV))
-                        {
-                            <span class="blink" title="Текущий расход воды не соответствует заданной норме расхода!">@item.waterLosePod.ToString("0.00")</span>
-                        }
-                        else
-                        {
-                            <span title="Текущий объемный расход воды">@item.waterLosePod.ToString("0.00")</span>
-                        }
+                <td class="podacha">
+                    @if (item.VNormaPod > 0 && (item.waterLosePod < item.MinNormaV || item.waterLosePod > item.MaxNormaV))
+                    {
+                        <span class="blink" title="Текущий расход воды не соответствует заданной норме расхода!">@item.waterLosePod.ToString("0.00")</span>
+                    }
+                    else
+                    {
+                        <span title="Текущий объемный расход воды">@item.waterLosePod.ToString("0.00")</span>
+                    }
 
-                    </td>
+                </td>
+
+
                
                 @*
                 @if (item.VNormaPod > 0 && (item.waterLosePod < item.MinNormaV || item.waterLosePod > item.MaxNormaV))
@@ -154,27 +166,30 @@
                     <td title="Текущий объемный расход воды">@item.waterLosePod.ToString("0.00")</td>
                 }
                     *@
-                <td title="Предельное отклонение расхода воды (если заведена норма и коэффициент)">
+                <td title="Предельное отклонение расхода воды (если заведена норма и коэффициент)" class="podacha">
                     @item.MinNormaV.ToString("0.#0")~@item.MaxNormaV.ToString("0.#0")
                 </td>
 
-                <td title="Общий объемный расход воды">
+                <td title="Общий объемный расход воды" class="podacha">
                     <b>@item.waterLoseAllPod.ToString("0.#0")</b>
                 </td>
-                <td title="Текущий массовый расход воды">
+                <td title="Текущий массовый расход воды" class="podacha">
                     @item.waterLoseMPod.ToString("0.00")
                 </td>
-                <td title="Общий массовый расход воды">
+                <td title="Общий массовый расход воды" class="podacha">
                     @item.waterLoseAllMPod.ToString("0.#0")
                 </td>
+                <td title="Давление в подающей магистрали" class="podacha">
+                    @item.waterPressPod.ToString("0.#0")
+                </td>
 
-                <td title="Показания теплоэнергии в обратной магистрали">
+                <td title="Показания теплоэнергии в обратной магистрали" class="obratka">
                     <b>@item.heatObr.ToString("0.00")</b>
                 </td>
-                <td title="Мощность">
+                <td title="Мощность" class="obratka">
                     @item.powerObr.ToString("0.0")
                 </td>
-                <td title="Температура в обратной магистрали">
+                <td title="Температура в обратной магистрали" class="obratka">
                     @if (item.kNamePod.ToLower().Contains(System.Configuration.ConfigurationManager.AppSettings["TempControl"]) && nominal != null)
                     {
                         if (nominal.ObrTemp > item.TempObr)
@@ -191,23 +206,29 @@
                         @item.TempObr.ToString("0.0")
                     }
                 </td>
-                <td title="Текущий объемный расход воды обратки">
+                <td title="Текущий объемный расход воды обратки" class="obratka">
                     @item.waterLoseObr.ToString("0.00")
                 </td>
-                <td title="Общий расход воды обратки">
+                <td title="Общий расход воды обратки" class="obratka">
                     <b>@item.waterLoseAllObr.ToString("0.#0")</b>
                 </td>
-                <td title="Текущий массовый расход воды обратки">
+                <td title="Текущий массовый расход воды обратки" class="obratka">
                     @item.waterLoseMObr.ToString("0.00")
                 </td>
-                <td title="Общий массовый расход обратки">
+                <td title="Общий массовый расход обратки" class="obratka">
                     @item.waterLoseAllMObr.ToString("0.#0")
+                </td>
+                <td title="Давление в обратной магистрали" class="obratka">
+                    @item.waterPressObr.ToString("0.#0")
                 </td>
                 <td title="Температура холодной воды">
                     @item.TempCold.ToString("0.0")
                 </td>
                 <td title="Общее время наработки прибора">
                     @item.totalWorkHours.ToString()
+                </td>
+                <td title="Время работы прибора с активной ошибкой">
+                    @item.workWithError.ToString()
                 </td>
 
                 <td title="Сообщения об ошибках и др." style="line-height:0.9">

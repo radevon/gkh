@@ -25,6 +25,9 @@ namespace DBPortable
         public double waterLoseMPod {get; set;}
         public double waterLoseAllMPod {get; set;}
         public int totalWorkHours {get; set;}
+
+        public int workWithError { get; set; }
+        public double waterPressPod { get; set; }
         public double TempCold {get; set;}
         public string errorList {get; set;}
 
@@ -36,6 +39,8 @@ namespace DBPortable
         public double waterLoseAllObr { get; set; }
         public double waterLoseMObr { get; set; }
         public double waterLoseAllMObr { get; set; }
+
+        public double waterPressObr { get; set; }
 
         public double? AirTemp { get; set; }
 
