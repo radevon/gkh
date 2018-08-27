@@ -92,12 +92,14 @@ namespace MonoIndication.Controllers
              foreach (KonturItem item in konturs)
                     {
                         HeateInfo heatInf = repo.GetHeatInfoLast(PhoneNumber, item.N);
-                        double? val = repo.GetCurrentTemp(heatInf.recvDate);
+                 
+                        double? temp=null;
+                        if(heatInf!=null) temp = repo.GetCurrentTemp(heatInf.recvDate);
                         listInformation.Add(new ItpRow()
                             {
                                 HeatLastInfo = heatInf,
                                 KonturInfo=item,
-                                CurrentTempAir=val,
+                                CurrentTempAir=temp,
                                 NominalTemp=NominalTemp
                             });
                     }
