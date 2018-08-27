@@ -53,15 +53,19 @@ function trackEvents(url, seconds_ago) {
     });
 }
 
+var locationsTemp = ['Chojniki', 'Svyetlahorsk','Zlobin']
+
+
 function openweathermap(fn) {
-    
-        var url = 'http://api.openweathermap.org/data/2.5/weather?q=Chojniki&appid=f62c1e09b0f0ac4468daf91c3fd39089&units=metric';
-        $.getJSON(url + '&callback=?', {  }, function (data) {
-            
-            fn(data);
-        });
-   
+
+    var url = 'http://api.openweathermap.org/data/2.5/weather?q='+locationsTemp[0]+'&appid=f62c1e09b0f0ac4468daf91c3fd39089&units=metric';
+    $.getJSON(url + '&callback=?', {}, function (data) {
+
+        fn(data);
+    });
+
 }
+
 
 function customAlert(message, clas,delay) {
     var aler = $("<div class='alert fixedAlert " + clas + " alert-dismissable'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button>" + message + "</div>");
