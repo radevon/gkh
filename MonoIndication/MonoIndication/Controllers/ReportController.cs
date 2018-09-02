@@ -288,6 +288,7 @@ namespace MonoIndication.Controllers
                 
                 appExl = new Excel.Application();
                 appExl.ScreenUpdating = false;
+                appExl.FileValidation = Microsoft.Office.Core.MsoFileValidationMode.msoFileValidationSkip;
                 
                 //appExl.Visible = true;
                 wBooks=appExl.Workbooks;
