@@ -27,6 +27,8 @@ namespace MonoIndication
         public int DiffsTimer { get { return EndValues.TotalHours - StartValues.TotalHours; } }
 
         // вычисляю разность показаний времени
-        public TimeSpan DiffsDate { get { return EndValues.RecvDate.Subtract(StartValues.RecvDate); } }
+        //public TimeSpan DiffsDate { get { return EndValues.RecvDate.Subtract(StartValues.RecvDate); } }
+
+        public TimeSpan DiffsDate { get { return new TimeSpan(this.DiffsTimer,0,0); } }
     }
 }
